@@ -23,17 +23,6 @@ object AppStyleSheet : StyleSheet() {
         alignItems(AlignItems.Center)
     }
 
-    val minesweeperContainer by style {
-        display(DisplayStyle.Flex) // Flexを指定
-        flexDirection(FlexDirection.Row) // 横並び
-        flexWrap(FlexWrap.Wrap) // 折り返し下
-        alignItems(AlignItems.FlexStart)
-
-        backgroundColor(Color.sandybrown)
-        width(90.vmin)
-        height(90.vmin)
-    }
-
     val sidebarPCStyle by style {
         flexBasis(20.percent) // 子要素としてのプロパティ
 
@@ -49,12 +38,4 @@ object AppStyleSheet : StyleSheet() {
         borderRadius(0.1.px, 20.px, 20.px, 0.1.px)
         property("box-shadow", "5px 0px 24px -2px #848484") // 影
     }
-
-    val tileStyle by style {
-        display(DisplayStyle.Flex)
-        flexDirection(FlexDirection.Column)
-        justifyContent(JustifyContent.Center)
-        alignItems(AlignItems.Center)
-    }
-
 }

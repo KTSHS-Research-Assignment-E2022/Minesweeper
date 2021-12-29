@@ -24,7 +24,7 @@ fun CenterLayout(content: @Composable () -> Unit) {
 @Composable
 fun MinesweeperLayout(content: @Composable () -> Unit) {
     Div(attrs = {
-        classes(AppStyleSheet.minesweeperContainer)
+        classes(MinesweeperStyleSheet.minesweeperContainer)
     }) {
         content()
     }

@@ -6,6 +6,7 @@ import org.jetbrains.compose.web.renderComposable
 fun main() {
     renderComposable("root") {
         Style(AppStyleSheet)
+        Style(MinesweeperStyleSheet)
 
         MainLayout {
             Sidebar()

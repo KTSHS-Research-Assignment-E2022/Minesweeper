@@ -35,7 +35,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int) {
         val isClicked = mutableStateOf(false)
 
         Div({
-            classes(AppStyleSheet.tileStyle)
+            classes(MinesweeperStyleSheet.tileStyle)
             style {
                 // 合計のwidth = 100/column
                 // 合計のheight = 100/row
