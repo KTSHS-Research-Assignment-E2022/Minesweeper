@@ -2,6 +2,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text

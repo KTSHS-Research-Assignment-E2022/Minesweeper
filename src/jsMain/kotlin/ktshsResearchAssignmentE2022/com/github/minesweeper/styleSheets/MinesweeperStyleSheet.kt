@@ -1,4 +1,4 @@
-package ktshsResearchAssignmentE2022.com.github.minesweeper
+package ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets
 
 import org.jetbrains.compose.web.css.*
 

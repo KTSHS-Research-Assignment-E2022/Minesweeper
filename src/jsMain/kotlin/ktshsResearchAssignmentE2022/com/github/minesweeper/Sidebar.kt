@@ -1,17 +1,31 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.AppStyleSheet
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.PcSidebarStyleSheet
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.PhoneSidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Sidebar() {
+fun Sidebar(width: Int) {
+    if (width > 600) {
+        // PC
+        PcSidebar()
+    } else {
+        // 画面幅 749px以下の端末
+        PhoneSidebar()
+    }
+}
+
+@Composable
+private fun PcSidebar() {
     Div({
-        classes(AppStyleSheet.sidebarPCStyle)
+        classes(PcSidebarStyleSheet.pcSidebarStyle)
     }) {
         Style({
-            classes(SidebarStyleSheet.elementStyle)
+            classes(PcSidebarStyleSheet.elementStyle)
         }) {
             H1 { Text("まいんすいーぱー") }
             Settings()
@@ -21,26 +35,22 @@ fun Sidebar() {
 }
 
 @Composable
-private fun Settings() {
-    val elemStyle = SidebarStyleSheet.settingElementStyle
-    Div({
-        style {
-            display(DisplayStyle.Flex)
-            flexDirection(FlexDirection.Column)
-            justifyContent(JustifyContent.SpaceBetween)
+private fun PhoneSidebar() {
+    Div ({
+        classes(PhoneSidebarStyleSheet.menuButtonStyle)
+    }){ Text("スマホは横画面でプレイしてね") }
+}
 
-            height(30.vh)
-            backgroundColor(Color.gray)
-        }
-        // classes(SidebarStyleSheet.settingStyle)
+@Composable
+private fun Settings() {
+    Div({
+        classes(PcSidebarStyleSheet.settingStyle)
     }) {
         H2 {
             Text("設定")
         }
 
-        Div({
-            classes(elemStyle)
-        }) {
+        Div {
             Button({
                 style {
                     width(100.percent)
@@ -51,23 +61,17 @@ private fun Settings() {
             }
         }
 
-        Div({
-            classes(elemStyle)
-        }) {
+        Div {
             Text("縦の幅")
             Input(InputType.Range)
         }
 
-        Div({
-            classes(elemStyle)
-        }) {
+        Div {
             Text("横の幅")
             Input(InputType.Range)
         }
 
-        Div({
-            classes(elemStyle)
-        }) {
+        Div {
             Text("爆弾の数")
             Input(InputType.Number,
                 attrs = {
