@@ -7,12 +7,13 @@ import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
-class MineSweeper(private val column: Int, private val row: Int, ratio: Int) {
-    private val logic = MineSweeperLogic(column, row, ratio)
+class MineSweeper(private val column: Int, private val row: Int, ratio: Int, seed: Int) {
+    private val logic = MineSweeperLogic(column, row, ratio, seed)
+
     private val map = logic.map
 
     @Composable
-    fun Content() {
+    fun show() {
         MinesweeperLayout {
             for (i in 0 until row) {
                 // 配列は0から!!!!!

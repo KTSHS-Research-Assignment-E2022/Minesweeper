@@ -2,7 +2,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import kotlin.random.Random
 
-class MineSweeperLogic(private val column: Int, private val row: Int, ratio: Int) {
+class MineSweeperLogic(private val column: Int, private val row: Int, ratio: Int,seed: Int) {
     private val originalMap: List<List<Int>>
 
     init {
@@ -15,7 +15,7 @@ class MineSweeperLogic(private val column: Int, private val row: Int, ratio: Int
             connectedList.add(0)
         }
 
-        connectedList.shuffle(Random(123))
+        connectedList.shuffle(Random(seed))
         originalMap = connectedList.windowed(column, column)
     }
 

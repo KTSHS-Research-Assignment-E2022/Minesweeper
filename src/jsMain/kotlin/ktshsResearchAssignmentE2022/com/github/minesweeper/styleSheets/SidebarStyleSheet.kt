@@ -2,7 +2,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets
 
 import org.jetbrains.compose.web.css.*
 
-object PcSidebarStyleSheet : StyleSheet() {
+object SidebarStyleSheet : StyleSheet() {
 
     val pcSidebarStyle by style {
         flexBasis(20.percent) // 子要素としてのプロパティ
