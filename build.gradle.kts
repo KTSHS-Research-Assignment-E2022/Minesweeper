@@ -23,3 +23,13 @@ kotlin {
         }
     }
 }
+
+tasks.register("copyToDocs") {
+    dependsOn("jsBrowserProductionWebpack")
+
+    val distributions = File("$rootDir\\build\\distributions")
+    val docs = File("$rootDir\\docs")
+    doFirst {
+        distributions.copyRecursively(docs,true)
+    }
+}
