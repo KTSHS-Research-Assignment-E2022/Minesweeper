@@ -2,8 +2,7 @@
 
 ## プレイはこちらから
 
-https://ktshs-research-assignment-e2022.github.io/Minesweeper/  
-ビルド/デプロイ自動化していないので更新遅めです
+https://ktshs-research-assignment-e2022.github.io/Minesweeper/
 
 ## 使用しているフレームワーク
 
