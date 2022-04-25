@@ -23,9 +23,9 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
     }
 
     @Composable
-    private fun TileRow(row: MutableList<Int>, numOfColumn: Int) {
+    private fun TileRow(row: List<TileLogic>, numOfColumn: Int) {
         for (i in 0 until column) {
-            Tile(row[i], i, numOfColumn)
+            Tile(row[i].nearbyMines, i, numOfColumn)
         }
     }
 

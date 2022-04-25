@@ -2,71 +2,65 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import kotlin.random.Random
 
-class MineSweeperLogic(private val column: Int, private val row: Int, ratio: Int,seed: Int) {
-    private val originalMap: List<List<Int>>
+class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
+    val map: List<List<TileLogic>>
 
     init {
-        val connectedList = mutableListOf<Int>()
-        for (i in 1 until ratio) {
-            connectedList.add(-1)
+        val connectedList = mutableListOf<TileLogic>()
+        for (i in 1 .. ratio) {
+            connectedList.add(TileLogic(true))
         }
 
         while (connectedList.size <= column * row) {
-            connectedList.add(0)
+            connectedList.add(TileLogic(false))
         }
 
         connectedList.shuffle(Random(seed))
-        originalMap = connectedList.windowed(column, column)
+        map = connectedList.windowed(column, column)
+
+        for (x in 0 until row) {
+            for (y in 0 until column) {
+                if (map[x][y].isBomb) {
+                    map.incAround(x, y)
+                }
+            }
+        }
     }
 
-    private fun List<MutableList<Int>>.incAround(int: Int, int2: Int) {
+    private fun List<List<TileLogic>>.incAround(int: Int, int2: Int) {
         // 左上
         if (int != 0 && int2 != 0) {
-            if (this[int - 1][int2 - 1] != -1) this[int - 1][int2 - 1]++
+            if (! this[int - 1][int2 - 1].isBomb) this[int - 1][int2 - 1].nearbyMines++
         }
         // 真上
         if (int != 0) {
-            if (this[int - 1][int2] != -1) this[int - 1][int2]++
+            if (!this[int - 1][int2].isBomb) this[int - 1][int2].nearbyMines++
         }
         // 右上
         if (int != 0 && this[int - 1].size > int2 + 1) {
-            if (this[int - 1][int2 + 1] != -1) this[int - 1][int2 + 1]++
+            if (!this[int - 1][int2 + 1].isBomb) this[int - 1][int2 + 1].nearbyMines++
         }
 
         // 左
         if (int2 != 0) {
-            if (this[int][int2 - 1] != -1) this[int][int2 - 1]++
+            if (!this[int][int2 - 1].isBomb) this[int][int2 - 1].nearbyMines++
         }
         // 右
         if (this[int].size > int2 + 1) {
-            if (this[int][int2 + 1] != -1) this[int][int2 + 1]++
+            if (!this[int][int2 + 1].isBomb) this[int][int2 + 1].nearbyMines++
         }
 
         // 左下
         if (this.size > int + 1 && int2 != 0) {
-            if (this[int + 1][int2 - 1] != -1) this[int + 1][int2 - 1]++
+            if (!this[int + 1][int2 - 1].isBomb) this[int + 1][int2 - 1].nearbyMines++
         }
         // 真下
         if (this.size > int + 1) {
-            if (this[int + 1][int2] != -1) this[int + 1][int2]++
+            if (!this[int + 1][int2].isBomb) this[int + 1][int2].nearbyMines++
         }
         // 右下
         if (this.size > int + 1 && this[int + 1].size > int2 + 1) {
-            if (this[int + 1][int2 + 1] != -1) this[int + 1][int2 + 1]++
+            if (!this[int + 1][int2 + 1].isBomb) this[int + 1][int2 + 1].nearbyMines++
         }
     }
-
-    val map: List<MutableList<Int>>
-        get() {
-            val gameMap = originalMap as List<MutableList<Int>>
-            for (row in 0 until row) {
-                for (column in 0 until column) {
-                    if (gameMap[row][column] == -1) {
-                        gameMap.incAround(row, column)
-                    }
-                }
-            }
-            println(gameMap)
-            return gameMap
-        }
 }
