@@ -1,6 +1,6 @@
 plugins {
-    kotlin("multiplatform") version "1.6.10"
-    id("org.jetbrains.compose") version "1.0.1-rc2"
+    kotlin("multiplatform") version "1.6.20"
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev620"
 }
 
 repositories {
@@ -32,4 +32,8 @@ tasks.register("copyToDocs") {
     doFirst {
         distributions.copyRecursively(docs,true)
     }
+}
+
+tasks.wrapper {
+    distributionUrl = "https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
 }
