@@ -2,6 +2,43 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import kotlin.random.Random
 
+private fun List<List<TileLogic>>.incAround(int: Int, int2: Int) {
+    // 左上
+    if (int != 0 && int2 != 0) {
+        if (! this[int - 1][int2 - 1].isBomb) this[int - 1][int2 - 1].nearbyMines++
+    }
+    // 真上
+    if (int != 0) {
+        if (!this[int - 1][int2].isBomb) this[int - 1][int2].nearbyMines++
+    }
+    // 右上
+    if (int != 0 && this[int - 1].size > int2 + 1) {
+        if (!this[int - 1][int2 + 1].isBomb) this[int - 1][int2 + 1].nearbyMines++
+    }
+
+    // 左
+    if (int2 != 0) {
+        if (!this[int][int2 - 1].isBomb) this[int][int2 - 1].nearbyMines++
+    }
+    // 右
+    if (this[int].size > int2 + 1) {
+        if (!this[int][int2 + 1].isBomb) this[int][int2 + 1].nearbyMines++
+    }
+
+    // 左下
+    if (this.size > int + 1 && int2 != 0) {
+        if (!this[int + 1][int2 - 1].isBomb) this[int + 1][int2 - 1].nearbyMines++
+    }
+    // 真下
+    if (this.size > int + 1) {
+        if (!this[int + 1][int2].isBomb) this[int + 1][int2].nearbyMines++
+    }
+    // 右下
+    if (this.size > int + 1 && this[int + 1].size > int2 + 1) {
+        if (!this[int + 1][int2 + 1].isBomb) this[int + 1][int2 + 1].nearbyMines++
+    }
+}
+
 class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
     val map: List<List<TileLogic>>
 
@@ -24,43 +61,6 @@ class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
                     map.incAround(x, y)
                 }
             }
-        }
-    }
-
-    private fun List<List<TileLogic>>.incAround(int: Int, int2: Int) {
-        // 左上
-        if (int != 0 && int2 != 0) {
-            if (! this[int - 1][int2 - 1].isBomb) this[int - 1][int2 - 1].nearbyMines++
-        }
-        // 真上
-        if (int != 0) {
-            if (!this[int - 1][int2].isBomb) this[int - 1][int2].nearbyMines++
-        }
-        // 右上
-        if (int != 0 && this[int - 1].size > int2 + 1) {
-            if (!this[int - 1][int2 + 1].isBomb) this[int - 1][int2 + 1].nearbyMines++
-        }
-
-        // 左
-        if (int2 != 0) {
-            if (!this[int][int2 - 1].isBomb) this[int][int2 - 1].nearbyMines++
-        }
-        // 右
-        if (this[int].size > int2 + 1) {
-            if (!this[int][int2 + 1].isBomb) this[int][int2 + 1].nearbyMines++
-        }
-
-        // 左下
-        if (this.size > int + 1 && int2 != 0) {
-            if (!this[int + 1][int2 - 1].isBomb) this[int + 1][int2 - 1].nearbyMines++
-        }
-        // 真下
-        if (this.size > int + 1) {
-            if (!this[int + 1][int2].isBomb) this[int + 1][int2].nearbyMines++
-        }
-        // 右下
-        if (this.size > int + 1 && this[int + 1].size > int2 + 1) {
-            if (!this[int + 1][int2 + 1].isBomb) this[int + 1][int2 + 1].nearbyMines++
         }
     }
 }
