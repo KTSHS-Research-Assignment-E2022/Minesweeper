@@ -39,15 +39,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
-                // 合計のwidth = 100/column
-                // 合計のheight = 100/row
-                margin(0.55.percent)
-                width(10.percent)
-                height(10.percent)
-
-                borderRadius(30.percent)
                 backgroundColor(color.value)
-
                 if (isMine) fontSize(5.vmin) else fontSize(3.vmin)
             }
             id("$row-$column")
