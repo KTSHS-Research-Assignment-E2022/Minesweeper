@@ -5,37 +5,37 @@ import kotlin.random.Random
 private fun List<List<TileLogic>>.incAround(int: Int, int2: Int) {
     // 左上
     if (int != 0 && int2 != 0) {
-        if (! this[int - 1][int2 - 1].isBomb) this[int - 1][int2 - 1].nearbyMines++
+        if (! this[int - 1][int2 - 1].isMine) this[int - 1][int2 - 1].numOfAroundMines++
     }
     // 真上
     if (int != 0) {
-        if (!this[int - 1][int2].isBomb) this[int - 1][int2].nearbyMines++
+        if (!this[int - 1][int2].isMine) this[int - 1][int2].numOfAroundMines++
     }
     // 右上
     if (int != 0 && this[int - 1].size > int2 + 1) {
-        if (!this[int - 1][int2 + 1].isBomb) this[int - 1][int2 + 1].nearbyMines++
+        if (!this[int - 1][int2 + 1].isMine) this[int - 1][int2 + 1].numOfAroundMines++
     }
 
     // 左
     if (int2 != 0) {
-        if (!this[int][int2 - 1].isBomb) this[int][int2 - 1].nearbyMines++
+        if (!this[int][int2 - 1].isMine) this[int][int2 - 1].numOfAroundMines++
     }
     // 右
     if (this[int].size > int2 + 1) {
-        if (!this[int][int2 + 1].isBomb) this[int][int2 + 1].nearbyMines++
+        if (!this[int][int2 + 1].isMine) this[int][int2 + 1].numOfAroundMines++
     }
 
     // 左下
     if (this.size > int + 1 && int2 != 0) {
-        if (!this[int + 1][int2 - 1].isBomb) this[int + 1][int2 - 1].nearbyMines++
+        if (!this[int + 1][int2 - 1].isMine) this[int + 1][int2 - 1].numOfAroundMines++
     }
     // 真下
     if (this.size > int + 1) {
-        if (!this[int + 1][int2].isBomb) this[int + 1][int2].nearbyMines++
+        if (!this[int + 1][int2].isMine) this[int + 1][int2].numOfAroundMines++
     }
     // 右下
     if (this.size > int + 1 && this[int + 1].size > int2 + 1) {
-        if (!this[int + 1][int2 + 1].isBomb) this[int + 1][int2 + 1].nearbyMines++
+        if (!this[int + 1][int2 + 1].isMine) this[int + 1][int2 + 1].numOfAroundMines++
     }
 }
 
@@ -57,7 +57,7 @@ class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
 
         for (x in 0 until row) {
             for (y in 0 until column) {
-                if (map[x][y].isBomb) {
+                if (map[x][y].isMine) {
                     map.incAround(x, y)
                 }
             }

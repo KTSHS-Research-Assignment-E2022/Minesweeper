@@ -25,12 +25,12 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
     @Composable
     private fun TileRow(row: List<TileLogic>, numOfColumn: Int) {
         for (i in 0 until column) {
-            Tile(row[i].nearbyMines, i, numOfColumn)
+            Tile(row[i].numOfAroundMines, row[i].isMine,i, numOfColumn)
         }
     }
 
     @Composable
-    private fun Tile(nearbyMines: Int, row: Int, column: Int) {
+    private fun Tile(numOfAroundMines: Int, isMine: Boolean, row: Int, column: Int) {
         val color = mutableStateOf(Color.brown)
         val text = mutableStateOf("")
         val flag = mutableStateOf(false)
@@ -48,7 +48,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
                 borderRadius(30.percent)
                 backgroundColor(color.value)
 
-                if (nearbyMines == -1) fontSize(5.vmin) else fontSize(3.vmin)
+                if (isMine) fontSize(5.vmin) else fontSize(3.vmin)
             }
             id("$row-$column")
             onContextMenu {
@@ -60,7 +60,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
-            if (nearbyMines == -1) {
+            if (isMine) {
                 // 地雷時の挙動
                 classes("mine")
                 onClick {
@@ -68,11 +68,11 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
                     text.value = "💣"
                 }
             } else {
-                classes(nearbyMines.toString())
+                classes(numOfAroundMines.toString())
                 // ただのマスの挙動
                 onClick {
                     color.value = Color.green
-                    text.value = nearbyMines.toString()
+                    text.value = numOfAroundMines.toString()
                 }
             }
             onClick {
