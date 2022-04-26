@@ -25,50 +25,52 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
     @Composable
     private fun TileRow(row: List<TileLogic>, numOfColumn: Int) {
         for (i in 0 until column) {
-            Tile(row[i].numOfAroundMines, row[i].isMine,i, numOfColumn)
+            Tile(row[i], i, numOfColumn)
         }
     }
 
     @Composable
-    private fun Tile(numOfAroundMines: Int, isMine: Boolean, row: Int, column: Int) {
-        val color = mutableStateOf(Color.brown)
+    private fun Tile(tileLogic: TileLogic, row: Int, column: Int) {
+        val isOpened = mutableStateOf(tileLogic.isOpened)
+        val isFlagged = mutableStateOf(tileLogic.isFlagged)
         val text = mutableStateOf("")
-        val flag = mutableStateOf(false)
-        val isClicked = mutableStateOf(false)
 
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
-                backgroundColor(color.value)
-                if (isMine) fontSize(5.vmin) else fontSize(3.vmin)
+                backgroundColor(
+                    when {
+                        isOpened.value -> if(tileLogic.isMine) Color.red else Color.green
+                        isFlagged.value -> Color.blue
+                        else -> Color.brown
+                    }
+                )
+                if (tileLogic.isMine) fontSize(5.vmin) else fontSize(3.vmin)
             }
             id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
-                if (!isClicked.value) {
-                    flag.value = !flag.value
-                    color.value = if (flag.value) Color.blue else Color.brown
+                if (!isOpened.value) {
+                    isFlagged.value = !isFlagged.value
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
-            if (isMine) {
+            if (tileLogic.isMine) {
                 // 地雷時の挙動
                 classes("mine")
                 onClick {
-                    color.value = Color.red
                     text.value = "💣"
                 }
             } else {
-                classes(numOfAroundMines.toString())
+                classes(tileLogic.numOfAroundMines.toString())
                 // ただのマスの挙動
                 onClick {
-                    color.value = Color.green
-                    text.value = numOfAroundMines.toString()
+                    text.value = tileLogic.numOfAroundMines.toString()
                 }
             }
             onClick {
-                isClicked.value = true
+                isOpened.value = true
             }
         }) {
             Text(text.value)
