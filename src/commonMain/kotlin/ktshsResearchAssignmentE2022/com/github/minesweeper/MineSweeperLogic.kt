@@ -2,7 +2,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import kotlin.random.Random
 
-private fun List<List<TileLogic>>.incAround(x: Int, y: Int) {
+private fun List<List<TileState>>.incAround(x: Int, y: Int) {
     // 左上
     if (x != 0 && y != 0) {
         if (!this[x - 1][y - 1].isMine) this[x - 1][y - 1].numOfAroundMines++
@@ -39,78 +39,48 @@ private fun List<List<TileLogic>>.incAround(x: Int, y: Int) {
     }
 }
 
-private fun List<List<TileLogic>>.openAround(x: Int, y: Int) {
-    // 左上
-    if (x != 0 && y != 0) {
-        if (this[x - 1][y - 1].numOfAroundMines == 0) {
-            this[x - 1][y - 1].isOpened = true
-            this.openAround(x - 1, y - 1)
-        }
-    }
+private fun List<List<TileState>>.openAround(x: Int, y: Int) {
     // 真上
     if (x != 0) {
-        if (this[x - 1][y].numOfAroundMines == 0) {
-            this[x - 1][y].isOpened = true
+        if (this[x - 1][y].numOfAroundMines == 0 && !this[x - 1][y].isOpened.value) {
+            this[x - 1][y].isOpened.value = true
             this.openAround(x - 1, y)
         }
     }
-    // 右上
-    if (x != 0 && this[x - 1].size > y + 1) {
-        if (this[x - 1][y + 1].numOfAroundMines == 0) {
-            this[x - 1][y + 1].isOpened = true
-            this.openAround(x - 1, y + 1)
-        }
-    }
-
     // 左
     if (y != 0) {
-        if (this[x][y - 1].numOfAroundMines == 0) {
-            this[x][y - 1].isOpened = true
+        if (this[x][y - 1].numOfAroundMines == 0 && !this[x][y - 1].isOpened.value) {
+            this[x][y - 1].isOpened.value = true
             this.openAround(x, y - 1)
         }
     }
     // 右
     if (this[x].size > y + 1) {
-        if (this[x][y + 1].numOfAroundMines == 0) {
-            this[x][y + 1].isOpened = true
+        if (this[x][y + 1].numOfAroundMines == 0 && !this[x][y + 1].isOpened.value) {
+            this[x][y + 1].isOpened.value = true
             this.openAround(x, y + 1)
-        }
-    }
-
-    // 左下
-    if (this.size > x + 1 && y != 0) {
-        if (this[x + 1][y - 1].numOfAroundMines == 0) {
-            this[x + 1][y - 1].isOpened = true
-            this.openAround(x + 1, y - 1)
         }
     }
     // 真下
     if (this.size > x + 1) {
-        if (this[x + 1][y].numOfAroundMines == 0) {
-            this[x + 1][y].isOpened = true
+        if (this[x + 1][y].numOfAroundMines == 0 && !this[x + 1][y].isOpened.value) {
+            this[x + 1][y].isOpened.value = true
             this.openAround(x + 1, y)
-        }
-    }
-    // 右下
-    if (this.size > x + 1 && this[x + 1].size > y + 1) {
-        if (this[x + 1][y + 1].numOfAroundMines == 0) {
-            this[x + 1][y + 1].isOpened
-            this.openAround(x + 1, y + 1)
         }
     }
 }
 
 class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
-    val map: List<List<TileLogic>>
+    val map: List<List<TileState>>
 
     init {
-        val connectedList = mutableListOf<TileLogic>()
+        val connectedList = mutableListOf<TileState>()
         for (i in 1..ratio) {
-            connectedList.add(TileLogic(true))
+            connectedList.add(TileState(true))
         }
 
         while (connectedList.size <= column * row) {
-            connectedList.add(TileLogic(false))
+            connectedList.add(TileState(false))
         }
 
         connectedList.shuffle(Random(seed))
@@ -126,7 +96,9 @@ class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
     }
 
     fun openTile(x: Int, y: Int) {
-        map[x][y].isOpened = true
-        map.openAround(x, y)
+        map[x][y].isOpened.value = true
+        if (map[x][y].numOfAroundMines == 0) {
+            map.openAround(x, y)
+        }
     }
 }

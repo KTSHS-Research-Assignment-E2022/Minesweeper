@@ -1,7 +1,6 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
@@ -23,25 +22,21 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
     }
 
     @Composable
-    private fun TileRow(row: List<TileLogic>, numOfColumn: Int) {
+    private fun TileRow(row: List<TileState>, numOfColumn: Int) {
         for (i in 0 until column) {
             Tile(row[i], i, numOfColumn)
         }
     }
 
     @Composable
-    private fun Tile(tileLogic: TileLogic, row: Int, column: Int) {
-        val isOpened = mutableStateOf(tileLogic.isOpened)
-        val isFlagged = mutableStateOf(tileLogic.isFlagged)
-        val text = mutableStateOf("")
-
+    private fun Tile(tileLogic: TileState, row: Int, column: Int) {
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
                 backgroundColor(
                     when {
-                        isOpened.value -> if(tileLogic.isMine) Color.red else Color.green
-                        isFlagged.value -> Color.blue
+                        tileLogic.isOpened.value -> if (tileLogic.isMine) Color.red else Color.green
+                        tileLogic.isFlagged.value -> Color.blue
                         else -> Color.brown
                     }
                 )
@@ -50,30 +45,23 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
-                if (!isOpened.value) {
-                    isFlagged.value = !isFlagged.value
+                if (!tileLogic.isOpened.value) {
+                    tileLogic.isFlagged.value = !tileLogic.isFlagged.value
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
-            if (tileLogic.isMine) {
-                // 地雷時の挙動
-                classes("mine")
-                onClick {
-                    text.value = "💣"
-                }
-            } else {
-                classes(tileLogic.numOfAroundMines.toString())
-                // ただのマスの挙動
-                onClick {
-                    text.value = tileLogic.numOfAroundMines.toString()
-                }
-            }
             onClick {
-                isOpened.value = true
+                logic.openTile(column, row)
             }
         }) {
-            Text(text.value)
+            Text(
+                if (tileLogic.isOpened.value) {
+                    if (tileLogic.isMine) "💣" else tileLogic.numOfAroundMines.toString()
+                } else {
+                    ""
+                }
+            )
         }
 
     }
