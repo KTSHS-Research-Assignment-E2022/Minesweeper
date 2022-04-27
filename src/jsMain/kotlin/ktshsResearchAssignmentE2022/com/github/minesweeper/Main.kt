@@ -10,7 +10,7 @@ import org.jetbrains.compose.web.css.Style
 import org.jetbrains.compose.web.renderComposable
 import kotlin.random.Random
 
-val mineSweeper = mutableStateOf(MineSweeper(9, 9, 9, Random.nextInt()))
+val mineSweeper = mutableStateOf(MineSweeper(9, 9, 12, Random.nextInt()))
 fun main() {
     renderComposable("root") {
         Style(AppStyleSheet)

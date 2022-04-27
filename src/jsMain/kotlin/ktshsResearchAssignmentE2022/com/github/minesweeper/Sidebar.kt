@@ -51,7 +51,7 @@ private fun PhoneSidebar() {
 private fun Settings() {
     val column = mutableStateOf(9)
     val row = mutableStateOf(9)
-    val ratio = mutableStateOf(12)
+    val numOfMines = mutableStateOf(12)
     val seed = mutableStateOf(Random.nextInt())
 
     Div({
@@ -72,7 +72,7 @@ private fun Settings() {
                     mineSweeper.value =
                         MineSweeper(
                             column.value, row.value,
-                            (column.value.toDouble() * row.value.toDouble() * (ratio.value.toDouble() / 100.0)).toInt(),
+                            numOfMines.value,
                             seed.value
                         )
                 }
@@ -112,21 +112,21 @@ private fun Settings() {
         }
 
         Div {
-            P { Text("爆弾の割合: ${ratio.value}% (${(column.value.toDouble() * row.value.toDouble() * (ratio.value.toDouble() / 100.0)).toInt()}個)") }
+            P { Text("爆弾の個数: ${numOfMines.value}個") }
             Input(InputType.Range) {
                 style {
                     max("100")
                     min("0")
                     width(90.percent)
                 }
-                value(ratio.value)
+                value(numOfMines.value)
                 onInput {
-                    ratio.value = it.value as Int
+                    numOfMines.value = it.value as Int
                 }
             }
         }
 
-        Div{}
-        P { Text("シード値: ${seed.value}")}
+        Div {}
+        P { Text("シード値: ${seed.value}") }
     }
 }
