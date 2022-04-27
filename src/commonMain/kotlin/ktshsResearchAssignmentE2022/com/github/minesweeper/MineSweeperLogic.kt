@@ -40,33 +40,49 @@ private fun List<List<TileState>>.incAround(x: Int, y: Int) {
 }
 
 private fun List<List<TileState>>.openAround(x: Int, y: Int) {
+    // 左上
+    if (x != 0 && y != 0 && !this[x - 1][y - 1].isOpened.value) {
+        this[x - 1][y - 1].isOpened.value = true
+    }
     // 真上
-    if (x != 0) {
-        if (this[x - 1][y].numOfAroundMines == 0 && !this[x - 1][y].isOpened.value) {
-            this[x - 1][y].isOpened.value = true
+    if (x != 0 && !this[x - 1][y].isOpened.value) {
+        this[x - 1][y].isOpened.value = true
+        if (this[x - 1][y].numOfAroundMines == 0) {
             this.openAround(x - 1, y)
         }
     }
+    // 右上
+    if (x != 0 && this[x - 1].size > y + 1 && !this[x - 1][y + 1].isOpened.value) {
+        this[x - 1][y + 1].isOpened.value = true
+    }
     // 左
-    if (y != 0) {
-        if (this[x][y - 1].numOfAroundMines == 0 && !this[x][y - 1].isOpened.value) {
-            this[x][y - 1].isOpened.value = true
+    if (y != 0 && !this[x][y - 1].isOpened.value) {
+        this[x][y - 1].isOpened.value = true
+        if (this[x][y - 1].numOfAroundMines == 0) {
             this.openAround(x, y - 1)
         }
     }
     // 右
-    if (this[x].size > y + 1) {
-        if (this[x][y + 1].numOfAroundMines == 0 && !this[x][y + 1].isOpened.value) {
-            this[x][y + 1].isOpened.value = true
+    if (this[x].size > y + 1 && !this[x][y + 1].isOpened.value) {
+        this[x][y + 1].isOpened.value = true
+        if (this[x][y + 1].numOfAroundMines == 0) {
             this.openAround(x, y + 1)
         }
     }
+    // 左下
+    if (this.size > x + 1 && y != 0 && !this[x + 1][y - 1].isOpened.value) {
+        this[x + 1][y - 1].isOpened.value = true
+    }
     // 真下
-    if (this.size > x + 1) {
-        if (this[x + 1][y].numOfAroundMines == 0 && !this[x + 1][y].isOpened.value) {
-            this[x + 1][y].isOpened.value = true
+    if (this.size > x + 1 && !this[x + 1][y].isOpened.value) {
+        this[x + 1][y].isOpened.value = true
+        if (this[x + 1][y].numOfAroundMines == 0) {
             this.openAround(x + 1, y)
         }
+    }
+    // 右下
+    if (this.size > x + 1 && this[x + 1].size > y + 1 && !this[x + 1][y + 1].isOpened.value) {
+        this[x + 1][y + 1].isOpened.value = true
     }
 }
 
