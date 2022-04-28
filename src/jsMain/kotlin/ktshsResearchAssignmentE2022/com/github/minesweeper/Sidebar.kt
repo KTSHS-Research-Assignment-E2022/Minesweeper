@@ -113,7 +113,7 @@ private fun Settings() {
             P { Text("爆弾の個数: ${numOfMines}個") }
             Input(InputType.Range) {
                 style {
-                    max("100")
+                    max((column*row).toString())
                     min("0")
                     width(90.percent)
                 }
