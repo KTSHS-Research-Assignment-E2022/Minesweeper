@@ -12,6 +12,8 @@ import org.jetbrains.compose.web.css.backgroundColor
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.*
+import kotlin.Int.Companion.MAX_VALUE
+import kotlin.Int.Companion.MIN_VALUE
 import kotlin.random.Random
 
 @Composable
@@ -68,7 +70,6 @@ private fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    seed.value = Random.nextInt()
                     mineSweeper.value =
                         MineSweeper(
                             column.value, row.value,
@@ -126,7 +127,33 @@ private fun Settings() {
             }
         }
 
-        Div {}
-        P { Text("シード値: ${seed.value}") }
+        Div {
+            Text("シード値")
+            Button({
+                style {
+                    width(50.percent)
+                    backgroundColor(Color.whitesmoke)
+                }
+                onClick {
+                    seed.value = Random.nextInt()
+                }
+            }) {
+                Text("ランダムな値")
+            }
+            Input(InputType.Number) {
+                style {
+                    width(90.percent)
+                }
+                value(seed.value)
+                onInput {
+                    seed.value = when {
+                        // XXX_VALUEはIntの最大値と最小値を保持する定数
+                        it.value as Int >= MAX_VALUE -> MAX_VALUE
+                        it.value as Int <= MIN_VALUE -> MIN_VALUE
+                        else -> it.value as Int
+                    }
+                }
+            }
+        }
     }
 }
