@@ -1,7 +1,9 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.PhoneSidebarStyleSheet
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
@@ -51,10 +53,10 @@ private fun PhoneSidebar() {
 
 @Composable
 private fun Settings() {
-    val column = mutableStateOf(9)
-    val row = mutableStateOf(9)
-    val numOfMines = mutableStateOf(12)
-    val seed = mutableStateOf(Random.nextInt())
+    var column by mutableStateOf(9)
+    var row by mutableStateOf(9)
+    var numOfMines by mutableStateOf(12)
+    var seed by mutableStateOf(Random.nextInt())
 
     Div({
         classes(SidebarStyleSheet.settingStyle)
@@ -70,12 +72,7 @@ private fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    mineSweeper.value =
-                        MineSweeper(
-                            column.value, row.value,
-                            numOfMines.value,
-                            seed.value
-                        )
+                    mineSweeper = MineSweeper(column, row, numOfMines, seed)
                 }
             }) {
                 Text("再生成")
@@ -83,46 +80,48 @@ private fun Settings() {
         }
 
         Div {
-            P { Text("縦の幅: ${column.value}") }
+            P { Text("縦の幅: $column") }
             Input(InputType.Range) {
                 style {
                     max("20")
                     min("2")
                     width(90.percent)
                 }
-                value(column.value)
+                value(column)
                 onInput {
-                    column.value = it.value as Int
+                    column = it.value as Int
+                    if (numOfMines > column * row) numOfMines = column * row
                 }
             }
         }
 
         Div {
-            P { Text("横の幅: ${row.value}") }
+            P { Text("横の幅: $row") }
             Input(InputType.Range) {
                 style {
                     max("20")
                     min("2")
                     width(90.percent)
                 }
-                value(row.value)
+                value(row)
                 onInput {
-                    row.value = it.value as Int
+                    row = it.value as Int
+                    if (numOfMines > column * row) numOfMines = column * row
                 }
             }
         }
 
         Div {
-            P { Text("爆弾の個数: ${numOfMines.value}個") }
+            P { Text("爆弾の個数: ${numOfMines}個") }
             Input(InputType.Range) {
                 style {
-                    max("100")
+                    max((column * row).toString())
                     min("0")
                     width(90.percent)
                 }
-                value(numOfMines.value)
+                value(numOfMines)
                 onInput {
-                    numOfMines.value = it.value as Int
+                    numOfMines = it.value as Int
                 }
             }
         }
@@ -135,7 +134,7 @@ private fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    seed.value = Random.nextInt()
+                    seed = Random.nextInt()
                 }
             }) {
                 Text("ランダムな値")
@@ -144,9 +143,9 @@ private fun Settings() {
                 style {
                     width(90.percent)
                 }
-                value(seed.value)
+                value(seed)
                 onInput {
-                    seed.value = when {
+                    seed = when {
                         // XXX_VALUEはIntの最大値と最小値を保持する定数
                         it.value as Int >= MAX_VALUE -> MAX_VALUE
                         it.value as Int <= MIN_VALUE -> MIN_VALUE

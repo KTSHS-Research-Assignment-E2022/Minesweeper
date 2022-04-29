@@ -35,8 +35,8 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             style {
                 backgroundColor(
                     when {
-                        tileLogic.isOpened.value -> if (tileLogic.isMine) Color.red else Color.green
-                        tileLogic.isFlagged.value -> Color.blue
+                        tileLogic.isOpened -> if (tileLogic.isMine) Color.red else Color.green
+                        tileLogic.isFlagged -> Color.blue
                         else -> Color.brown
                     }
                 )
@@ -45,8 +45,8 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
-                if (!tileLogic.isOpened.value) {
-                    tileLogic.isFlagged.value = !tileLogic.isFlagged.value
+                if (!tileLogic.isOpened) {
+                    tileLogic.isFlagged = !tileLogic.isFlagged
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
@@ -56,7 +56,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             }
         }) {
             Text(
-                if (tileLogic.isOpened.value) {
+                if (tileLogic.isOpened) {
                     if (tileLogic.isMine) "💣" else tileLogic.numOfAroundMines.toString()
                 } else {
                     ""
