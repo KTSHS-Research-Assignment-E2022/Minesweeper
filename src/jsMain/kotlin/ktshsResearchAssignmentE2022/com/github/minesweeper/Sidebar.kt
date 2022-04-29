@@ -90,6 +90,7 @@ private fun Settings() {
                 value(column)
                 onInput {
                     column = it.value as Int
+                    if (numOfMines > column * row) numOfMines = column * row
                 }
             }
         }
@@ -105,6 +106,7 @@ private fun Settings() {
                 value(row)
                 onInput {
                     row = it.value as Int
+                    if (numOfMines > column * row) numOfMines = column * row
                 }
             }
         }
@@ -113,7 +115,7 @@ private fun Settings() {
             P { Text("爆弾の個数: ${numOfMines}個") }
             Input(InputType.Range) {
                 style {
-                    max((column*row).toString())
+                    max((column * row).toString())
                     min("0")
                     width(90.percent)
                 }
