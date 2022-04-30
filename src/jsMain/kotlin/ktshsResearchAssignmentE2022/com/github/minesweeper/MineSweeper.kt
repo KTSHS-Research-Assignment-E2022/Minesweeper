@@ -7,7 +7,7 @@ import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
 class MineSweeper(private val column: Int, private val row: Int, ratio: Int, seed: Int) {
-    private val logic = MineSweeperLogic(column, row, ratio, seed)
+    val logic = MineSweeperLogic(column, row, ratio, seed)
 
     private val map = logic.map
 
@@ -29,35 +29,36 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
     }
 
     @Composable
-    private fun Tile(tileLogic: TileState, row: Int, column: Int) {
+    private fun Tile(tileState: TileState, row: Int, column: Int) {
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
                 backgroundColor(
                     when {
-                        tileLogic.isOpened -> if (tileLogic.isMine) Color.red else Color.green
-                        tileLogic.isFlagged -> Color.blue
+                        tileState.isOpened -> if (tileState.isMine) Color.red else Color.green
+                        tileState.isFlagged -> Color.blue
                         else -> Color.brown
                     }
                 )
-                if (tileLogic.isMine) fontSize(5.vmin) else fontSize(3.vmin)
+                if (tileState.isMine) fontSize(5.vmin) else fontSize(3.vmin)
             }
             id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
-                if (!tileLogic.isOpened) {
-                    tileLogic.isFlagged = !tileLogic.isFlagged
+                if (!tileState.isOpened) {
+                    tileState.isFlagged = !tileState.isFlagged
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
             onClick {
                 logic.openTile(column, row)
+                if(tileState.isMine) logic.isGameOver = true
             }
         }) {
             Text(
-                if (tileLogic.isOpened) {
-                    if (tileLogic.isMine) "💣" else tileLogic.numOfAroundMines.toString()
+                if (tileState.isOpened) {
+                    if (tileState.isMine) "💣" else tileState.numOfAroundMines.toString()
                 } else {
                     ""
                 }
