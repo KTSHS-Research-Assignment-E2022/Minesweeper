@@ -1,9 +1,6 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.max
@@ -17,10 +14,10 @@ import kotlin.random.Random
 
 @Composable
 fun Settings() {
-    var column by mutableStateOf(9)
-    var row by mutableStateOf(9)
-    var numOfMines by mutableStateOf(12)
-    var seed by mutableStateOf(Random.nextInt())
+    var column = SettingState.column
+    var row = SettingState.row
+    var numOfMines = SettingState.numOfMines
+    var seed = SettingState.seed
 
     Div({
         classes(SidebarStyleSheet.settingStyle)
