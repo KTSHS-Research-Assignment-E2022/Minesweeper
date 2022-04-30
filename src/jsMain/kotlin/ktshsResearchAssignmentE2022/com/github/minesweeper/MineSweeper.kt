@@ -1,29 +1,41 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
-class MineSweeper(private val column: Int, private val row: Int, ratio: Int, seed: Int) {
-    val logic = MineSweeperLogic(column, row, ratio, seed)
+object MineSweeper {
+    var logic by mutableStateOf(
+        MineSweeperLogic(
+            SettingState.column,
+            SettingState.row,
+            SettingState.numOfMines,
+            SettingState.seed
+        )
+    )
 
-    private val map = logic.map
+    fun regenerate() {
+        logic = MineSweeperLogic(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+    }
 
     @Composable
     fun show() {
         MinesweeperLayout {
-            for (i in 0 until row) {
+            for (i in 0 until logic.row) {
                 // 配列は0から!!!!!
-                TileRow(map[i], i)
+                TileRow(logic.map[i], i)
             }
         }
     }
 
     @Composable
     private fun TileRow(row: List<TileState>, numOfColumn: Int) {
-        for (i in 0 until column) {
+        for (i in 0 until logic.column) {
             Tile(row[i], i, numOfColumn)
         }
     }
@@ -53,7 +65,7 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             }
             onClick {
                 logic.openTile(column, row)
-                if(tileState.isMine) logic.isGameOver = true
+                if (tileState.isMine) logic.isGameOver = true
             }
         }) {
             Text(

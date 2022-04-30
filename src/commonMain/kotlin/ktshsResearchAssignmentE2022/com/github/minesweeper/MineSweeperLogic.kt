@@ -89,13 +89,13 @@ private fun List<List<TileState>>.openAround(x: Int, y: Int) {
     }
 }
 
-class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
+class MineSweeperLogic(val column: Int, val row: Int, val numOfMines: Int, val seed: Int) {
     val map: List<List<TileState>>
     var isGameOver by mutableStateOf(false)
 
     init {
         val connectedList = mutableListOf<TileState>()
-        for (i in 1..ratio) {
+        for (i in 1..numOfMines) {
             connectedList.add(TileState(true))
         }
 

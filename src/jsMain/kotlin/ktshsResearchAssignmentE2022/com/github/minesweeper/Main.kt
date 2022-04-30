@@ -1,15 +1,11 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.*
 import org.jetbrains.compose.web.css.Style
 import org.jetbrains.compose.web.renderComposable
-import kotlin.random.Random
 
-var mineSweeper by mutableStateOf(MineSweeper(9, 9, 12, Random.nextInt()))
 fun main() {
     renderComposable("root") {
         Style(AppStyleSheet)
@@ -27,10 +23,10 @@ fun main() {
         }
 
         MainLayout {
-            if(mineSweeper.logic.isGameOver) ScoreBoard()
+            if(MineSweeper.logic.isGameOver) ScoreBoard()
             Sidebar(outerWidth.value)
             CenterLayout {
-                mineSweeper.show()
+                MineSweeper.show()
             }
         }
     }

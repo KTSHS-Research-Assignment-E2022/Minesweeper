@@ -11,12 +11,11 @@ fun ScoreBoard() {
         classes(ScoreBoardStyleSheet.ScoreBoardStyle)
     }) {
         P { Text("スコア") }
-        if (mineSweeper.logic.isGameOver) Result("Game Over") else Result("スコアだす")
+        if (MineSweeper.logic.isGameOver) Result("Game Over") else Result("スコアだす")
         Button({
             onClick {
                 SettingState.seed = Random.nextInt()
-                mineSweeper =
-                    MineSweeper(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+                MineSweeper.regenerate()
             }
         }) {
             Text("もう一度プレイする")

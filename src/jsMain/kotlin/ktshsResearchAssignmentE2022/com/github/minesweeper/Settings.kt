@@ -28,8 +28,7 @@ fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    mineSweeper =
-                        MineSweeper(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+                    MineSweeper.regenerate()
                 }
             }) {
                 Text("再生成")
