@@ -2,10 +2,8 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ScoreBoardStyleSheet
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.H3
-import org.jetbrains.compose.web.dom.P
-import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.dom.*
+import kotlin.random.Random
 
 @Composable
 fun ScoreBoard() {
@@ -14,6 +12,15 @@ fun ScoreBoard() {
     }) {
         P { Text("スコア") }
         if (mineSweeper.logic.isGameOver) Result("Game Over") else Result("スコアだす")
+        Button({
+            onClick {
+                SettingState.seed = Random.nextInt()
+                mineSweeper =
+                    MineSweeper(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+            }
+        }) {
+            Text("もう一度プレイする")
+        }
     }
 }
 
