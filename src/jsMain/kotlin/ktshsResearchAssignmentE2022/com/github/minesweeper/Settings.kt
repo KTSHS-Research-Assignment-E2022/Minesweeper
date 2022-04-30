@@ -14,11 +14,6 @@ import kotlin.random.Random
 
 @Composable
 fun Settings() {
-    var column = SettingState.column
-    var row = SettingState.row
-    var numOfMines = SettingState.numOfMines
-    var seed = SettingState.seed
-
     Div({
         classes(SidebarStyleSheet.settingStyle)
     }) {
@@ -33,7 +28,8 @@ fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    mineSweeper = MineSweeper(column, row, numOfMines, seed)
+                    mineSweeper =
+                        MineSweeper(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
                 }
             }) {
                 Text("再生成")
@@ -41,48 +37,50 @@ fun Settings() {
         }
 
         Div {
-            P { Text("縦の幅: $column") }
+            P { Text("縦の幅: ${SettingState.column}") }
             Input(InputType.Range) {
                 style {
                     max("20")
                     min("2")
                     width(90.percent)
                 }
-                value(column)
+                value(SettingState.column)
                 onInput {
-                    column = it.value as Int
-                    if (numOfMines > column * row) numOfMines = column * row
+                    SettingState.column = it.value as Int
+                    if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
+                        SettingState.column * SettingState.row
                 }
             }
         }
 
         Div {
-            P { Text("横の幅: $row") }
+            P { Text("横の幅: ${SettingState.row}") }
             Input(InputType.Range) {
                 style {
                     max("20")
                     min("2")
                     width(90.percent)
                 }
-                value(row)
+                value(SettingState.row)
                 onInput {
-                    row = it.value as Int
-                    if (numOfMines > column * row) numOfMines = column * row
+                    SettingState.row = it.value as Int
+                    if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
+                        SettingState.column * SettingState.row
                 }
             }
         }
 
         Div {
-            P { Text("爆弾の個数: ${numOfMines}個") }
+            P { Text("爆弾の個数: ${SettingState.numOfMines}個") }
             Input(InputType.Range) {
                 style {
-                    max((column * row).toString())
+                    max((SettingState.column * SettingState.row).toString())
                     min("0")
                     width(90.percent)
                 }
-                value(numOfMines)
+                value(SettingState.numOfMines)
                 onInput {
-                    numOfMines = it.value as Int
+                    SettingState.numOfMines = it.value as Int
                 }
             }
         }
@@ -95,7 +93,7 @@ fun Settings() {
                     backgroundColor(Color.whitesmoke)
                 }
                 onClick {
-                    seed = Random.nextInt()
+                    SettingState.seed = Random.nextInt()
                 }
             }) {
                 Text("ランダムな値")
@@ -104,9 +102,9 @@ fun Settings() {
                 style {
                     width(90.percent)
                 }
-                value(seed)
+                value(SettingState.seed)
                 onInput {
-                    seed = when {
+                    SettingState.seed = when {
                         // XXX_VALUEはIntの最大値と最小値を保持する定数
                         it.value as Int >= Int.MAX_VALUE -> Int.MAX_VALUE
                         it.value as Int <= Int.MIN_VALUE -> Int.MIN_VALUE
