@@ -1,5 +1,8 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import kotlin.random.Random
 
 private fun List<List<TileState>>.incAround(x: Int, y: Int) {
@@ -88,6 +91,7 @@ private fun List<List<TileState>>.openAround(x: Int, y: Int) {
 
 class MineSweeperLogic(column: Int, row: Int, ratio: Int, seed: Int) {
     val map: List<List<TileState>>
+    var isGameOver by mutableStateOf(false)
 
     init {
         val connectedList = mutableListOf<TileState>()
