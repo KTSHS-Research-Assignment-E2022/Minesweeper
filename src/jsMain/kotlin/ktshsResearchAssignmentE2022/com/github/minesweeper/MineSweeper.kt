@@ -54,7 +54,6 @@ object MineSweeper {
                 )
                 if (tileState.isMine) fontSize(5.vmin) else fontSize(3.vmin)
             }
-            id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
                 if (!tileState.isOpened) {
