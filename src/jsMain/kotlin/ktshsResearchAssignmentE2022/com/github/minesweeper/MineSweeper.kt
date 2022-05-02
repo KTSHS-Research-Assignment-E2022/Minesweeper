@@ -47,9 +47,17 @@ object MineSweeper {
             style {
                 backgroundColor(
                     when {
-                        tileState.isOpened -> if (tileState.isMine) Color.red else Color.green
-                        tileState.isFlagged -> Color.blue
-                        else -> Color.brown
+                        tileState.isOpened -> if (tileState.isMine) Color.crimson else
+                            when (tileState.numOfAroundMines) {
+                                // 色は安全→危険で　青→黄→赤
+                                0 -> Color.paleturquoise
+                                1 -> Color.cornflowerblue
+                                2 -> Color.khaki
+                                3 -> Color.lightcoral
+                                else -> Color.mediumorchid
+                            }
+                        tileState.isFlagged -> Color.mediumseagreen
+                        else -> Color.whitesmoke
                     }
                 )
                 if (tileState.isMine) fontSize(5.vmin) else fontSize(3.vmin)
@@ -63,7 +71,7 @@ object MineSweeper {
                 it.nativeEvent.preventDefault()
             }
             onClick {
-                if(tileState.isFlagged) return@onClick
+                if (tileState.isFlagged) return@onClick
                 logic.openTile(column, row)
                 if (tileState.isMine) logic.isGameOver = true
             }
