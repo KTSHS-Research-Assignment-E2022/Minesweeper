@@ -63,6 +63,7 @@ object MineSweeper {
                 it.nativeEvent.preventDefault()
             }
             onClick {
+                if(tileState.isFlagged) return@onClick
                 logic.openTile(column, row)
                 if (tileState.isMine) logic.isGameOver = true
             }
