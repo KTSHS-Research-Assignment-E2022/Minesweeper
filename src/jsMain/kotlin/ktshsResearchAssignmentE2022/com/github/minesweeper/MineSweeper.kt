@@ -68,7 +68,7 @@ object MineSweeper {
             }
         }) {
             Text(
-                if (tileState.isOpened) {
+                if (tileState.isOpened && tileState.numOfAroundMines != 0) {
                     if (tileState.isMine) "💣" else tileState.numOfAroundMines.toString()
                 } else {
                     ""
