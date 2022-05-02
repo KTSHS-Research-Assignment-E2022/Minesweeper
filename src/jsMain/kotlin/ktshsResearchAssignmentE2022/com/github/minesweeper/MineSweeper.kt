@@ -60,7 +60,12 @@ object MineSweeper {
                         else -> Color.whitesmoke
                     }
                 )
-                if (tileState.isMine) fontSize(5.vmin) else fontSize(3.vmin)
+                fontSize(
+                    if (tileState.isOpened) {
+                        if (tileState.isMine) 5.vmin else 3.vmin
+                    } else 3.vmin
+                )
+
             }
             onContextMenu {
                 //右クリ時の挙動
@@ -79,6 +84,8 @@ object MineSweeper {
             Text(
                 if (tileState.isOpened && tileState.numOfAroundMines != 0) {
                     if (tileState.isMine) "💣" else tileState.numOfAroundMines.toString()
+                } else if (tileState.isFlagged) {
+                    "🚩"
                 } else {
                     ""
                 }
