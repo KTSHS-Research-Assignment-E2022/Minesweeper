@@ -22,8 +22,8 @@ fun main() {
             it
         }
 
+        if (MineSweeper.logic.isGameOver) ScoreBoardContainerLayout { ScoreBoard() }
         MainLayout {
-            if(MineSweeper.logic.isGameOver) ScoreBoard()
             Sidebar(outerWidth.value)
             CenterLayout {
                 MineSweeper.show()
