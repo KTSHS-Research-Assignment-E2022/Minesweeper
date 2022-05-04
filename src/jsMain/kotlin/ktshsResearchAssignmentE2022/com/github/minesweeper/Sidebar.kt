@@ -25,11 +25,11 @@ private fun PcSidebar() {
         Style({
             classes(SidebarStyleSheet.elementStyle)
         }) {
-            H1 { Text(if (!MineSweeper.isDevMode) "まいんすいーぱー" else "Dev Mode") }
+            H1 { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
             Settings()
             Button({
                 onClick {
-                    MineSweeper.isDevMode = !MineSweeper.isDevMode
+                    MineSweeper.logic.isDevMode = !MineSweeper.logic.isDevMode
                 }
             }) {
                 H3({

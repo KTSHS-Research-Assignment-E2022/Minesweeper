@@ -92,6 +92,7 @@ private fun List<List<TileState>>.openAround(x: Int, y: Int) {
 class MineSweeperLogic(val column: Int, val row: Int, numOfMines: Int, seed: Int) {
     val map: List<List<TileState>>
     var isGameOver by mutableStateOf(false)
+    var isDevMode by mutableStateOf(false)
 
     init {
         val connectedList = mutableListOf<TileState>()
@@ -117,6 +118,7 @@ class MineSweeperLogic(val column: Int, val row: Int, numOfMines: Int, seed: Int
 
     fun openTile(x: Int, y: Int) {
         map[x][y].isOpened = true
+        if (map[x][y].isMine && !isDevMode) isGameOver = true
         if (map[x][y].numOfAroundMines == 0) {
             map.openAround(x, y)
         }
