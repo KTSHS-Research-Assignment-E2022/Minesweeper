@@ -5,11 +5,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
-import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Color
+import org.jetbrains.compose.web.css.backgroundColor
+import org.jetbrains.compose.web.css.fontSize
+import org.jetbrains.compose.web.css.vmin
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
 object MineSweeper {
+    var isDevMode by mutableStateOf(false)
     var logic by mutableStateOf(
         MineSweeperLogic(
             SettingState.column,
@@ -78,7 +82,7 @@ object MineSweeper {
             onClick {
                 if (tileState.isFlagged) return@onClick
                 logic.openTile(column, row)
-                if (tileState.isMine) logic.isGameOver = true
+                if (tileState.isMine && !isDevMode) logic.isGameOver = true
             }
         }) {
             Text(
