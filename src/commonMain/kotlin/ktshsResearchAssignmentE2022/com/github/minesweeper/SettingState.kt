@@ -10,4 +10,10 @@ object SettingState {
     var row by mutableStateOf(9)
     var numOfMines by mutableStateOf(12)
     var seed by mutableStateOf(Random.nextInt())
+
+    fun reset() {
+        column = 9
+        row = 9
+        numOfMines = 12
+    }
 }

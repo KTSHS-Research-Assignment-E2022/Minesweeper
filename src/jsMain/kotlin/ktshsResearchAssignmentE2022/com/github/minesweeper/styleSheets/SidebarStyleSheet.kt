@@ -13,7 +13,7 @@ object SidebarStyleSheet : StyleSheet() {
         justifyContent(JustifyContent.SpaceBetween)
 
         // 自分自身へのプロパティ
-        backgroundColor(Color.bisque)
+        backgroundColor(Color.white)
         width(10.vw)
         height(100.vh)
         borderRadius(0.1.px, 20.px, 20.px, 0.1.px)
@@ -24,12 +24,20 @@ object SidebarStyleSheet : StyleSheet() {
         width(100.percent)
     }
 
-    val settingStyle by style {
+    val settingContainerStyle by style {
         display(DisplayStyle.Flex)
         flexDirection(FlexDirection.Column)
         justifyContent(JustifyContent.SpaceBetween)
 
-        height(30.vh)
-        backgroundColor(Color.gray)
+        height(50.vh)
+        backgroundColor(Color.white)
+    }
+
+    val settingElementStyle by style {
+        width(100.percent)
+        display(DisplayStyle.Flex)
+        flexWrap(FlexWrap.Wrap)
+        justifyContent(JustifyContent.Center)
+        alignItems(AlignItems.Center)
     }
 }
