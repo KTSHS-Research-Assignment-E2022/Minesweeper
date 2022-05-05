@@ -3,6 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.PhoneSidebarStyleSheet
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
+import org.jetbrains.compose.web.css.textAlign
 import org.jetbrains.compose.web.dom.*
 
 @Composable
@@ -24,9 +25,19 @@ private fun PcSidebar() {
         Style({
             classes(SidebarStyleSheet.elementStyle)
         }) {
-            H1 { Text("まいんすいーぱー") }
+            H1 { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
             Settings()
-            H3 { Text("Made by 神奈川工業高校電気科") }
+            Button({
+                onClick {
+                    MineSweeper.logic.isDevMode = !MineSweeper.logic.isDevMode
+                }
+            }) {
+                H3({
+                    style {
+                        textAlign("left")
+                    }
+                }) { Text("Made by 神奈川工業高校電気科") }
+            }
         }
     }
 }

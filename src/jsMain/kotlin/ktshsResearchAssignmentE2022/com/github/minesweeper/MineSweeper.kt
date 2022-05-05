@@ -1,29 +1,44 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
-import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Color
+import org.jetbrains.compose.web.css.backgroundColor
+import org.jetbrains.compose.web.css.fontSize
+import org.jetbrains.compose.web.css.vmin
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
-class MineSweeper(private val column: Int, private val row: Int, ratio: Int, seed: Int) {
-    val logic = MineSweeperLogic(column, row, ratio, seed)
+object MineSweeper {
+    var logic by mutableStateOf(
+        MineSweeperLogic(
+            SettingState.column,
+            SettingState.row,
+            SettingState.numOfMines,
+            SettingState.seed
+        )
+    )
 
-    private val map = logic.map
+    fun regenerate() {
+        logic = MineSweeperLogic(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+    }
 
     @Composable
     fun show() {
         MinesweeperLayout {
-            for (i in 0 until row) {
+            for (i in 0 until logic.row) {
                 // 配列は0から!!!!!
-                TileRow(map[i], i)
+                TileRow(logic.map[i], i)
             }
         }
     }
 
     @Composable
     private fun TileRow(row: List<TileState>, numOfColumn: Int) {
-        for (i in 0 until column) {
+        for (i in 0 until logic.column) {
             Tile(row[i], i, numOfColumn)
         }
     }
@@ -35,30 +50,44 @@ class MineSweeper(private val column: Int, private val row: Int, ratio: Int, see
             style {
                 backgroundColor(
                     when {
-                        tileState.isOpened -> if (tileState.isMine) Color.red else Color.green
-                        tileState.isFlagged -> Color.blue
-                        else -> Color.brown
+                        tileState.isOpened -> if (tileState.isMine) Color.crimson else
+                            when (tileState.numOfAroundMines) {
+                                // 色は安全→危険で　青→黄→赤
+                                0 -> Color.paleturquoise
+                                1 -> Color.cornflowerblue
+                                2 -> Color.khaki
+                                3 -> Color.lightcoral
+                                else -> Color.mediumorchid
+                            }
+                        tileState.isFlagged -> Color.mediumseagreen
+                        else -> Color.whitesmoke
                     }
                 )
-                if (tileState.isMine) fontSize(5.vmin) else fontSize(3.vmin)
+                fontSize(
+                    if (tileState.isOpened) {
+                        if (tileState.isMine) 5.vmin else 3.vmin
+                    } else 3.vmin
+                )
+
             }
-            id("$row-$column")
             onContextMenu {
                 //右クリ時の挙動
                 if (!tileState.isOpened) {
-                    tileState.isFlagged = !tileState.isFlagged
+                    logic.toggleTileFlag(column,row)
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
             onClick {
-                logic.openTile(column, row)
-                if(tileState.isMine) logic.isGameOver = true
+                if (tileState.isFlagged) return@onClick
+                logic.openTileWithAround(column, row)
             }
         }) {
             Text(
-                if (tileState.isOpened) {
+                if (tileState.isOpened && tileState.numOfAroundMines != 0) {
                     if (tileState.isMine) "💣" else tileState.numOfAroundMines.toString()
+                } else if (tileState.isFlagged) {
+                    "🚩"
                 } else {
                     ""
                 }
