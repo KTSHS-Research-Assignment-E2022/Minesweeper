@@ -42,7 +42,7 @@ private fun List<List<TileState>>.incAround(x: Int, y: Int) {
     }
 }
 
-class MineSweeperLogic(val column: Int, val row: Int, numOfMines: Int, seed: Int) {
+class MineSweeperLogic(val column: Int, val row: Int, val numOfMines: Int, val seed: Int) {
     val map: List<List<TileState>>
     private val flaggedTilesCoordinate = mutableSetOf<Pair<Int, Int>>()
     private val minesCoordinate: Set<Pair<Int, Int>>

@@ -57,7 +57,6 @@ fun SimpleSettings() {
 
         GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy) {
             SettingState.difficulty = Difficulty.Easy
-            SettingState.reset()
             MineSweeper.regenerate()
         }
 
@@ -88,15 +87,39 @@ fun AdvancedSettings() {
         H2 {
             Text("詳細設定")
         }
-        GrowingButton("再生成する", true) {
-            MineSweeper.regenerate()
+        GrowingButton(
+            "再生成する",
+            !(SettingState.column == MineSweeper.logic.column &&
+                    SettingState.row == MineSweeper.logic.row &&
+                    SettingState.numOfMines == MineSweeper.logic.numOfMines &&
+                    SettingState.seed == MineSweeper.logic.seed)
+        ) {
+            if (!(SettingState.column == MineSweeper.logic.column &&
+                        SettingState.row == MineSweeper.logic.row &&
+                        SettingState.numOfMines == MineSweeper.logic.numOfMines &&
+                        SettingState.seed == MineSweeper.logic.seed)
+            ) {
+                MineSweeper.regenerate()
+            }
         }
         GrowingButton(
-            "デフォルトにもどす",
-            !(SettingState.column == 9 && SettingState.row == 9 && SettingState.numOfMines == 12),
+            "現在の設定にもどす",
+            !(SettingState.column == MineSweeper.logic.column &&
+                    SettingState.row == MineSweeper.logic.row &&
+                    SettingState.numOfMines == MineSweeper.logic.numOfMines &&
+                    SettingState.seed == MineSweeper.logic.seed),
             10.percent
         ) {
-            SettingState.reset()
+            if (!(SettingState.column == MineSweeper.logic.column &&
+                        SettingState.row == MineSweeper.logic.row &&
+                        SettingState.numOfMines == MineSweeper.logic.numOfMines &&
+                        SettingState.seed == MineSweeper.logic.seed)
+            ) {
+                SettingState.column = MineSweeper.logic.column
+                SettingState.row = MineSweeper.logic.row
+                SettingState.numOfMines = MineSweeper.logic.numOfMines
+                SettingState.seed = MineSweeper.logic.seed
+            }
         }
 
         Div({
