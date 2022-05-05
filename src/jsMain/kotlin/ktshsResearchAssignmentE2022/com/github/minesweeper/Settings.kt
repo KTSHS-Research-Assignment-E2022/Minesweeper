@@ -31,7 +31,23 @@ fun Settings() {
             }
             onClick {
                 showAdvancedSettings = !showAdvancedSettings
-                if (showAdvancedSettings) SettingState.difficulty = Difficulty.Manual
+                if (showAdvancedSettings) SettingState.difficulty = Difficulty.Manual else {
+                    SettingState.difficulty = when {
+                        SettingState.column == Difficulty.Easy.column &&
+                                SettingState.row == Difficulty.Easy.row &&
+                                SettingState.numOfMines == Difficulty.Easy.numOfMines -> Difficulty.Easy
+
+                        SettingState.column == Difficulty.Normal.column &&
+                                SettingState.row == Difficulty.Normal.row &&
+                                SettingState.numOfMines == Difficulty.Normal.numOfMines -> Difficulty.Normal
+
+                        SettingState.column == Difficulty.Hard.column &&
+                                SettingState.row == Difficulty.Hard.row &&
+                                SettingState.numOfMines == Difficulty.Hard.numOfMines -> Difficulty.Hard
+
+                        else -> Difficulty.Manual
+                    }
+                }
             }
         }) {
             Text("詳細設定を${if (showAdvancedSettings) "とじる" else "ひらく"}")

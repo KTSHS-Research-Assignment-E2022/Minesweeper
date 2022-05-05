@@ -6,9 +6,9 @@ import androidx.compose.runtime.setValue
 import kotlin.random.Random
 
 object SettingState {
-    var column by mutableStateOf(9)
-    var row by mutableStateOf(9)
-    var numOfMines by mutableStateOf(12)
+    var column by mutableStateOf(Difficulty.Easy.column)
+    var row by mutableStateOf(Difficulty.Easy.row)
+    var numOfMines by mutableStateOf(Difficulty.Easy.numOfMines)
     var seed by mutableStateOf(Random.nextInt())
     var difficulty by mutableStateOf(Difficulty.Easy)
 
