@@ -1,59 +1,40 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
-import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ScoreBoardStyleSheet
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Button
+import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ResultStyleSheet
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.textAlign
+import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 import kotlin.random.Random
 
 @Composable
-fun ScoreBoard() {
+fun Result() {
     Div({
-        classes(ScoreBoardStyleSheet.ScoreBoardStyle)
+        classes(ResultStyleSheet.ResultStyle)
     }) {
         if (MineSweeper.logic.isGameOver)
-            Result("Game Over")
+            ResultTitle("Game Over")
         else if (MineSweeper.logic.isGameClear)
-            Result("Game Clear")
-        else Result("Error: Is dev mode?")
-        Button({
-            style {
-                height(20.percent)
-                width(70.percent)
-                borderRadius(2.vmin)
-                backgroundColor(Color.white)
-                outlineColor(Color.black)
-            }
-            onClick {
-                SettingState.seed = Random.nextInt()
-                MineSweeper.regenerate()
-            }
-        }) {
-            Text("新しい盤面でプレイする")
+            ResultTitle("Game Clear")
+        else ResultTitle("Error: Is dev mode?")
+
+        OnHoverGrowingButton("新しい盤面でプレイする") {
+            SettingState.seed = Random.nextInt()
+            MineSweeper.regenerate()
         }
 
-        Button({
-            style {
-                height(20.percent)
-                width(70.percent)
-                borderRadius(2.vmin)
-                backgroundColor(Color.white)
-                outlineColor(Color.black)
-            }
-            onClick {
-                MineSweeper.regenerate()
-            }
-        }) {
-            Text("もう一度この盤面をプレイする")
+        OnHoverGrowingButton("もう一度この盤面をプレイする") {
+            MineSweeper.regenerate()
         }
     }
 }
 
 @Composable
-fun Result(text: String) {
+fun ResultTitle(text: String) {
     Div({
         style {
             width(100.percent)

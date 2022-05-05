@@ -9,7 +9,7 @@ import org.jetbrains.compose.web.renderComposable
 fun main() {
     renderComposable("root") {
         Style(AppStyleSheet)
-        Style(ScoreBoardStyleSheet)
+        Style(ResultStyleSheet)
         Style(MinesweeperStyleSheet)
         Style(SidebarStyleSheet)
         Style(PhoneSidebarStyleSheet)
@@ -22,7 +22,7 @@ fun main() {
             it
         }
 
-        if (MineSweeper.logic.isGameOver || MineSweeper.logic.isGameClear) ScoreBoardContainerLayout { ScoreBoard() }
+        if (MineSweeper.logic.isGameOver || MineSweeper.logic.isGameClear) ScoreBoardContainerLayout { Result() }
         MainLayout {
             Sidebar(outerWidth.value)
             CenterLayout {

@@ -3,7 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.AppStyleSheet
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
-import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ScoreBoardStyleSheet
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ResultStyleSheet
 import org.jetbrains.compose.web.dom.Div
 
 @Composable
@@ -36,7 +36,7 @@ fun MinesweeperLayout(content: @Composable () -> Unit) {
 @Composable
 fun ScoreBoardContainerLayout(content: @Composable () -> Unit) {
     Div({
-        classes(ScoreBoardStyleSheet.ScoreBoardContainerStyle)
+        classes(ResultStyleSheet.ResultContainerStyle)
     }) {
         content()
     }
