@@ -29,7 +29,10 @@ fun Settings() {
                 width(100.percent)
                 backgroundColor(Color.white)
             }
-            onClick { showAdvancedSettings = !showAdvancedSettings }
+            onClick {
+                showAdvancedSettings = !showAdvancedSettings
+                if (showAdvancedSettings) SettingState.difficulty = Difficulty.Manual
+            }
         }) {
             Text("詳細設定を${if (showAdvancedSettings) "とじる" else "ひらく"}")
         }
@@ -38,7 +41,6 @@ fun Settings() {
 
 @Composable
 fun SimpleSettings() {
-    var difficulty by mutableStateOf(Difficulty.Easy)
     Div({
         style {
             height(100.percent)
@@ -53,26 +55,22 @@ fun SimpleSettings() {
             Text("むずかしさ")
         }
 
-        GrowingButton("かんたん", difficulty == Difficulty.Easy) {
-            difficulty = Difficulty.Easy
+        GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy) {
+            SettingState.difficulty = Difficulty.Easy
             SettingState.reset()
             MineSweeper.regenerate()
         }
 
-        GrowingButton("ふつう", difficulty == Difficulty.Normal) {
-            difficulty = Difficulty.Normal
+        GrowingButton("ふつう", SettingState.difficulty == Difficulty.Normal) {
+            SettingState.difficulty = Difficulty.Normal
             MineSweeper.regenerate()
         }
 
-        GrowingButton("むずかしい", difficulty == Difficulty.Hard) {
-            difficulty = Difficulty.Hard
+        GrowingButton("むずかしい", SettingState.difficulty == Difficulty.Hard) {
+            SettingState.difficulty = Difficulty.Hard
             MineSweeper.regenerate()
         }
     }
-}
-
-private enum class Difficulty {
-    Easy, Normal, Hard
 }
 
 @Composable
