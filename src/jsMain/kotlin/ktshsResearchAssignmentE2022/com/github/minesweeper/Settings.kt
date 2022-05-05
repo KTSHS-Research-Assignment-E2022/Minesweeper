@@ -56,17 +56,17 @@ fun SimpleSettings() {
         }
 
         GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy) {
-            SettingState.difficulty = Difficulty.Easy
+            SettingState.setWithDifficulty(Difficulty.Easy)
             MineSweeper.regenerate()
         }
 
         GrowingButton("ふつう", SettingState.difficulty == Difficulty.Normal) {
-            SettingState.difficulty = Difficulty.Normal
+            SettingState.setWithDifficulty(Difficulty.Normal)
             MineSweeper.regenerate()
         }
 
         GrowingButton("むずかしい", SettingState.difficulty == Difficulty.Hard) {
-            SettingState.difficulty = Difficulty.Hard
+            SettingState.setWithDifficulty(Difficulty.Hard)
             MineSweeper.regenerate()
         }
     }
@@ -74,6 +74,11 @@ fun SimpleSettings() {
 
 @Composable
 fun AdvancedSettings() {
+    val notIsDiff = !(SettingState.column == MineSweeper.logic.column &&
+            SettingState.row == MineSweeper.logic.row &&
+            SettingState.numOfMines == MineSweeper.logic.numOfMines &&
+            SettingState.seed == MineSweeper.logic.seed)
+
     Div({
         style {
             height(100.percent)
@@ -87,38 +92,17 @@ fun AdvancedSettings() {
         H2 {
             Text("詳細設定")
         }
-        GrowingButton(
-            "再生成する",
-            !(SettingState.column == MineSweeper.logic.column &&
-                    SettingState.row == MineSweeper.logic.row &&
-                    SettingState.numOfMines == MineSweeper.logic.numOfMines &&
-                    SettingState.seed == MineSweeper.logic.seed)
-        ) {
-            if (!(SettingState.column == MineSweeper.logic.column &&
-                        SettingState.row == MineSweeper.logic.row &&
-                        SettingState.numOfMines == MineSweeper.logic.numOfMines &&
-                        SettingState.seed == MineSweeper.logic.seed)
-            ) {
-                MineSweeper.regenerate()
-            }
+        GrowingButton("再生成する", notIsDiff) {
+            if (notIsDiff) MineSweeper.regenerate()
         }
-        GrowingButton(
-            "現在の設定にもどす",
-            !(SettingState.column == MineSweeper.logic.column &&
-                    SettingState.row == MineSweeper.logic.row &&
-                    SettingState.numOfMines == MineSweeper.logic.numOfMines &&
-                    SettingState.seed == MineSweeper.logic.seed),
-            10.percent
-        ) {
-            if (!(SettingState.column == MineSweeper.logic.column &&
-                        SettingState.row == MineSweeper.logic.row &&
-                        SettingState.numOfMines == MineSweeper.logic.numOfMines &&
-                        SettingState.seed == MineSweeper.logic.seed)
-            ) {
-                SettingState.column = MineSweeper.logic.column
-                SettingState.row = MineSweeper.logic.row
-                SettingState.numOfMines = MineSweeper.logic.numOfMines
-                SettingState.seed = MineSweeper.logic.seed
+        GrowingButton("現在の設定にもどす", notIsDiff, 10.percent) {
+            if (notIsDiff) {
+                SettingState.setAll(
+                    MineSweeper.logic.column,
+                    MineSweeper.logic.row,
+                    MineSweeper.logic.numOfMines,
+                    MineSweeper.logic.seed
+                )
             }
         }
 
