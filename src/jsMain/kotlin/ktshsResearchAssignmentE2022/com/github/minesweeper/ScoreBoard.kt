@@ -14,7 +14,11 @@ fun ScoreBoard() {
     Div({
         classes(ScoreBoardStyleSheet.ScoreBoardStyle)
     }) {
-        if (MineSweeper.logic.isGameOver) Result("Game Over") else Result("スコアだす")
+        if (MineSweeper.logic.isGameOver)
+            Result("Game Over")
+        else if (MineSweeper.logic.isGameClear)
+            Result("Game Clear")
+        else Result("Error: Is dev mode?")
         Button({
             style {
                 height(20.percent)

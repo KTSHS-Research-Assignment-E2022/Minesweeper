@@ -73,14 +73,14 @@ object MineSweeper {
             onContextMenu {
                 //右クリ時の挙動
                 if (!tileState.isOpened) {
-                    tileState.isFlagged = !tileState.isFlagged
+                    logic.toggleTileFlag(column,row)
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
             onClick {
                 if (tileState.isFlagged) return@onClick
-                logic.openTile(column, row)
+                logic.openTileWithAround(column, row)
             }
         }) {
             Text(
