@@ -38,7 +38,7 @@ fun MinesweeperLayout(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun ScoreBoardContainerLayout(content: @Composable () -> Unit) {
+fun ResultContainerLayout(content: @Composable () -> Unit) {
     Div({
         classes(ResultStyleSheet.ResultContainerStyle)
         onContextMenu {
