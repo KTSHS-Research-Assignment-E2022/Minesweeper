@@ -10,6 +10,10 @@ import org.jetbrains.compose.web.dom.Div
 fun MainLayout(content: @Composable () -> Unit) {
     Div({
         classes(AppStyleSheet.mainContainer)
+        onContextMenu {
+            // キャンセル
+            it.preventDefault()
+        }
     }) {
         content()
     }
@@ -34,9 +38,13 @@ fun MinesweeperLayout(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun ScoreBoardContainerLayout(content: @Composable () -> Unit) {
+fun ResultContainerLayout(content: @Composable () -> Unit) {
     Div({
         classes(ResultStyleSheet.ResultContainerStyle)
+        onContextMenu {
+            // キャンセル
+            it.preventDefault()
+        }
     }) {
         content()
     }
