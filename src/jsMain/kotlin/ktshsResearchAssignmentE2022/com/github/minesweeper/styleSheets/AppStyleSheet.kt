@@ -12,6 +12,9 @@ object AppStyleSheet : StyleSheet() {
         backgroundColor(Color.whitesmoke)
         width(100.vw)
         height(100.vh)
+
+        // 文字列がドラッグできてしまうのを阻止
+        property("user-select", "none")
     }
 
     val centerContainer by style {
