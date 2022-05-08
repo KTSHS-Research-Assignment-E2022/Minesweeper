@@ -14,7 +14,7 @@ import org.jetbrains.compose.web.dom.*
 import kotlin.random.Random
 
 @Composable
-fun Settings() {
+fun PcSettings() {
     var showAdvancedSettings by mutableStateOf(false)
     Div({
         classes(SidebarStyleSheet.settingContainerStyle)
@@ -56,7 +56,7 @@ fun Settings() {
 }
 
 @Composable
-fun SimpleSettings() {
+private fun SimpleSettings() {
     Div({
         style {
             height(100.percent)
@@ -89,7 +89,7 @@ fun SimpleSettings() {
 }
 
 @Composable
-fun AdvancedSettings() {
+private fun AdvancedSettings() {
     val notIsDiff = !(SettingState.column == MineSweeper.logic.column &&
             SettingState.row == MineSweeper.logic.row &&
             SettingState.numOfMines == MineSweeper.logic.numOfMines &&

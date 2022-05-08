@@ -3,12 +3,15 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets
 import org.jetbrains.compose.web.css.*
 
 object PhoneSidebarStyleSheet : StyleSheet() {
-    val menuButtonStyle by style{
+    val SettingMenuButtonContainerStyle by style {
+        position(Position.Absolute)
         width(100.vw)
-        height(5.vh)
+        height(100.vh)
 
-        borderRadius(10.px)
-        backgroundColor(Color.whitesmoke)
-        property("box-shadow", "0px 0px 12px 0px #848484")
+        display(DisplayStyle.Flex)
+        justifyContent(JustifyContent.Left)
+        alignItems(AlignItems.Start)
+
+        property("user-select", "none")
     }
 }
