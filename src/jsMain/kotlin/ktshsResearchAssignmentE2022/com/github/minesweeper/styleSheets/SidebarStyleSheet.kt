@@ -26,6 +26,7 @@ object SidebarStyleSheet : StyleSheet() {
 
         display(DisplayStyle.Flex)
         flexFlow(FlexDirection.Column, FlexWrap.Wrap)
+        alignItems(AlignItems.Center)
         alignContent(AlignContent.Center)
         justifyContent(JustifyContent.SpaceBetween)
 
