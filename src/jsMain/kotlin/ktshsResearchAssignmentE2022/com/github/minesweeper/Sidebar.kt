@@ -16,7 +16,7 @@ fun PcSidebar() {
             classes(SidebarStyleSheet.elementStyle)
         }) {
             H1 { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
-            PcSettings()
+            Settings()
             Button({
                 onClick {
                     MineSweeper.logic.isDevMode = !MineSweeper.logic.isDevMode
@@ -40,8 +40,12 @@ fun PhoneSidebar() {
         Style({
             classes(SidebarStyleSheet.elementStyle)
         }) {
-            H1 { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
-            PcSettings()
+            H1({
+                style {
+                    textAlign("center")
+                }
+            }) { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
+            Settings()
             GrowingButton("閉じる", true, 10.percent) {
                 isSidebarOpen = false
             }
@@ -50,11 +54,7 @@ fun PhoneSidebar() {
                     MineSweeper.logic.isDevMode = !MineSweeper.logic.isDevMode
                 }
             }) {
-                H3({
-                    style {
-                        textAlign("left")
-                    }
-                }) { Text("Made by 神奈川工業高校電気科") }
+                H3 { Text("Made by 神奈川工業高校電気科") }
             }
         }
     }

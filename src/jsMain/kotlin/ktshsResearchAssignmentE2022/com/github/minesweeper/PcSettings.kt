@@ -14,7 +14,7 @@ import org.jetbrains.compose.web.dom.*
 import kotlin.random.Random
 
 @Composable
-fun PcSettings() {
+fun Settings() {
     var showAdvancedSettings by mutableStateOf(false)
     Div({
         classes(SidebarStyleSheet.settingContainerStyle)
