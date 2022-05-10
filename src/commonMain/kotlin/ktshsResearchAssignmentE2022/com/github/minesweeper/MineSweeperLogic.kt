@@ -65,6 +65,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
         connectedList.shuffle(Random(seed))
 
+        // TODO: おかしい
         map = connectedList.windowed(yLength, yLength)
 
         for (x in 0 until xLength) {

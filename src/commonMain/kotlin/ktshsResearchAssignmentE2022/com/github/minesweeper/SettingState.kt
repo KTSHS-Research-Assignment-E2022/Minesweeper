@@ -6,14 +6,14 @@ import androidx.compose.runtime.setValue
 import kotlin.random.Random
 
 object SettingState {
-    var column by mutableStateOf(Difficulty.Easy.column)
-    var row by mutableStateOf(Difficulty.Easy.row)
+    var yLength by mutableStateOf(Difficulty.Easy.yLength)
+    var xLength by mutableStateOf(Difficulty.Easy.xLength)
     var numOfMines by mutableStateOf(Difficulty.Easy.numOfMines)
     var seed by mutableStateOf(Random.nextInt())
     var difficulty by mutableStateOf(Difficulty.Easy)
 
     fun setWithDifficulty(difficulty: Difficulty, seed: Int = Random.nextInt()) {
-        setAll(difficulty.column, difficulty.row, difficulty.numOfMines, seed, difficulty)
+        setAll(difficulty.yLength, difficulty.xLength, difficulty.numOfMines, seed, difficulty)
     }
 
     fun setAll(
@@ -24,8 +24,8 @@ object SettingState {
         difficulty: Difficulty = Difficulty.Manual
     ) {
         this.difficulty = difficulty
-        this.column = column
-        this.row = row
+        this.yLength = column
+        this.xLength = row
         this.numOfMines = numOfMines
         this.seed = seed
     }
@@ -34,23 +34,23 @@ object SettingState {
 enum class Difficulty {
     Easy, Normal, Hard, Manual;
 
-    val column: Int
+    val yLength: Int
         get() {
             return when (this) {
                 Easy -> 9
                 Normal -> 9
                 Hard -> 9
-                Manual -> SettingState.column
+                Manual -> SettingState.yLength
             }
         }
 
-    val row: Int
+    val xLength: Int
         get() {
             return when (this) {
                 Easy -> 9
                 Normal -> 9
                 Hard -> 9
-                Manual -> SettingState.row
+                Manual -> SettingState.xLength
             }
         }
 
