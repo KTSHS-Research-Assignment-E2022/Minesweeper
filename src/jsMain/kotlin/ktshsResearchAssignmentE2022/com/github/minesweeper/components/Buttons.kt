@@ -75,6 +75,7 @@ fun SettingMenuButton(onClick: () -> Unit) {
             backgroundColor(Color.white)
             marginTop(2.vmin)
             marginLeft(2.vmin)
+            property("pointer-events", "auto")
         }
         onClick {
             onClick()
