@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.compose") version "1.2.0-alpha01-dev620"
 }
 
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     mavenCentral()
@@ -26,6 +26,12 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(compose.runtime)
+            }
+        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+                implementation(compose.web.testUtils)
             }
         }
     }

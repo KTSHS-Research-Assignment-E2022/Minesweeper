@@ -15,36 +15,30 @@ import org.jetbrains.compose.web.dom.Text
 object MineSweeper {
     var logic by mutableStateOf(
         MineSweeperLogic(
-            SettingState.column,
-            SettingState.row,
+            SettingState.xLength,
+            SettingState.yLength,
             SettingState.numOfMines,
             SettingState.seed
         )
     )
 
     fun regenerate() {
-        logic = MineSweeperLogic(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+        logic = MineSweeperLogic(SettingState.xLength, SettingState.yLength, SettingState.numOfMines, SettingState.seed)
     }
 
     @Composable
     fun show() {
         MinesweeperLayout {
-            for (i in 0 until logic.row) {
-                // 配列は0から!!!!!
-                TileRow(logic.map[i], i)
+            for (x in 0 until logic.xLength) {
+                for (y in 0 until logic.yLength) {
+                    Tile(logic.map[x][y], x, y)
+                }
             }
         }
     }
 
     @Composable
-    private fun TileRow(row: List<TileState>, numOfColumn: Int) {
-        for (i in 0 until logic.column) {
-            Tile(row[i], i, numOfColumn)
-        }
-    }
-
-    @Composable
-    private fun Tile(tileState: TileState, row: Int, column: Int) {
+    private fun Tile(tileState: TileState, x: Int, y: Int) {
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
@@ -73,14 +67,14 @@ object MineSweeper {
             onContextMenu {
                 //右クリ時の挙動
                 if (!tileState.isOpened) {
-                    logic.toggleTileFlag(column,row)
+                    logic.toggleTileFlag(x, y)
                 }
                 // 右クリメニューをキャンセル
                 it.nativeEvent.preventDefault()
             }
             onClick {
                 if (tileState.isFlagged) return@onClick
-                logic.openTileWithAround(column, row)
+                logic.openTileWithAround(x, y)
             }
         }) {
             Text(

@@ -33,16 +33,16 @@ fun Settings() {
                 showAdvancedSettings = !showAdvancedSettings
                 if (showAdvancedSettings) SettingState.difficulty = Difficulty.Manual else {
                     SettingState.difficulty = when {
-                        SettingState.column == Difficulty.Easy.column &&
-                                SettingState.row == Difficulty.Easy.row &&
+                        SettingState.yLength == Difficulty.Easy.yLength &&
+                                SettingState.xLength == Difficulty.Easy.xLength &&
                                 SettingState.numOfMines == Difficulty.Easy.numOfMines -> Difficulty.Easy
 
-                        SettingState.column == Difficulty.Normal.column &&
-                                SettingState.row == Difficulty.Normal.row &&
+                        SettingState.yLength == Difficulty.Normal.yLength &&
+                                SettingState.xLength == Difficulty.Normal.xLength &&
                                 SettingState.numOfMines == Difficulty.Normal.numOfMines -> Difficulty.Normal
 
-                        SettingState.column == Difficulty.Hard.column &&
-                                SettingState.row == Difficulty.Hard.row &&
+                        SettingState.yLength == Difficulty.Hard.yLength &&
+                                SettingState.xLength == Difficulty.Hard.xLength &&
                                 SettingState.numOfMines == Difficulty.Hard.numOfMines -> Difficulty.Hard
 
                         else -> Difficulty.Manual
@@ -90,8 +90,8 @@ private fun SimpleSettings() {
 
 @Composable
 private fun AdvancedSettings() {
-    val notIsDiff = !(SettingState.column == MineSweeper.logic.column &&
-            SettingState.row == MineSweeper.logic.row &&
+    val notIsDiff = !(SettingState.yLength == MineSweeper.logic.yLength &&
+            SettingState.xLength == MineSweeper.logic.xLength &&
             SettingState.numOfMines == MineSweeper.logic.numOfMines &&
             SettingState.seed == MineSweeper.logic.seed)
 
@@ -114,8 +114,8 @@ private fun AdvancedSettings() {
         GrowingButton("現在の設定にもどす", notIsDiff, 10.percent) {
             if (notIsDiff) {
                 SettingState.setAll(
-                    MineSweeper.logic.column,
-                    MineSweeper.logic.row,
+                    MineSweeper.logic.yLength,
+                    MineSweeper.logic.xLength,
                     MineSweeper.logic.numOfMines,
                     MineSweeper.logic.seed
                 )
@@ -137,18 +137,18 @@ private fun AdvancedSettings() {
             Div({
                 classes(SidebarStyleSheet.settingElementStyle)
             }) {
-                P { Text("縦の幅: ${SettingState.column}") }
+                P { Text("縦の幅: ${SettingState.yLength}") }
                 Input(InputType.Range) {
                     style {
                         max("20")
                         min("2")
                         width(90.percent)
                     }
-                    value(SettingState.column)
+                    value(SettingState.yLength)
                     onInput {
-                        SettingState.column = it.value as Int
-                        if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
-                            SettingState.column * SettingState.row
+                        SettingState.yLength = it.value as Int
+                        if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
+                            SettingState.yLength * SettingState.xLength - 1
                     }
                 }
             }
@@ -156,18 +156,18 @@ private fun AdvancedSettings() {
             Div({
                 classes(SidebarStyleSheet.settingElementStyle)
             }) {
-                P { Text("横の幅: ${SettingState.row}") }
+                P { Text("横の幅: ${SettingState.xLength}") }
                 Input(InputType.Range) {
                     style {
                         max("20")
                         min("2")
                         width(90.percent)
                     }
-                    value(SettingState.row)
+                    value(SettingState.xLength)
                     onInput {
-                        SettingState.row = it.value as Int
-                        if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
-                            SettingState.column * SettingState.row
+                        SettingState.xLength = it.value as Int
+                        if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
+                            SettingState.yLength * SettingState.xLength - 1
                     }
                 }
             }
@@ -178,8 +178,8 @@ private fun AdvancedSettings() {
                 P { Text("地雷の数: ${SettingState.numOfMines}個") }
                 Input(InputType.Range) {
                     style {
-                        max((SettingState.column * SettingState.row).toString())
-                        min("0")
+                        max((SettingState.yLength * SettingState.xLength - 1).toString())
+                        min("1")
                         width(90.percent)
                     }
                     value(SettingState.numOfMines)
