@@ -12,6 +12,7 @@ object PhoneSidebarStyleSheet : StyleSheet() {
         justifyContent(JustifyContent.Left)
         alignItems(AlignItems.Start)
 
+        property("pointer-events", "none")
         property("user-select", "none")
     }
 }
