@@ -15,21 +15,21 @@ import org.jetbrains.compose.web.dom.Text
 object MineSweeper {
     var logic by mutableStateOf(
         MineSweeperLogic(
-            SettingState.column,
             SettingState.row,
+            SettingState.column,
             SettingState.numOfMines,
             SettingState.seed
         )
     )
 
     fun regenerate() {
-        logic = MineSweeperLogic(SettingState.column, SettingState.row, SettingState.numOfMines, SettingState.seed)
+        logic = MineSweeperLogic(SettingState.row, SettingState.column, SettingState.numOfMines, SettingState.seed)
     }
 
     @Composable
     fun show() {
         MinesweeperLayout {
-            for (i in 0 until logic.row) {
+            for (i in 0 until logic.xLength) {
                 // 配列は0から!!!!!
                 TileRow(logic.map[i], i)
             }
@@ -38,7 +38,7 @@ object MineSweeper {
 
     @Composable
     private fun TileRow(row: List<TileState>, numOfColumn: Int) {
-        for (i in 0 until logic.column) {
+        for (i in 0 until logic.yLength) {
             Tile(row[i], i, numOfColumn)
         }
     }

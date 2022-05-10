@@ -90,8 +90,8 @@ private fun SimpleSettings() {
 
 @Composable
 private fun AdvancedSettings() {
-    val notIsDiff = !(SettingState.column == MineSweeper.logic.column &&
-            SettingState.row == MineSweeper.logic.row &&
+    val notIsDiff = !(SettingState.column == MineSweeper.logic.yLength &&
+            SettingState.row == MineSweeper.logic.xLength &&
             SettingState.numOfMines == MineSweeper.logic.numOfMines &&
             SettingState.seed == MineSweeper.logic.seed)
 
@@ -114,8 +114,8 @@ private fun AdvancedSettings() {
         GrowingButton("現在の設定にもどす", notIsDiff, 10.percent) {
             if (notIsDiff) {
                 SettingState.setAll(
-                    MineSweeper.logic.column,
-                    MineSweeper.logic.row,
+                    MineSweeper.logic.yLength,
+                    MineSweeper.logic.xLength,
                     MineSweeper.logic.numOfMines,
                     MineSweeper.logic.seed
                 )

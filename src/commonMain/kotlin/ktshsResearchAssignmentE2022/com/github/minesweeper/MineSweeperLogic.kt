@@ -42,7 +42,8 @@ private fun List<List<TileState>>.incAround(x: Int, y: Int) {
     }
 }
 
-class MineSweeperLogic(val column: Int, val row: Int, val numOfMines: Int, val seed: Int) {
+class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
+    // y軸方向に各マスの情報を格納している
     val map: List<List<TileState>>
     private val flaggedTilesCoordinate = mutableSetOf<Pair<Int, Int>>()
     private val minesCoordinate: Set<Pair<Int, Int>>
@@ -58,15 +59,16 @@ class MineSweeperLogic(val column: Int, val row: Int, val numOfMines: Int, val s
             connectedList.add(TileState(true))
         }
 
-        while (connectedList.size <= column * row) {
+        while (connectedList.size <= xLength * yLength) {
             connectedList.add(TileState(false))
         }
 
         connectedList.shuffle(Random(seed))
-        map = connectedList.windowed(column, column)
 
-        for (x in 0 until row) {
-            for (y in 0 until column) {
+        map = connectedList.windowed(yLength, yLength)
+
+        for (x in 0 until xLength) {
+            for (y in 0 until yLength) {
                 if (map[x][y].isMine) {
                     mutMinesMap.add(Pair(x, y))
                     map.incAround(x, y)
