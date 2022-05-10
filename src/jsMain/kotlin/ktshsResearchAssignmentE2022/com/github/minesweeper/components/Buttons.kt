@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Button
+import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
@@ -61,5 +62,24 @@ fun OnHoverGrowingButton(
         }
     }) {
         Text(string)
+    }
+}
+
+@Composable
+fun SettingMenuButton(onClick: () -> Unit) {
+    Button({
+        style {
+            height(8.vmin)
+            width(8.vmin)
+            borderRadius(5.vmin)
+            backgroundColor(Color.white)
+            marginTop(2.vmin)
+            marginLeft(2.vmin)
+        }
+        onClick {
+            onClick()
+        }
+    }) {
+        H2 { Text("⚙") }
     }
 }

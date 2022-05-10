@@ -21,6 +21,23 @@ object SidebarStyleSheet : StyleSheet() {
         property("user-select", "none")
     }
 
+    val phoneSidebarStyle by style {
+        flexBasis(40.percent)
+
+        display(DisplayStyle.Flex)
+        flexFlow(FlexDirection.Column, FlexWrap.Wrap)
+        alignItems(AlignItems.Center)
+        alignContent(AlignContent.Center)
+        justifyContent(JustifyContent.SpaceBetween)
+
+        backgroundColor(Color.white)
+        width(10.vw)
+        height(100.vh)
+        borderRadius(0.1.px, 20.px, 20.px, 0.1.px)
+        property("box-shadow", "5px 0px 24px -2px #848484") // 影
+        property("user-select", "none")
+    }
+
     val elementStyle by style {
         width(100.percent)
     }

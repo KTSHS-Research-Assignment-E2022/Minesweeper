@@ -13,6 +13,8 @@ object AppStyleSheet : StyleSheet() {
         width(100.vw)
         height(100.vh)
 
+        justifyContent(JustifyContent.SpaceAround)
+
         // 文字列がドラッグできてしまうのを阻止
         property("user-select", "none")
     }
