@@ -148,7 +148,7 @@ private fun AdvancedSettings() {
                     onInput {
                         SettingState.column = it.value as Int
                         if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
-                            SettingState.column * SettingState.row
+                            SettingState.column * SettingState.row - 1
                     }
                 }
             }
@@ -167,7 +167,7 @@ private fun AdvancedSettings() {
                     onInput {
                         SettingState.row = it.value as Int
                         if (SettingState.numOfMines > SettingState.column * SettingState.row) SettingState.numOfMines =
-                            SettingState.column * SettingState.row
+                            SettingState.column * SettingState.row - 1
                     }
                 }
             }
@@ -178,8 +178,8 @@ private fun AdvancedSettings() {
                 P { Text("地雷の数: ${SettingState.numOfMines}個") }
                 Input(InputType.Range) {
                     style {
-                        max((SettingState.column * SettingState.row).toString())
-                        min("0")
+                        max((SettingState.column * SettingState.row - 1).toString())
+                        min("1")
                         width(90.percent)
                     }
                     value(SettingState.numOfMines)
