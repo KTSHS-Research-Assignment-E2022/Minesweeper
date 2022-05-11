@@ -5,10 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
-import org.jetbrains.compose.web.css.Color
-import org.jetbrains.compose.web.css.backgroundColor
-import org.jetbrains.compose.web.css.fontSize
-import org.jetbrains.compose.web.css.vmin
+import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
@@ -31,17 +28,28 @@ object MineSweeper {
         MinesweeperLayout {
             for (x in 0 until logic.xLength) {
                 for (y in 0 until logic.yLength) {
-                    Tile(logic.map[x][y], x, y)
+                    Tile(logic, x, y)
                 }
             }
         }
     }
 
     @Composable
-    private fun Tile(tileState: TileState, x: Int, y: Int) {
+    private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
+        val tileState = logic.map[x][y]
         Div({
             classes(MinesweeperStyleSheet.tileStyle)
             style {
+                // 合計の width = 100/(x軸方向の長さ + マージン)
+                // 合計の height = 100/(y軸方向の長さ + マージン)
+                val width: Double = 100.0 / (logic.xLength + 1)
+                val height: Double = 100.0 / (logic.yLength + 1)
+                width(width.percent)
+                height(height.percent)
+                marginLeft((width / (logic.xLength + 1)).percent)
+                marginTop((height / ((logic.yLength + 1) * 2)).percent)
+                marginBottom((height / ((logic.yLength + 1) * 2)).percent)
+
                 backgroundColor(
                     when {
                         tileState.isOpened -> if (tileState.isMine) Color.crimson else

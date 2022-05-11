@@ -137,7 +137,7 @@ private fun AdvancedSettings() {
             Div({
                 classes(SidebarStyleSheet.settingElementStyle)
             }) {
-                P { Text("縦の幅: ${SettingState.yLength}") }
+                P { Text("盤面の幅: ${SettingState.yLength}") }
                 Input(InputType.Range) {
                     style {
                         max("20")
@@ -147,30 +147,51 @@ private fun AdvancedSettings() {
                     value(SettingState.yLength)
                     onInput {
                         SettingState.yLength = it.value as Int
-                        if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
-                            SettingState.yLength * SettingState.xLength - 1
-                    }
-                }
-            }
-
-            Div({
-                classes(SidebarStyleSheet.settingElementStyle)
-            }) {
-                P { Text("横の幅: ${SettingState.xLength}") }
-                Input(InputType.Range) {
-                    style {
-                        max("20")
-                        min("2")
-                        width(90.percent)
-                    }
-                    value(SettingState.xLength)
-                    onInput {
                         SettingState.xLength = it.value as Int
                         if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
                             SettingState.yLength * SettingState.xLength - 1
                     }
                 }
             }
+
+// 暫定的に正方形のみにしてる
+//            Div({
+//                classes(SidebarStyleSheet.settingElementStyle)
+//            }) {
+//                P { Text("縦の幅: ${SettingState.yLength}") }
+//                Input(InputType.Range) {
+//                    style {
+//                        max("20")
+//                        min("2")
+//                        width(90.percent)
+//                    }
+//                    value(SettingState.yLength)
+//                    onInput {
+//                        SettingState.yLength = it.value as Int
+//                        if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
+//                            SettingState.yLength * SettingState.xLength - 1
+//                    }
+//                }
+//            }
+//
+//            Div({
+//                classes(SidebarStyleSheet.settingElementStyle)
+//            }) {
+//                P { Text("横の幅: ${SettingState.xLength}") }
+//                Input(InputType.Range) {
+//                    style {
+//                        max("20")
+//                        min("2")
+//                        width(90.percent)
+//                    }
+//                    value(SettingState.xLength)
+//                    onInput {
+//                        SettingState.xLength = it.value as Int
+//                        if (SettingState.numOfMines > SettingState.yLength * SettingState.xLength) SettingState.numOfMines =
+//                            SettingState.yLength * SettingState.xLength - 1
+//                    }
+//                }
+//            }
 
             Div({
                 classes(SidebarStyleSheet.settingElementStyle)
