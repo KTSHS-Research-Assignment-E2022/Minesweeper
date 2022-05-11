@@ -23,11 +23,6 @@ object MinesweeperStyleSheet : StyleSheet() {
         flexDirection(FlexDirection.Column)
         justifyContent(JustifyContent.Center)
         alignItems(AlignItems.Center)
-        // 合計のwidth = 100/column
-        // 合計のheight = 100/row
-        margin(0.55.percent)
-        width(10.percent)
-        height(10.percent)
 
         borderRadius(30.percent)
         property("box-shadow", "0px 0px 13px 0px #848484")
