@@ -81,7 +81,6 @@ object MineSweeper {
                 it.nativeEvent.preventDefault()
             }
             onClick {
-                if (tileState.isFlagged) return@onClick
                 logic.openTileWithAround(x, y)
             }
         }) {
