@@ -45,15 +45,16 @@ private fun List<List<TileState>>.incAround(x: Int, y: Int) {
 class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
     // y軸方向に各マスの情報を格納している
     val map: List<List<TileState>>
-    private val flaggedTilesCoordinate = mutableSetOf<Pair<Int, Int>>()
-    private val minesCoordinate: Set<Pair<Int, Int>>
+    private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
+    private val coordinatesWithoutMines: Set<Pair<Int, Int>>
     var isGameOver by mutableStateOf(false)
     var isGameClear by mutableStateOf(false)
     var isDevMode by mutableStateOf(false)
 
     init {
         val connectedList = mutableListOf<TileState>()
-        val mutMinesMap = mutableSetOf<Pair<Int, Int>>()
+        val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
+        val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
 
         for (i in 1..numOfMines) {
             connectedList.add(TileState(true))
@@ -69,14 +70,15 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
         for (x in 0 until xLength) {
             for (y in 0 until yLength) {
+                coordinatesOfPlane.add(Pair(x, y))
                 if (map[x][y].isMine) {
-                    mutMinesMap.add(Pair(x, y))
+                    coordinatesOfMines.add(Pair(x, y))
                     map.incAround(x, y)
                 }
             }
         }
-
-        minesCoordinate = mutMinesMap
+        coordinatesOfPlane.removeAll(coordinatesOfMines)
+        coordinatesWithoutMines = coordinatesOfPlane
     }
 
     fun openTileWithAround(x: Int, y: Int) {
@@ -88,12 +90,12 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
     fun toggleTileFlag(x: Int, y: Int) {
         map[x][y].isFlagged = !map[x][y].isFlagged
-        if (map[x][y].isFlagged) flaggedTilesCoordinate.add(Pair(x, y)) else flaggedTilesCoordinate.remove(Pair(x, y))
-        isGameClear = minesCoordinate == flaggedTilesCoordinate
     }
 
     private fun openTile(x: Int, y: Int) {
         map[x][y].isOpened = true
+        coordinatesOfOpened.add(Pair(x, y))
+        isGameClear = coordinatesOfOpened == coordinatesWithoutMines
         if (map[x][y].isMine && !isDevMode) isGameOver = true
     }
 
