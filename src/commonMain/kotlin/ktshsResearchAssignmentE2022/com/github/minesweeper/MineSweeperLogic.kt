@@ -106,6 +106,9 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         // 左上
         if (x != 0 && y != 0 && !this[x - 1][y - 1].isOpened) {
             openTile(x - 1, y - 1)
+            if (this[x - 1][y - 1].numOfAroundMines == 0) {
+                this.openAround(x - 1, y - 1)
+            }
         }
         // 真上
         if (x != 0 && !this[x - 1][y].isOpened) {
@@ -117,6 +120,9 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         // 右上
         if (x != 0 && this[x - 1].size > y + 1 && !this[x - 1][y + 1].isOpened) {
             openTile(x - 1, y + 1)
+            if (this[x - 1][y + 1].numOfAroundMines == 0) {
+                this.openAround(x - 1, y + 1)
+            }
         }
         // 左
         if (y != 0 && !this[x][y - 1].isOpened) {
@@ -135,6 +141,9 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         // 左下
         if (this.size > x + 1 && y != 0 && !this[x + 1][y - 1].isOpened) {
             openTile(x + 1, y - 1)
+            if (this[x + 1][y - 1].numOfAroundMines == 0) {
+                this.openAround(x + 1, y - 1)
+            }
         }
         // 真下
         if (this.size > x + 1 && !this[x + 1][y].isOpened) {
@@ -146,6 +155,9 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         // 右下
         if (this.size > x + 1 && this[x + 1].size > y + 1 && !this[x + 1][y + 1].isOpened) {
             openTile(x + 1, y + 1)
+            if (this[x + 1][y + 1].numOfAroundMines == 0) {
+                this.openAround(x + 1, y + 1)
+            }
         }
     }
 }
