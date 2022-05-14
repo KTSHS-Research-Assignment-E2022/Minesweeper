@@ -8,7 +8,6 @@ object AppStyleSheet : StyleSheet() {
         display(DisplayStyle.Flex)
         flexWrap(FlexWrap.Nowrap)
 
-        fontFamily("M PLUS Rounded 1c", "sans-serif")
         backgroundColor(Color.whitesmoke)
         width(100.vw)
         height(100.vh)
