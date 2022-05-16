@@ -65,9 +65,10 @@ object MineSweeper {
                         else -> Color.whitesmoke
                     }
                 )
+                val mineFontSize = if (logic.xLength<14) 5.vmin else 3.vmin
                 fontSize(
                     if (tileState.isOpened) {
-                        if (tileState.isMine) 5.vmin else 3.vmin
+                        if (tileState.isMine) mineFontSize else 3.vmin
                     } else 3.vmin
                 )
 
