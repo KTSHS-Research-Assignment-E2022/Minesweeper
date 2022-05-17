@@ -1,0 +1,43 @@
+name: build-and-placement
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      - name: Gradle wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Setup Gradle and execute build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: jsBrowserProductionWebpack
+
+      - name: Copy build artifacts to /docs directory
+        run: |
+          cd ~/Minesweeper
+          cp -f -r ./build/distributions ./docs
+
+      - name: Setup Git config & remote repository
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
+
+      - name: Commit and push
+        run: |
+          git add -f ./docs
+          git commit -m "Updated GitHub Pages contents"
+          git push origin HEAD:master
