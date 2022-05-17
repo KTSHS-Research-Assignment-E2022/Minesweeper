@@ -32,13 +32,14 @@ jobs:
         run: |
           cp -f -r ./build/distributions ./docs
 
-      - name: Setup Git config & remote repository
+      - name: Setup Git config
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
       - name: Commit and push
         run: |
+          git pull
           git add -f ./docs
           git commit -m "Updated GitHub Pages contents"
           git push origin HEAD:master
