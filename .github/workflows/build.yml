@@ -34,13 +34,12 @@ jobs:
 
       - name: Setup Git config
         run: |
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git config user.name "github-actions[bot]"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "${GITHUB_ACTOR}"
           git config pull.rebase false
 
       - name: Commit and push
         run: |
-          git add -f ./docs
+          git add ./docs
           git commit -m "Updated GitHub Pages contents"
-          git pull origin master
-          git push origin master
+          git push origin HEAD:${GITHUB_REF}
