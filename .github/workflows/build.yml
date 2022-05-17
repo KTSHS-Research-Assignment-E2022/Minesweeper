@@ -41,5 +41,5 @@ jobs:
       - name: Commit and push
         run: |
           git add ./docs
-          git commit -m "Updated GitHub Pages contents"
+          git commit -m -v "Updated GitHub Pages contents"
           git push origin ${GITHUB_REF_NAME}
