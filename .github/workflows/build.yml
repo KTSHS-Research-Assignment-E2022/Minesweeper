@@ -40,8 +40,7 @@ jobs:
 
       - name: Commit and push
         run: |
-          git pull origin master
-          git checkout master
           git add -f ./docs
           git commit -m "Updated GitHub Pages contents"
-          git push origin HEAD:master
+          git pull origin master
+          git push origin master
