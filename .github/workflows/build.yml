@@ -17,6 +17,9 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
+      - name: Add permission to gradlew
+        run: chmod +x gradlew
+
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
 
