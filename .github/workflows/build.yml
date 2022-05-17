@@ -30,7 +30,7 @@ jobs:
 
       - name: Copy build artifacts to /docs directory
         run: |
-          cp -FRT ./build/distributions ./docs
+          cp -fRT ./build/distributions ./docs
 
       - name: Setup Git config
         run: |
