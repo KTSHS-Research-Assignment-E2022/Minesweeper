@@ -40,6 +40,7 @@ jobs:
 
       - name: Commit and push
         run: |
+          git status
           git add ./docs
           git commit -m "Updated GitHub Pages contents" -v
           git push origin ${GITHUB_REF_NAME}
