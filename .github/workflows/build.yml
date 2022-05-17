@@ -42,4 +42,4 @@ jobs:
         run: |
           git add ./docs
           git commit -m "Updated GitHub Pages contents"
-          git push origin HEAD:${GITHUB_REF}
+          git push origin HEAD
