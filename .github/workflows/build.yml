@@ -30,7 +30,7 @@ jobs:
 
       - name: Copy build artifacts to /docs directory
         run: |
-          cd ~/Minesweeper
+          ls ./
           cp -f -r ./build/distributions ./docs
 
       - name: Setup Git config & remote repository
