@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-    tags:
-      - 'v*'
 
 jobs:
   build:
@@ -17,6 +15,9 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
+      - name: Add permission to gradlew
+        run: chmod +x gradlew
+
       - name: Gradle wrapper validation
         uses: gradle/wrapper-validation-action@v1
 
@@ -27,17 +28,10 @@ jobs:
 
       - name: Copy build artifacts to /docs directory
         run: |
-          cd ~/Minesweeper
-          cp -f -r ./build/distributions ./docs
+          cp -fRT ./build/distributions ./docs
 
-      - name: Setup Git config & remote repository
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
-
-      - name: Commit and push
-        run: |
-          git add -f ./docs
-          git commit -m "Updated GitHub Pages contents"
-          git push origin HEAD:master
+      - name: Commit
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated GitHub Pages contents
+          file_pattern: ./docs/*
