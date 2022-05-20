@@ -1,8 +1,8 @@
-name: build-and-placement
+name: gradle-build-and-placement-contents
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
