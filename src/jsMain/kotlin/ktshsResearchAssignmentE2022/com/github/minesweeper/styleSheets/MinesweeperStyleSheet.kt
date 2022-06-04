@@ -10,6 +10,7 @@ object MinesweeperStyleSheet : StyleSheet() {
         flexWrap(FlexWrap.Wrap) // 折り返し下
         alignItems(AlignItems.FlexStart)
 
+        fontFamily("M PLUS Rounded 1c", "serif")
         backgroundColor(Color.whitesmoke)
         width(90.vmin)
         height(90.vmin)
