@@ -3,16 +3,16 @@ const CACHE_VERSION = 1;
 const CACHE_KEY = `${CACHE_NAME}:v${CACHE_VERSION}`;
 // キャッシュに登録するもの
 const urlsToCache = [
-  'index.html',
-  'Minesweeper.js',
-  'ress.min.css',
-  'fonts/M_PLUS_2/MPLUS2-VariableFont_wght.ttf',
-  'fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf',
-  'icons/icon-32.png',
-  'icons/icon-64.png',
-  'icons/icon-128.png',
-  'icons/icon-256.png',
-  'icons/icon-512.png'
+  './index.html',
+  './Minesweeper.js',
+  './ress.min.css',
+  './fonts/M_PLUS_2/MPLUS2-VariableFont_wght.ttf',
+  './fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf',
+  './icons/icon-32.png',
+  './icons/icon-64.png',
+  './icons/icon-128.png',
+  './icons/icon-256.png',
+  './icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
