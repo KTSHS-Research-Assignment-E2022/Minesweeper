@@ -14,6 +14,13 @@ var isSidebarOpen by mutableStateOf(false)
 fun main() {
     // PWA読み込み 読み込み先はJSじゃないとダメみたい
     window.navigator.serviceWorker.register("serviceworker.js").then {
+        // PWAで実行しているか判断
+        if (window.matchMedia("(display-mode: fullscreen)").matches) {
+            it.onupdatefound = { _ ->
+                window.alert("アップデートがあります。再起動してください。")
+                it.update()
+            }
+        }
         console.log("Service worker registration is successful with scope:${it.scope}")
     }.catch {
         console.error("ServiceWorker registration failed:$it")

@@ -2,6 +2,10 @@
   "name": "まいんすいーぱー",
   "short_name": "まいんすいーぱー",
   "description": "まいんすいーぱー PWA Edition Made by 神奈川工業高校電気科",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "theme_color": "lightskyblue",
+  "background_color": "whitesmoke",
   "icons": [
     {
       "src": "icons/icon-32.png",
@@ -14,7 +18,7 @@
       "type": "image/png"
     },
     {
-      "src": "icons/icon-128png",
+      "src": "icons/icon-128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
@@ -23,9 +27,5 @@
       "sizes": "256x256",
       "type": "image/png"
     }
-  ],
-  "start_url": "/index.html",
-  "display": "fullscreen",
-  "theme_color": "lightskyblue",
-  "background_color": "whitesmoke"
+  ]
 }
