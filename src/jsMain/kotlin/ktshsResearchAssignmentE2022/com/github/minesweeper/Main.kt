@@ -12,6 +12,13 @@ import org.jetbrains.compose.web.renderComposable
 var isSidebarOpen by mutableStateOf(false)
 
 fun main() {
+    // PWA読み込み 読み込み先はJSじゃないとダメみたい
+    window.navigator.serviceWorker.register("serviceworker.js").then {
+        console.log("Service worker registration is successful with scope:${it.scope}")
+    }.catch {
+        console.error("ServiceWorker registration failed:$it")
+    }
+
     renderComposable("root") {
         Style(AppStyleSheet)
         Style(ResultStyleSheet)
