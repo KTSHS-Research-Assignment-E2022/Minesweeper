@@ -26,6 +26,5 @@ object MinesweeperStyleSheet : StyleSheet() {
         alignItems(AlignItems.Center)
 
         borderRadius(30.percent)
-        property("box-shadow", "0px 0px 13px 0px #848484")
     }
 }
