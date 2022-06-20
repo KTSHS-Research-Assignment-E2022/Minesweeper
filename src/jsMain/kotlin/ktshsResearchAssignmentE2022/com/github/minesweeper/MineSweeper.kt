@@ -55,14 +55,14 @@ object MineSweeper {
                         tileState.isOpened -> if (tileState.isMine) Color.crimson else
                             when (tileState.numOfAroundMines) {
                                 // 色は安全→危険で　青→黄→赤
-                                0 -> Color.paleturquoise
+                                0 -> Color.whitesmoke
                                 1 -> Color.cornflowerblue
                                 2 -> Color.khaki
                                 3 -> Color.lightcoral
                                 else -> Color.mediumorchid
                             }
                         tileState.isFlagged -> Color.mediumseagreen
-                        else -> Color.whitesmoke
+                        else -> Color.paleturquoise
                     }
                 )
 
@@ -72,6 +72,17 @@ object MineSweeper {
                         if (tileState.isMine) mineFontSize else 3.vmin
                     } else 3.vmin
                 )
+
+                if (!tileState.isOpened) {
+                    property("box-shadow", "0px 0px 13px 0px #848484")
+                } else {
+                    if (tileState.numOfAroundMines == 0) {
+                        border {
+                            style = LineStyle.Solid
+                            color = Color.lightgray
+                        }
+                    }
+                }
 
             }
             onContextMenu {
