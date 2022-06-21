@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
@@ -67,6 +68,20 @@ private fun SimpleSettings() {
             alignContent(AlignContent.SpaceBetween)
         }
     }) {
+        if (hasUpdate) {
+            // アップデート通知
+            GrowingButton("アップデートがあります", true) {
+                window.navigator.serviceWorker.getRegistrations().then {
+                    for (registration in it) {
+                        registration.unregister()
+                        registration.update()
+                    }
+                    hasUpdate = false
+                    window.location.reload()
+                }
+            }
+        }
+
         H2 {
             Text("むずかしさ")
         }
@@ -139,9 +154,9 @@ private fun AdvancedSettings() {
             }) {
                 P { Text("盤面の幅: ${SettingState.yLength}") }
                 Input(InputType.Range) {
+                    max("20")
+                    min("2")
                     style {
-                        max("20")
-                        min("2")
                         width(90.percent)
                     }
                     value(SettingState.yLength)
@@ -198,9 +213,9 @@ private fun AdvancedSettings() {
             }) {
                 P { Text("地雷の数: ${SettingState.numOfMines}個") }
                 Input(InputType.Range) {
+                    max((SettingState.yLength * SettingState.xLength - 1).toString())
+                    min("1")
                     style {
-                        max((SettingState.yLength * SettingState.xLength - 1).toString())
-                        min("1")
                         width(90.percent)
                     }
                     value(SettingState.numOfMines)
