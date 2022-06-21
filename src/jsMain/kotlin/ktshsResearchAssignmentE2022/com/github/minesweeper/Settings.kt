@@ -77,8 +77,8 @@ private fun SimpleSettings() {
                         registration.update()
                     }
                     hasUpdate = false
-                    window.location.reload()
                 }
+                window.location.href = window.location.href
             }
         }
 
