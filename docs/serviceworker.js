@@ -18,24 +18,29 @@ const urlsToCache = [
 self.addEventListener('install', (event) => {
   console.log('sw event: install called');
 
-  event.waitUntil(
+  event.waitUntil(() => {
     caches.open(CACHE_KEY)
     .then((cache) => {
       return cache.addAll(urlsToCache);
     })
-  );
+    self.skipWaiting()
+  });
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keyList) => {
-      return Promise.all(keyList.map((key) => {
-        if(key !== CACHE_KEY) {
-          return caches.delete(key);
-        }
-      }));
-    })
-  );
+// https://blog.ohoshi.me/blog/service-worker
+self.addEventListener("activate", (event) => {
+  event.waitUntil(() => {
+      caches.keys().then((oldCacheKeys) => {
+        oldCacheKeys
+          .filter((key) => {
+            return key !== CACHE_NAME;
+          })
+          .map((key) => {
+            return caches.delete(key);
+          });
+      });
+      clients.claim();
+    });
 });
 
 self.addEventListener('fetch', (event) => {
