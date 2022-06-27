@@ -39,7 +39,7 @@ self.addEventListener("activate", (event) => {
             return caches.delete(key);
           });
       });
-      clients.claim();
+      event.clients.claim();
     });
 });
 
