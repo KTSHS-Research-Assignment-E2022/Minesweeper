@@ -21,6 +21,7 @@ object ResultStyleSheet : StyleSheet() {
         width(80.vmin)
         borderRadius(5.vmin)
         backgroundColor(Color.white)
+        fontFamily("M PLUS 2", "serif")
 
         display(DisplayStyle.Flex)
         justifyContent(JustifyContent.Center)
