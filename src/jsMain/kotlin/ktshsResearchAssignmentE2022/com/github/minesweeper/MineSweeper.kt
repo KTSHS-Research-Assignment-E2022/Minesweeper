@@ -74,7 +74,7 @@ object MineSweeper {
                 )
 
                 if (!tileState.isOpened) {
-                    property("box-shadow", "0px 0px 13px 0px #848484")
+                    property("box-shadow", "0px 0px 8px 0px #848484")
                 } else {
                     if (tileState.numOfAroundMines == 0) {
                         border {
