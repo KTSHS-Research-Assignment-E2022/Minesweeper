@@ -3,6 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlin.js.Date
 import kotlin.random.Random
 
 private fun List<List<TileState>>.incAround(x: Int, y: Int) {
@@ -50,11 +51,13 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     var isGameOver by mutableStateOf(false)
     var isGameClear by mutableStateOf(false)
     var isDevMode by mutableStateOf(false)
+    private val startTime: Double
 
     init {
         val connectedList = mutableListOf<TileState>()
         val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
         val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
+        startTime = Date.now()
 
         for (i in 1..numOfMines) {
             connectedList.add(TileState(true))
@@ -91,6 +94,10 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
     fun toggleTileFlag(x: Int, y: Int) {
         map[x][y].isFlagged = !map[x][y].isFlagged
+    }
+
+    fun getElapsedSeconds(): Double {
+        return (Date.now() - startTime) / 1000
     }
 
     private fun openTile(x: Int, y: Int) {
