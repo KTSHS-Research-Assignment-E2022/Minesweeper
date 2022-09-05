@@ -10,7 +10,6 @@ import org.jetbrains.compose.web.css.Style
 import org.jetbrains.compose.web.renderComposable
 
 var isSidebarOpen by mutableStateOf(false)
-var hasUpdate by mutableStateOf(false)
 
 fun main() {
     renderComposable("root") {
