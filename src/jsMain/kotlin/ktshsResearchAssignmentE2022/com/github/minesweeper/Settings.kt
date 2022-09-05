@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
@@ -68,19 +67,6 @@ private fun SimpleSettings() {
             alignContent(AlignContent.SpaceBetween)
         }
     }) {
-        if (hasUpdate) {
-            // アップデート通知
-            GrowingButton("アップデートがあります", true) {
-                window.navigator.serviceWorker.getRegistrations().then {
-                    for (registration in it) {
-                        registration.unregister()
-                        registration.update()
-                    }
-                    hasUpdate = false
-                }
-                window.location.href = window.location.href
-            }
-        }
 
         H2 {
             Text("むずかしさ")
