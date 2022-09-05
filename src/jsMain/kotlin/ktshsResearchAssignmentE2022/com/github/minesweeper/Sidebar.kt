@@ -16,6 +16,7 @@ fun PcSidebar() {
             classes(SidebarStyleSheet.elementStyle)
         }) {
             H1 { Text(if (!MineSweeper.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
+            Timer()
             Settings()
             Button({
                 onClick {
