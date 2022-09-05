@@ -51,13 +51,13 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     var isGameOver by mutableStateOf(false)
     var isGameClear by mutableStateOf(false)
     var isDevMode by mutableStateOf(false)
-    private val startTime: Double
+    private var isStarted by mutableStateOf(false)
+    private var startTime = 0.0
 
     init {
         val connectedList = mutableListOf<TileState>()
         val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
         val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
-        startTime = Date.now()
 
         for (i in 1..numOfMines) {
             connectedList.add(TileState(true))
@@ -85,7 +85,8 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun openTileWithAround(x: Int, y: Int) {
-        if(map[x][y].isFlagged) return
+        if (!isStarted) firstTimeAction()
+        if (map[x][y].isFlagged) return
         openTile(x, y)
         if (map[x][y].numOfAroundMines == 0) {
             map.openAround(x, y)
@@ -93,6 +94,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun toggleTileFlag(x: Int, y: Int) {
+        if (!isStarted) firstTimeAction()
         map[x][y].isFlagged = !map[x][y].isFlagged
     }
 
@@ -100,8 +102,13 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         return (Date.now() - startTime) / 1000
     }
 
+    private fun firstTimeAction() {
+        isStarted = true
+        startTime = Date.now()
+    }
+
     private fun openTile(x: Int, y: Int) {
-        if(map[x][y].isFlagged) return
+        if (map[x][y].isFlagged) return
         map[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
         isGameClear = coordinatesOfOpened == coordinatesWithoutMines
