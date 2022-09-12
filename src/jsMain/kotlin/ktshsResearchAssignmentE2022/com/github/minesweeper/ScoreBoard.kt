@@ -17,9 +17,9 @@ fun Result() {
         classes(ResultStyleSheet.ResultStyle)
     }) {
         if (MineSweeper.logic.isGameOver)
-            ResultTitle("Game Over ${MineSweeper.logic.getElapsedSeconds()}秒")
+            ResultTitle("Game Over")
         else if (MineSweeper.logic.isGameClear)
-            ResultTitle("Game Clear ${MineSweeper.logic.getElapsedSeconds()}秒")
+            ResultTitle("Game Clear Time:${MineSweeper.logic.getElapsedSeconds()}秒")
         else ResultTitle("Error: Is dev mode?")
 
         OnHoverGrowingButton("新しい盤面でプレイする") {
