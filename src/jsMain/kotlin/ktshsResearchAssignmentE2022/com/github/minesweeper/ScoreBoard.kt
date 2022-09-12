@@ -8,6 +8,7 @@ import org.jetbrains.compose.web.css.textAlign
 import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
+import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.Text
 import kotlin.random.Random
 
@@ -18,9 +19,10 @@ fun Result() {
     }) {
         if (MineSweeper.logic.isGameOver)
             ResultTitle("Game Over")
-        else if (MineSweeper.logic.isGameClear)
-            ResultTitle("Game Clear Time:${MineSweeper.logic.getElapsedSeconds()}秒")
-        else ResultTitle("Error: Is dev mode?")
+        else if (MineSweeper.logic.isGameClear) {
+            ResultTitle("🎉Game Clear🎉")
+            ResultTime("Clear Time: ${MineSweeper.logic.getElapsedSeconds()}秒")
+        } else ResultTitle("Error: Is dev mode?")
 
         OnHoverGrowingButton("新しい盤面でプレイする") {
             SettingState.seed = Random.nextInt()
@@ -41,6 +43,21 @@ fun ResultTitle(text: String) {
         }
     }) {
         H1({
+            style {
+                textAlign("center")
+            }
+        }) { Text(text) }
+    }
+}
+
+@Composable
+fun ResultTime(text: String) {
+    Div({
+        style {
+            width(100.percent)
+        }
+    }) {
+        H2({
             style {
                 textAlign("center")
             }
