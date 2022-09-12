@@ -51,7 +51,8 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     var isGameOver by mutableStateOf(false)
     var isGameClear by mutableStateOf(false)
     var isDevMode by mutableStateOf(false)
-    private var isStarted by mutableStateOf(false)
+    var isStarted by mutableStateOf(false)
+        private set
     private var startTime = 0.0
 
     init {
@@ -112,7 +113,10 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         map[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
         isGameClear = coordinatesOfOpened == coordinatesWithoutMines
-        if (map[x][y].isMine && !isDevMode) isGameOver = true
+        isGameOver = map[x][y].isMine && !isDevMode
+        if (isGameClear || isGameOver) {
+            isStarted = false
+        }
     }
 
 
