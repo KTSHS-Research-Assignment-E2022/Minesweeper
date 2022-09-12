@@ -67,6 +67,11 @@ private fun SimpleSettings() {
             alignContent(AlignContent.SpaceBetween)
         }
     }) {
+        H2 {
+            Text("経過時間")
+        }
+
+        Timer()
 
         H2 {
             Text("むずかしさ")

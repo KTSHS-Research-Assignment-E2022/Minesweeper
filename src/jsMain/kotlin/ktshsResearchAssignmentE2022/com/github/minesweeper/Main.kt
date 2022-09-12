@@ -24,7 +24,6 @@ fun main() {
 
         window.onresize = {
             outerWidth.value = window.outerWidth
-            // なんかitが必要っぽい(なぜ？)
             it
         }
 

@@ -9,13 +9,13 @@ import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
 
-var time by mutableStateOf(0.0)
+var time by mutableStateOf("0.000")
 
 @Composable
 fun Timer() {
     window.setInterval(
         {
-            time = MineSweeper.logic.getElapsedSeconds()
+            time = MineSweeper.logic.getElapsedSeconds().toInt().toString()
         }, 1
     )
 
@@ -33,7 +33,6 @@ fun Timer() {
             }
         }
     }) {
-        // TODO: こいつを残りの爆弾表示と同じコンテナに突っ込む あと数字を等幅フォントにしてがたがたをなくす
-        Text(if (MineSweeper.logic.isStarted) "経過時間: $time 秒" else "")
+        Text(if (MineSweeper.logic.isStarted) "$time 秒" else "")
     }
 }
