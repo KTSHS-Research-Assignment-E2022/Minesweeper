@@ -3,11 +3,11 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
 import org.jetbrains.compose.web.dom.*
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
 
 @Composable
 fun PCSidebar() {

@@ -3,8 +3,8 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.SettingMenuButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.*
 import org.jetbrains.compose.web.css.Style
 import org.jetbrains.compose.web.renderComposable

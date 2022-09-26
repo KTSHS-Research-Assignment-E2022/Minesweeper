@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
+import ktshsResearchAssignmentE2022.com.github.minesweeper.components.Timer
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
@@ -25,6 +26,7 @@ fun Settings() {
         } else {
             SimpleSettings()
         }
+
         Button({
             style {
                 width(100.percent)

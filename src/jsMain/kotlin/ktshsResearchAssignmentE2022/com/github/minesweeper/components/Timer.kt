@@ -1,4 +1,4 @@
-package ktshsResearchAssignmentE2022.com.github.minesweeper
+package ktshsResearchAssignmentE2022.com.github.minesweeper.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
