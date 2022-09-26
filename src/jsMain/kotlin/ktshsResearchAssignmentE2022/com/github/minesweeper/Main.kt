@@ -23,20 +23,22 @@ fun main() {
             it
         }
 
-        if (MineSweeperState.logic.isGameOver || MineSweeperState.logic.isGameClear) ResultContainerLayout { Result() }
+        if (MineSweeperState.logic.isGameOver || MineSweeperState.logic.isGameClear)
+            ResultContainerLayout { Result() }
 
-        if (WindowState.isPhone) PhoneHamburgerButtonLayout {
-            if (PhoneSidebarState.isOpen) {
-                PhoneSidebar()
-            } else {
-                SettingMenuButton {
-                    PhoneSidebarState.isOpen = true
+        if (WindowState.isPhone)
+            PhoneHamburgerButtonLayout {
+                if (PhoneSidebarState.isOpen) {
+                    PhoneSidebar()
+                } else {
+                    SettingMenuButton {
+                        PhoneSidebarState.isOpen = true
+                    }
                 }
             }
-        }
 
         MainLayout {
-            if (!WindowState.isPhone) PcSidebar()
+            if (!WindowState.isPhone) PCSidebar()
             CenterLayout {
                 MineSweeper()
             }

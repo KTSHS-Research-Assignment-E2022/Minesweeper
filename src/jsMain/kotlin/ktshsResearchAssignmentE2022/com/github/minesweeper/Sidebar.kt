@@ -10,7 +10,7 @@ import org.jetbrains.compose.web.dom.*
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
 
 @Composable
-fun PcSidebar() {
+fun PCSidebar() {
     Div({
         classes(SidebarStyleSheet.pcSidebarStyle)
     }) {
@@ -46,11 +46,16 @@ fun PhoneSidebar() {
                 style {
                     textAlign("center")
                 }
-            }) { Text(if (!MineSweeperState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
+            }) {
+                Text(if (!MineSweeperState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode")
+            }
+
             Settings()
+
             GrowingButton("閉じる", true, 10.percent) {
                 PhoneSidebarState.isOpen = false
             }
+
             Button({
                 onClick {
                     MineSweeperState.logic.isDevMode = !MineSweeperState.logic.isDevMode
