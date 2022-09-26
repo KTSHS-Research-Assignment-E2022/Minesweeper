@@ -2,6 +2,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ResultStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
@@ -17,20 +18,20 @@ fun Result() {
     Div({
         classes(ResultStyleSheet.ResultStyle)
     }) {
-        if (MineSweeper.logic.isGameOver)
+        if (MineSweeperState.logic.isGameOver)
             ResultTitle("Game Over")
-        else if (MineSweeper.logic.isGameClear) {
+        else if (MineSweeperState.logic.isGameClear) {
             ResultTitle("🎉Game Clear🎉")
-            ResultTime("Clear Time: ${MineSweeper.logic.getElapsedSeconds()}秒")
+            ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
         } else ResultTitle("Error: Is dev mode?")
 
         OnHoverGrowingButton("新しい盤面でプレイする") {
             SettingState.seed = Random.nextInt()
-            MineSweeper.regenerate()
+            MineSweeperState.regenerate()
         }
 
         OnHoverGrowingButton("もう一度この盤面をプレイする") {
-            MineSweeper.regenerate()
+            MineSweeperState.regenerate()
         }
     }
 }
