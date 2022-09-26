@@ -4,7 +4,7 @@ import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.SettingMenuButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.SidebarState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.*
 import org.jetbrains.compose.web.css.Style
 import org.jetbrains.compose.web.renderComposable
@@ -26,11 +26,11 @@ fun main() {
         if (MineSweeperState.logic.isGameOver || MineSweeperState.logic.isGameClear) ResultContainerLayout { Result() }
 
         if (WindowState.isPhone) PhoneHamburgerButtonLayout {
-            if (SidebarState.isOpen) {
+            if (PhoneSidebarState.isOpen) {
                 PhoneSidebar()
             } else {
                 SettingMenuButton {
-                    SidebarState.isOpen = true
+                    PhoneSidebarState.isOpen = true
                 }
             }
         }

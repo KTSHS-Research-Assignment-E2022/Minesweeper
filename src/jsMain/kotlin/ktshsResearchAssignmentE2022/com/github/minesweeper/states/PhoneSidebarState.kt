@@ -4,6 +4,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
-object SidebarState {
+object PhoneSidebarState {
     var isOpen by mutableStateOf(false)
 }
