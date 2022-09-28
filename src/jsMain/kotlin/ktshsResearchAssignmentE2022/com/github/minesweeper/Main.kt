@@ -24,7 +24,7 @@ fun main() {
         }
 
         if (MineSweeperState.logic.isGameOver || MineSweeperState.logic.isGameClear)
-            ResultContainerLayout { Result() }
+            Result()
 
         if (WindowState.isPhone)
             PhoneMenuButtonLayout {
