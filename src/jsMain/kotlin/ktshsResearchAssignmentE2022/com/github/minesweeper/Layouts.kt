@@ -39,7 +39,7 @@ fun MinesweeperLayout(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun PhoneHamburgerButtonLayout(content: @Composable () -> Unit) {
+fun PhoneMenuButtonLayout(content: @Composable () -> Unit) {
     Div({
         classes(PhoneSidebarStyleSheet.SettingMenuButtonContainerStyle)
         onContextMenu {

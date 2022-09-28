@@ -27,7 +27,7 @@ fun main() {
             ResultContainerLayout { Result() }
 
         if (WindowState.isPhone)
-            PhoneHamburgerButtonLayout {
+            PhoneMenuButtonLayout {
                 if (PhoneSidebarState.isOpen) {
                     PhoneSidebar()
                 } else {
