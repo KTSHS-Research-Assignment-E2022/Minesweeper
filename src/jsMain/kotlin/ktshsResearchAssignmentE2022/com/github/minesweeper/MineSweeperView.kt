@@ -51,7 +51,7 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
                     }
 
                     tileState.isFlagged -> Color.mediumseagreen
-                    else -> Color.paleturquoise
+                    else -> Color.white
                 }
             )
 
@@ -64,16 +64,12 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
             )
 
             if (!tileState.isOpened) {
-                property("box-shadow", "0px 0px 8px 0px #848484")
-            } else {
-                if (tileState.numOfAroundMines == 0) {
-                    border {
-                        style = LineStyle.Solid
-                        color = Color.lightgray
-                    }
+                border {
+                    style = LineStyle.Solid
+                    // todo: 枠線の太さを可変に 色の微調整 (もう少し濃く)
+                    color = rgb(180-x*y*5, 205-x*y, 250-x*y)
                 }
             }
-
         }
 
         onContextMenu {
