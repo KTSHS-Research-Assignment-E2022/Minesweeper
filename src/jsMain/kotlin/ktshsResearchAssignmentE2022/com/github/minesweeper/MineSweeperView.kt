@@ -36,15 +36,19 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
 
             backgroundColor(
                 when {
-                    tileState.isOpened -> if (tileState.isMine) Color.crimson else
-                        when (tileState.numOfAroundMines) {
-                            // 色は安全→危険で　青→黄→赤
-                            0 -> Color.whitesmoke
-                            1 -> Color.cornflowerblue
-                            2 -> Color.khaki
-                            3 -> Color.lightcoral
-                            else -> Color.mediumorchid
-                        }
+                    tileState.isOpened -> {
+                        if (tileState.isMine)
+                            Color.crimson
+                        else
+                            when (tileState.numOfAroundMines) {
+                                // 色は安全→危険で　青→黄→赤
+                                0 -> Color.whitesmoke
+                                1 -> Color.cornflowerblue
+                                2 -> Color.khaki
+                                3 -> Color.lightcoral
+                                else -> Color.mediumorchid
+                            }
+                    }
 
                     tileState.isFlagged -> Color.mediumseagreen
                     else -> Color.paleturquoise
@@ -53,9 +57,10 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
 
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
             fontSize(
-                if (tileState.isOpened) {
+                if (tileState.isOpened)
                     if (tileState.isMine) mineFontSize else 3.vmin
-                } else 3.vmin
+                else
+                    3.vmin
             )
 
             if (!tileState.isOpened) {
