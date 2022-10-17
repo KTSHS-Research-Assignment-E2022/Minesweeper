@@ -55,12 +55,14 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
                 }
             )
 
+            // todo:タイルの一片の長さの算出式から適当なフォントサイズを算出する式を立てる
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
+            val commonFontSize = if (logic.xLength > 5) 3.vmin else 4.vmin
             fontSize(
-                if (tileState.isOpened)
-                    if (tileState.isMine) mineFontSize else 3.vmin
+                if (tileState.isOpened && tileState.isMine)
+                    mineFontSize
                 else
-                    3.vmin
+                    commonFontSize
             )
 
             if (!tileState.isOpened && !tileState.isFlagged) {
