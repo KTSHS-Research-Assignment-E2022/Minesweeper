@@ -63,11 +63,11 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
                     3.vmin
             )
 
-            if (!tileState.isOpened) {
+            if (!tileState.isOpened && !tileState.isFlagged) {
                 border {
                     style = LineStyle.Solid
-                    // todo: 枠線の太さを可変に 色の微調整 (もう少し濃く)
-                    color = rgb(180-x*y*5, 205-x*y, 250-x*y)
+                    this.width = if (logic.xLength < 13) 3.px else 2.px
+                    color = rgb(180 - x * y * 5, 205 - x * y, 250 - x * y)
                 }
             }
         }
