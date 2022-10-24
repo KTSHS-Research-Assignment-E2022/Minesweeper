@@ -32,14 +32,15 @@ object SettingState {
 }
 
 enum class Difficulty {
+    // ハードが 1/5 くらいがいい比率
     Easy, Normal, Hard, Manual;
 
     val xLength: Int
         get() {
             return when (this) {
-                Easy -> 9
+                Easy -> 7
                 Normal -> 9
-                Hard -> 9
+                Hard -> 11
                 Manual -> SettingState.xLength
             }
         }
@@ -47,9 +48,9 @@ enum class Difficulty {
     val yLength: Int
         get() {
             return when (this) {
-                Easy -> 9
+                Easy -> 7
                 Normal -> 9
-                Hard -> 9
+                Hard -> 11
                 Manual -> SettingState.yLength
             }
         }
@@ -57,9 +58,9 @@ enum class Difficulty {
     val numOfMines: Int
         get() {
             return when (this) {
-                Easy -> 8
+                Easy -> 7
                 Normal -> 12
-                Hard -> 16
+                Hard -> 24
                 Manual -> SettingState.numOfMines
             }
         }

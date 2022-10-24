@@ -11,7 +11,7 @@ object MinesweeperStyleSheet : StyleSheet() {
         alignItems(AlignItems.FlexStart)
 
         fontFamily("M PLUS Rounded 1c", "serif")
-        backgroundColor(Color.whitesmoke)
+        backgroundColor(Color.white)
         width(90.vmin)
         height(90.vmin)
 

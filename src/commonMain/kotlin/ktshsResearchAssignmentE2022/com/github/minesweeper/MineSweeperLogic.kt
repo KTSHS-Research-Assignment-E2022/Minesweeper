@@ -109,7 +109,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     private fun openTile(x: Int, y: Int) {
-        if (map[x][y].isFlagged) return
+        if (map[x][y].isFlagged) toggleTileFlag(x, y)
         map[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
         isGameClear = coordinatesOfOpened == coordinatesWithoutMines

@@ -15,29 +15,31 @@ import kotlin.random.Random
 
 @Composable
 fun Result() {
-    Div({
-        classes(ResultStyleSheet.ResultStyle)
-    }) {
-        if (MineSweeperState.logic.isGameOver)
-            ResultTitle("Game Over")
-        else if (MineSweeperState.logic.isGameClear) {
-            ResultTitle("🎉Game Clear🎉")
-            ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
-        } else ResultTitle("Error: Is dev mode?")
+    ResultContainerLayout {
+        Div({
+            classes(ResultStyleSheet.ResultStyle)
+        }) {
+            if (MineSweeperState.logic.isGameOver)
+                ResultTitle("Game Over")
+            else if (MineSweeperState.logic.isGameClear) {
+                ResultTitle("🎉Game Clear🎉")
+                ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
+            } else ResultTitle("Error: Is it dev mode?")
 
-        OnHoverGrowingButton("新しい盤面でプレイする") {
-            SettingState.seed = Random.nextInt()
-            MineSweeperState.regenerate()
-        }
+            OnHoverGrowingButton("新しい盤面でプレイする") {
+                SettingState.seed = Random.nextInt()
+                MineSweeperState.regenerate()
+            }
 
-        OnHoverGrowingButton("もう一度この盤面をプレイする") {
-            MineSweeperState.regenerate()
+            OnHoverGrowingButton("もう一度この盤面をプレイする") {
+                MineSweeperState.regenerate()
+            }
         }
     }
 }
 
 @Composable
-fun ResultTitle(text: String) {
+private fun ResultTitle(text: String) {
     Div({
         style {
             width(100.percent)
@@ -52,7 +54,7 @@ fun ResultTitle(text: String) {
 }
 
 @Composable
-fun ResultTime(text: String) {
+private fun ResultTime(text: String) {
     Div({
         style {
             width(100.percent)

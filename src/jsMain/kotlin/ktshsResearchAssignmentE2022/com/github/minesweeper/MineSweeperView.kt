@@ -36,39 +36,41 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
 
             backgroundColor(
                 when {
-                    tileState.isOpened -> if (tileState.isMine) Color.crimson else
-                        when (tileState.numOfAroundMines) {
-                            // 色は安全→危険で　青→黄→赤
-                            0 -> Color.whitesmoke
-                            1 -> Color.cornflowerblue
-                            2 -> Color.khaki
-                            3 -> Color.lightcoral
-                            else -> Color.mediumorchid
-                        }
+                    tileState.isOpened -> {
+                        if (tileState.isMine)
+                            Color.crimson
+                        else
+                            when (tileState.numOfAroundMines) {
+                                // 色は安全→危険で　青→黄→赤
+                                0 -> Color.whitesmoke
+                                1 -> Color.cornflowerblue
+                                2 -> Color.khaki
+                                3 -> Color.lightcoral
+                                else -> Color.mediumorchid
+                            }
+                    }
 
                     tileState.isFlagged -> Color.mediumseagreen
-                    else -> Color.paleturquoise
+                    else -> Color.white
                 }
             )
 
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
+            val commonFontSize = if (logic.xLength > 5) 3.vmin else 4.vmin
             fontSize(
-                if (tileState.isOpened) {
-                    if (tileState.isMine) mineFontSize else 3.vmin
-                } else 3.vmin
+                if (tileState.isOpened && tileState.isMine)
+                    mineFontSize
+                else
+                    commonFontSize
             )
 
-            if (!tileState.isOpened) {
-                property("box-shadow", "0px 0px 8px 0px #848484")
-            } else {
-                if (tileState.numOfAroundMines == 0) {
-                    border {
-                        style = LineStyle.Solid
-                        color = Color.lightgray
-                    }
+            if (!tileState.isOpened && !tileState.isFlagged) {
+                border {
+                    style = LineStyle.Solid
+                    this.width = if (logic.xLength < 13) 3.px else 2.px
+                    color = rgb(180 - x * y * 5, 205 - x * y, 250 - x * y)
                 }
             }
-
         }
 
         onContextMenu {

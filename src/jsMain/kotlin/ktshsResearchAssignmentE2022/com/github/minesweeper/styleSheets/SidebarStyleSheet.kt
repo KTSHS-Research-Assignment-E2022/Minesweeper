@@ -11,6 +11,7 @@ object SidebarStyleSheet : StyleSheet() {
         display(DisplayStyle.Flex)
         flexFlow(FlexDirection.Column, FlexWrap.Wrap)
         justifyContent(JustifyContent.SpaceBetween)
+        alignItems(AlignItems.Center)
 
         // 自分自身へのプロパティ
         backgroundColor(Color.white)

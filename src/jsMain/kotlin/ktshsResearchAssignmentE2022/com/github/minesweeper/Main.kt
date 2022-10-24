@@ -24,10 +24,10 @@ fun main() {
         }
 
         if (MineSweeperState.logic.isGameOver || MineSweeperState.logic.isGameClear)
-            ResultContainerLayout { Result() }
+            Result()
 
         if (WindowState.isPhone)
-            PhoneHamburgerButtonLayout {
+            PhoneMenuButtonLayout {
                 if (PhoneSidebarState.isOpen) {
                     PhoneSidebar()
                 } else {
