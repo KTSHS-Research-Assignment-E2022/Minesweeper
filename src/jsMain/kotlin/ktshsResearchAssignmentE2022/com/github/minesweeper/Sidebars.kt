@@ -1,9 +1,9 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
-import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
+import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.PhoneSidebarState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
@@ -19,6 +19,9 @@ fun PCSidebar() {
         }) {
             H1 { Text(if (!MineSweeperState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
             Settings()
+            OnHoverGrowingButton("遊び方", height = 10.percent, width = 90.percent) {
+                AppState.isHelpOpen = true
+            }
             Button({
                 onClick {
                     MineSweeperState.logic.isDevMode = !MineSweeperState.logic.isDevMode
@@ -52,8 +55,8 @@ fun PhoneSidebar() {
 
             Settings()
 
-            GrowingButton("閉じる", true, 10.percent) {
-                PhoneSidebarState.isOpen = false
+            OnHoverGrowingButton("閉じる", height = 10.percent, width = 90.percent) {
+                AppState.isOpen = false
             }
 
             Button({

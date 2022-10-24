@@ -3,7 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ResultStyleSheet
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.BlackOutOverlayStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
 import org.jetbrains.compose.web.css.width
@@ -15,9 +15,9 @@ import kotlin.random.Random
 
 @Composable
 fun Result() {
-    ResultContainerLayout {
+    BlackOutOverlayLayout {
         Div({
-            classes(ResultStyleSheet.ResultStyle)
+            classes(BlackOutOverlayStyleSheet.ResultStyle)
         }) {
             if (MineSweeperState.logic.isGameOver)
                 ResultTitle("Game Over")

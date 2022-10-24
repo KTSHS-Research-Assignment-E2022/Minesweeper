@@ -2,8 +2,8 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets
 
 import org.jetbrains.compose.web.css.*
 
-object ResultStyleSheet : StyleSheet() {
-    val ResultContainerStyle by style {
+object BlackOutOverlayStyleSheet : StyleSheet() {
+    val BlackOutOverlayContainerStyle by style {
         position(Position.Absolute)
         width(100.vw)
         height(100.vh)
@@ -27,5 +27,19 @@ object ResultStyleSheet : StyleSheet() {
         justifyContent(JustifyContent.Center)
         alignItems(AlignItems.Center)
         flexWrap(FlexWrap.Wrap)
+    }
+
+    val HelpStyle by style {
+        height(70.vmin)
+        width(90.vmin)
+        borderRadius(5.vmin)
+        backgroundColor(Color.white)
+        fontFamily("M PLUS 2", "serif")
+
+        display(DisplayStyle.Flex)
+        justifyContent(JustifyContent.SpaceEvenly)
+        flexWrap(FlexWrap.Wrap)
+        flexDirection(FlexDirection.Column)
+        alignItems(AlignItems.Center)
     }
 }
