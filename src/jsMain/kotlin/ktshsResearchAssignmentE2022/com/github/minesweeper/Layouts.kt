@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.AppStyleSheet
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.MinesweeperStyleSheet
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.PhoneSidebarStyleSheet
-import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.ResultStyleSheet
+import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.BlackOutOverlayStyleSheet
 import org.jetbrains.compose.web.dom.Div
 
 @Composable
@@ -51,9 +51,9 @@ fun PhoneMenuButtonLayout(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun ResultContainerLayout(content: @Composable () -> Unit) {
+fun BlackOutOverlayLayout(content: @Composable () -> Unit) {
     Div({
-        classes(ResultStyleSheet.ResultContainerStyle)
+        classes(BlackOutOverlayStyleSheet.BlackOutOverlayContainerStyle)
         onContextMenu {
             // キャンセル
             it.preventDefault()
