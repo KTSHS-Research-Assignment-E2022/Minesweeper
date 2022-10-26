@@ -3,7 +3,7 @@ plugins {
     id("org.jetbrains.compose") version "1.2.0-beta01"
 }
 
-version = "2.0.0"
+version = "2.1.1"
 
 repositories {
     mavenCentral()

@@ -2,7 +2,8 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.SettingState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.BlackOutOverlayStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
@@ -19,20 +20,22 @@ fun Result() {
         Div({
             classes(BlackOutOverlayStyleSheet.ResultStyle)
         }) {
-            if (MineSweeperState.logic.isGameOver)
-                ResultTitle("Game Over")
-            else if (MineSweeperState.logic.isGameClear) {
-                ResultTitle("🎉Game Clear🎉")
-                ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
-            } else ResultTitle("Error: Is it dev mode?")
+            when (MineSweeperViewState.logic.gameStatus) {
+                GameStatus.GameOver -> ResultTitle("Game Over")
+                GameStatus.GameClear -> {
+                    ResultTitle("🎉Game Clear🎉")
+                    ResultTime("Clear Time: ${MineSweeperViewState.logic.getElapsedSeconds()}秒")
+                }
+                else -> ResultTitle("Error: Are you developer?")
+            }
 
             OnHoverGrowingButton("新しい盤面でプレイする") {
                 SettingState.seed = Random.nextInt()
-                MineSweeperState.regenerate()
+                MineSweeperViewState.regenerate()
             }
 
             OnHoverGrowingButton("もう一度この盤面をプレイする") {
-                MineSweeperState.regenerate()
+                MineSweeperViewState.regenerate()
             }
         }
     }

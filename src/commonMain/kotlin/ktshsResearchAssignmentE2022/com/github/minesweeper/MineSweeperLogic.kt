@@ -3,100 +3,46 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.ISquareState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSquareState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.NormalSquareState
 import kotlin.js.Date
 import kotlin.random.Random
 
-private fun List<List<TileState>>.incAround(x: Int, y: Int) {
-    // 左上
-    if (x != 0 && y != 0) {
-        if (!this[x - 1][y - 1].isMine) this[x - 1][y - 1].numOfAroundMines++
-    }
-    // 真上
-    if (x != 0) {
-        if (!this[x - 1][y].isMine) this[x - 1][y].numOfAroundMines++
-    }
-    // 右上
-    if (x != 0 && this[x - 1].size > y + 1) {
-        if (!this[x - 1][y + 1].isMine) this[x - 1][y + 1].numOfAroundMines++
-    }
-
-    // 左
-    if (y != 0) {
-        if (!this[x][y - 1].isMine) this[x][y - 1].numOfAroundMines++
-    }
-    // 右
-    if (this[x].size > y + 1) {
-        if (!this[x][y + 1].isMine) this[x][y + 1].numOfAroundMines++
-    }
-
-    // 左下
-    if (this.size > x + 1 && y != 0) {
-        if (!this[x + 1][y - 1].isMine) this[x + 1][y - 1].numOfAroundMines++
-    }
-    // 真下
-    if (this.size > x + 1) {
-        if (!this[x + 1][y].isMine) this[x + 1][y].numOfAroundMines++
-    }
-    // 右下
-    if (this.size > x + 1 && this[x + 1].size > y + 1) {
-        if (!this[x + 1][y + 1].isMine) this[x + 1][y + 1].numOfAroundMines++
-    }
-}
-
 class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
     // y軸方向に各マスの情報を格納している
-    val map: List<List<TileState>>
-    private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
-    private val coordinatesWithoutMines: Set<Pair<Int, Int>>
-    var isGameOver by mutableStateOf(false)
-    var isGameClear by mutableStateOf(false)
-    var isDevMode by mutableStateOf(false)
-    var isStarted by mutableStateOf(false)
+    var board by mutableStateOf(listOf(emptyList<ISquareState>()))
         private set
+    var gameStatus by mutableStateOf(GameStatus.BeforeAction)
+        private set
+
+    private val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
+    private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
+    private var coordinatesWithoutMines = mutableSetOf<Pair<Int, Int>>()
+
+    var isDevMode by mutableStateOf(false)
     private var startTime = 0.0
 
     init {
-        val connectedList = mutableListOf<TileState>()
-        val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
-        val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
-
-        for (i in 1..numOfMines) {
-            connectedList.add(TileState(true))
-        }
-
-        while (connectedList.size <= xLength * yLength) {
-            connectedList.add(TileState(false))
-        }
-
-        connectedList.shuffle(Random(seed))
-
-        map = connectedList.windowed(yLength, yLength)
-
-        for (x in 0 until xLength) {
-            for (y in 0 until yLength) {
-                coordinatesOfPlane.add(Pair(x, y))
-                if (map[x][y].isMine) {
-                    coordinatesOfMines.add(Pair(x, y))
-                    map.incAround(x, y)
-                }
+        board = MutableList(xLength) { x ->
+            MutableList(yLength) { y ->
+                NormalSquareState(x, y, 0)
             }
         }
-        coordinatesOfPlane.removeAll(coordinatesOfMines)
-        coordinatesWithoutMines = coordinatesOfPlane
     }
 
     fun openTileWithAround(x: Int, y: Int) {
-        if (!isStarted) firstTimeAction()
-        if (map[x][y].isFlagged) return
+        if (gameStatus == GameStatus.BeforeAction || gameStatus == GameStatus.BeforeClick) firstTimeOpen(x, y)
+        if (board[x][y].isFlagged) return
         openTile(x, y)
-        if (map[x][y].numOfAroundMines == 0) {
-            map.openAround(x, y)
+        if (board[x][y] is NormalSquareState && (board[x][y] as NormalSquareState).numOfAroundMines == 0) {
+            board.openAround(x, y)
         }
     }
 
     fun toggleTileFlag(x: Int, y: Int) {
-        if (!isStarted) firstTimeAction()
-        map[x][y].isFlagged = !map[x][y].isFlagged
+        if (gameStatus == GameStatus.BeforeAction) firstTimeAction()
+        board[x][y].isFlagged = !board[x][y].isFlagged
     }
 
     fun getElapsedSeconds(): Double {
@@ -104,78 +50,101 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     private fun firstTimeAction() {
-        isStarted = true
+        gameStatus = GameStatus.BeforeClick
         startTime = Date.now()
     }
 
+    private fun firstTimeOpen(clickedX: Int, clickedY: Int) {
+        firstTimeAction()
+        gameStatus = GameStatus.Started
+        // 地雷の座標を決定
+        val rnd = Random(seed)
+        while (coordinatesOfMines.size < numOfMines) {
+            val x = rnd.nextInt(xLength)
+            val y = rnd.nextInt(yLength)
+            if (!(x == clickedX && y == clickedY)) {
+                coordinatesOfMines.add(Pair(x, y))
+            }
+        }
+
+        val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
+        for (x in 0 until xLength) {
+            for (y in 0 until yLength) {
+                coordinatesOfPlane.add(Pair(x, y))
+            }
+        }
+        coordinatesOfPlane.removeAll(coordinatesOfMines)
+
+        coordinatesWithoutMines = coordinatesOfPlane
+
+        val flaggedSquareSet = mutableSetOf<Pair<Int, Int>>()
+        board.forEachIndexed { x, yList ->
+            yList.forEachIndexed { y, iSquareState ->
+                if (iSquareState.isFlagged)
+                    flaggedSquareSet.add(Pair(x, y))
+            }
+        }
+
+        board = MutableList(xLength) { x ->
+            MutableList(yLength) { y ->
+                if (coordinatesOfMines.contains(Pair(x, y))) {
+                    MineSquareState(x, y)
+                } else {
+                    NormalSquareState(x, y, 0)
+                }
+            }
+        }
+
+        board.forEachIndexed { x, yList ->
+            yList.forEachIndexed { y, iSquareState ->
+                if (iSquareState is NormalSquareState)
+                    iSquareState.numOfAroundMines = calcNumOfAroundMine(board, x, y)
+
+                if (flaggedSquareSet.contains(Pair(x, y)))
+                    iSquareState.isFlagged = true
+            }
+        }
+
+        openTileWithAround(clickedX, clickedY)
+    }
+
     private fun openTile(x: Int, y: Int) {
-        if (map[x][y].isFlagged) toggleTileFlag(x, y)
-        map[x][y].isOpened = true
+        if (board[x][y].isFlagged) toggleTileFlag(x, y)
+        board[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
-        isGameClear = coordinatesOfOpened == coordinatesWithoutMines
-        isGameOver = map[x][y].isMine && !isDevMode
-        if (isGameClear || isGameOver) {
-            isStarted = false
+        if (coordinatesOfOpened == coordinatesWithoutMines) {
+            gameStatus = GameStatus.GameClear
+        } else if (board[x][y] is MineSquareState && !isDevMode) {
+            gameStatus = GameStatus.GameOver
         }
     }
 
 
-    private fun List<List<TileState>>.openAround(x: Int, y: Int) {
-        // 左上
-        if (x != 0 && y != 0 && !this[x - 1][y - 1].isOpened) {
-            openTile(x - 1, y - 1)
-            if (this[x - 1][y - 1].numOfAroundMines == 0) {
-                this.openAround(x - 1, y - 1)
-            }
-        }
-        // 真上
-        if (x != 0 && !this[x - 1][y].isOpened) {
-            openTile(x - 1, y)
-            if (this[x - 1][y].numOfAroundMines == 0) {
-                this.openAround(x - 1, y)
-            }
-        }
-        // 右上
-        if (x != 0 && this[x - 1].size > y + 1 && !this[x - 1][y + 1].isOpened) {
-            openTile(x - 1, y + 1)
-            if (this[x - 1][y + 1].numOfAroundMines == 0) {
-                this.openAround(x - 1, y + 1)
-            }
-        }
-        // 左
-        if (y != 0 && !this[x][y - 1].isOpened) {
-            openTile(x, y - 1)
-            if (this[x][y - 1].numOfAroundMines == 0) {
-                this.openAround(x, y - 1)
-            }
-        }
-        // 右
-        if (this[x].size > y + 1 && !this[x][y + 1].isOpened) {
-            openTile(x, y + 1)
-            if (this[x][y + 1].numOfAroundMines == 0) {
-                this.openAround(x, y + 1)
-            }
-        }
-        // 左下
-        if (this.size > x + 1 && y != 0 && !this[x + 1][y - 1].isOpened) {
-            openTile(x + 1, y - 1)
-            if (this[x + 1][y - 1].numOfAroundMines == 0) {
-                this.openAround(x + 1, y - 1)
-            }
-        }
-        // 真下
-        if (this.size > x + 1 && !this[x + 1][y].isOpened) {
-            openTile(x + 1, y)
-            if (this[x + 1][y].numOfAroundMines == 0) {
-                this.openAround(x + 1, y)
-            }
-        }
-        // 右下
-        if (this.size > x + 1 && this[x + 1].size > y + 1 && !this[x + 1][y + 1].isOpened) {
-            openTile(x + 1, y + 1)
-            if (this[x + 1][y + 1].numOfAroundMines == 0) {
-                this.openAround(x + 1, y + 1)
+    private fun List<List<ISquareState>>.openAround(x: Int, y: Int) {
+        for (cx in x - 1..x + 1) {
+            if (0 <= cx && cx < this.size) {
+                for (cy in y - 1..y + 1) {
+                    if (0 <= cy && cy < this[cx].size && !this[cx][cy].isOpened) {
+                        openTile(cx, cy)
+                        if (board[cx][cy] is NormalSquareState && (this[cx][cy] as NormalSquareState).numOfAroundMines == 0)
+                            this.openAround(cx, cy)
+                    }
+                }
             }
         }
     }
+}
+
+private fun calcNumOfAroundMine(board: List<List<ISquareState>>, x: Int, y: Int): Int {
+    var num = 0
+    for (cx in x - 1..x + 1) {
+        if (0 <= cx && cx < board.size) {
+            for (cy in y - 1..y + 1) {
+                if (0 <= cy && cy < board[cx].size && board[cx][cy] is MineSquareState) {
+                    num++
+                }
+            }
+        }
+    }
+    return num
 }
