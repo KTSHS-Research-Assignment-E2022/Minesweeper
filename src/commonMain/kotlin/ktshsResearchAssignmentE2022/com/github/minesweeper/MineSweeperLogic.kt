@@ -11,26 +11,76 @@ import kotlin.random.Random
 
 class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
     // y軸方向に各マスの情報を格納している
-    val board: List<List<ISquareState>>
-    var gameStatus by mutableStateOf(GameStatus.BeforeStarts)
+    var board by mutableStateOf(listOf(emptyList<ISquareState>()))
         private set
+    var gameStatus by mutableStateOf(GameStatus.BeforeAction)
+        private set
+
+    private val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
     private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
-    private val coordinatesWithoutMines: Set<Pair<Int, Int>>
+    private var coordinatesWithoutMines = mutableSetOf<Pair<Int, Int>>()
 
     var isDevMode by mutableStateOf(false)
     private var startTime = 0.0
 
     init {
-        val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
+        board = MutableList(xLength) { x ->
+            MutableList(yLength) { y ->
+                NormalSquareState(x, y, 0)
+            }
+        }
+    }
+
+    fun openTileWithAround(x: Int, y: Int) {
+        if (gameStatus == GameStatus.BeforeClick) firstTimeOpen(x, y)
+        if (board[x][y].isFlagged) return
+        openTile(x, y)
+        if (board[x][y] is NormalSquareState && (board[x][y] as NormalSquareState).numOfAroundMines == 0) {
+            board.openAround(x, y)
+        }
+    }
+
+    fun toggleTileFlag(x: Int, y: Int) {
+        if (gameStatus == GameStatus.BeforeAction) firstTimeAction()
+        board[x][y].isFlagged = !board[x][y].isFlagged
+    }
+
+    fun getElapsedSeconds(): Double {
+        return (Date.now() - startTime) / 1000
+    }
+
+    private fun firstTimeAction() {
+        gameStatus = GameStatus.BeforeClick
+        startTime = Date.now()
+    }
+
+    private fun firstTimeOpen(clickedX: Int, clickedY: Int) {
+        gameStatus = GameStatus.Started
+        // 地雷の座標を決定
         val rnd = Random(seed)
         while (coordinatesOfMines.size < numOfMines) {
-            coordinatesOfMines.add(Pair(rnd.nextInt(xLength), rnd.nextInt(yLength)))
+            val x = rnd.nextInt(xLength)
+            val y = rnd.nextInt(yLength)
+            if (!(x == clickedX && y == clickedY)) {
+                coordinatesOfMines.add(Pair(x, y))
+            }
         }
 
         val coordinatesOfPlane = mutableSetOf<Pair<Int, Int>>()
         for (x in 0 until xLength) {
             for (y in 0 until yLength) {
                 coordinatesOfPlane.add(Pair(x, y))
+            }
+        }
+        coordinatesOfPlane.removeAll(coordinatesOfMines)
+
+        coordinatesWithoutMines = coordinatesOfPlane
+
+        val flaggedSquareSet = mutableSetOf<Pair<Int, Int>>()
+        board.forEachIndexed { x, yList ->
+            yList.forEachIndexed { y, iSquareState ->
+                if (iSquareState.isFlagged)
+                    flaggedSquareSet.add(Pair(x, y))
             }
         }
 
@@ -48,34 +98,13 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
             yList.forEachIndexed { y, iSquareState ->
                 if (iSquareState is NormalSquareState)
                     iSquareState.numOfAroundMines = calcNumOfAroundMine(board, x, y)
+
+                if (flaggedSquareSet.contains(Pair(x, y)))
+                    iSquareState.isFlagged = true
             }
         }
 
-        coordinatesOfPlane.removeAll(coordinatesOfMines)
-        coordinatesWithoutMines = coordinatesOfPlane
-    }
-
-    fun openTileWithAround(x: Int, y: Int) {
-        if (gameStatus == GameStatus.BeforeStarts) firstTimeAction()
-        if (board[x][y].isFlagged) return
-        openTile(x, y)
-        if (board[x][y] is NormalSquareState && (board[x][y] as NormalSquareState).numOfAroundMines == 0) {
-            board.openAround(x, y)
-        }
-    }
-
-    fun toggleTileFlag(x: Int, y: Int) {
-        if (gameStatus == GameStatus.BeforeStarts) firstTimeAction()
-        board[x][y].isFlagged = !board[x][y].isFlagged
-    }
-
-    fun getElapsedSeconds(): Double {
-        return (Date.now() - startTime) / 1000
-    }
-
-    private fun firstTimeAction() {
-        gameStatus = GameStatus.Started
-        startTime = Date.now()
+        openTileWithAround(clickedX, clickedY)
     }
 
     private fun openTile(x: Int, y: Int) {

@@ -35,6 +35,6 @@ fun Timer() {
             }
         }
     }) {
-        Text(if (MineSweeperViewState.logic.gameStatus == GameStatus.Started) "$time 秒" else "")
+        Text(if (MineSweeperViewState.logic.gameStatus != GameStatus.BeforeAction) "$time 秒" else "")
     }
 }
