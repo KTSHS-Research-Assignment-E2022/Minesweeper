@@ -3,7 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
@@ -17,14 +17,14 @@ fun PCSidebar() {
         Style({
             classes(SidebarStyleSheet.elementStyle)
         }) {
-            H1 { Text(if (!MineSweeperState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
+            H1 { Text(if (!MineSweeperViewState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
             Settings()
             OnHoverGrowingButton("遊び方", height = 10.percent, width = 90.percent) {
                 AppState.isHelpOpen = true
             }
             Button({
                 onClick {
-                    MineSweeperState.logic.isDevMode = !MineSweeperState.logic.isDevMode
+                    MineSweeperViewState.logic.isDevMode = !MineSweeperViewState.logic.isDevMode
                 }
             }) {
                 H3({
@@ -50,7 +50,7 @@ fun PhoneSidebar() {
                     textAlign("center")
                 }
             }) {
-                Text(if (!MineSweeperState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode")
+                Text(if (!MineSweeperViewState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode")
             }
 
             Settings()
@@ -61,7 +61,7 @@ fun PhoneSidebar() {
 
             Button({
                 onClick {
-                    MineSweeperState.logic.isDevMode = !MineSweeperState.logic.isDevMode
+                    MineSweeperViewState.logic.isDevMode = !MineSweeperViewState.logic.isDevMode
                 }
             }) {
                 H3 { Text("Made by 神奈川工業高校電気科") }

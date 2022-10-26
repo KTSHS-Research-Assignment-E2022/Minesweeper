@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.GrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.Timer
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.Difficulty
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.SettingState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
@@ -84,27 +84,27 @@ private fun SimpleSettings() {
 
         GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy) {
             SettingState.setWithDifficulty(Difficulty.Easy)
-            MineSweeperState.regenerate()
+            MineSweeperViewState.regenerate()
         }
 
         GrowingButton("ふつう", SettingState.difficulty == Difficulty.Normal) {
             SettingState.setWithDifficulty(Difficulty.Normal)
-            MineSweeperState.regenerate()
+            MineSweeperViewState.regenerate()
         }
 
         GrowingButton("むずかしい", SettingState.difficulty == Difficulty.Hard) {
             SettingState.setWithDifficulty(Difficulty.Hard)
-            MineSweeperState.regenerate()
+            MineSweeperViewState.regenerate()
         }
     }
 }
 
 @Composable
 private fun AdvancedSettings() {
-    val notIsDiff = !(SettingState.yLength == MineSweeperState.logic.yLength &&
-            SettingState.xLength == MineSweeperState.logic.xLength &&
-            SettingState.numOfMines == MineSweeperState.logic.numOfMines &&
-            SettingState.seed == MineSweeperState.logic.seed)
+    val notIsDiff = !(SettingState.yLength == MineSweeperViewState.logic.yLength &&
+            SettingState.xLength == MineSweeperViewState.logic.xLength &&
+            SettingState.numOfMines == MineSweeperViewState.logic.numOfMines &&
+            SettingState.seed == MineSweeperViewState.logic.seed)
 
     Div({
         style {
@@ -120,15 +120,15 @@ private fun AdvancedSettings() {
             Text("詳細設定")
         }
         GrowingButton("再生成する", notIsDiff) {
-            if (notIsDiff) MineSweeperState.regenerate()
+            if (notIsDiff) MineSweeperViewState.regenerate()
         }
         GrowingButton("現在の設定にもどす", notIsDiff, 10.percent) {
             if (notIsDiff) {
                 SettingState.setAll(
-                    MineSweeperState.logic.yLength,
-                    MineSweeperState.logic.xLength,
-                    MineSweeperState.logic.numOfMines,
-                    MineSweeperState.logic.seed
+                    MineSweeperViewState.logic.yLength,
+                    MineSweeperViewState.logic.xLength,
+                    MineSweeperViewState.logic.numOfMines,
+                    MineSweeperViewState.logic.seed
                 )
             }
         }

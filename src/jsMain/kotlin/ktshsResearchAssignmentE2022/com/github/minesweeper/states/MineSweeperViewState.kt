@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import ktshsResearchAssignmentE2022.com.github.minesweeper.MineSweeperLogic
 
-object MineSweeperState {
+object MineSweeperViewState {
     var logic by mutableStateOf(
         MineSweeperLogic(
             SettingState.xLength,

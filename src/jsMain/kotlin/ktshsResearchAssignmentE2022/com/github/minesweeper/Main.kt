@@ -3,7 +3,7 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.SettingMenuButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.*
 import org.jetbrains.compose.web.css.Style
@@ -23,7 +23,7 @@ fun main() {
             it
         }
 
-        if (MineSweeperState.logic.gameStatus == GameStatus.GameOver || MineSweeperState.logic.gameStatus == GameStatus.GameClear)
+        if (MineSweeperViewState.logic.gameStatus == GameStatus.GameOver || MineSweeperViewState.logic.gameStatus == GameStatus.GameClear)
             Result()
 
         if (AppState.isHelpOpen)

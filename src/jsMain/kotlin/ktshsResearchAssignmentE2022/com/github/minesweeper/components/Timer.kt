@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.browser.window
 import ktshsResearchAssignmentE2022.com.github.minesweeper.GameStatus
-import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
@@ -17,7 +17,7 @@ var time by mutableStateOf("0.000")
 fun Timer() {
     window.setInterval(
         {
-            time = MineSweeperState.logic.getElapsedSeconds().toInt().toString()
+            time = MineSweeperViewState.logic.getElapsedSeconds().toInt().toString()
         }, 1
     )
 
@@ -35,6 +35,6 @@ fun Timer() {
             }
         }
     }) {
-        Text(if (MineSweeperState.logic.gameStatus == GameStatus.Started) "$time 秒" else "")
+        Text(if (MineSweeperViewState.logic.gameStatus == GameStatus.Started) "$time 秒" else "")
     }
 }
