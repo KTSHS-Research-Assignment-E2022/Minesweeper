@@ -1,4 +1,4 @@
-package ktshsResearchAssignmentE2022.com.github.minesweeper
+package ktshsResearchAssignmentE2022.com.github.minesweeper.states
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

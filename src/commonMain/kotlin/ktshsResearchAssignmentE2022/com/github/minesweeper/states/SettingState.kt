@@ -1,4 +1,4 @@
-package ktshsResearchAssignmentE2022.com.github.minesweeper
+package ktshsResearchAssignmentE2022.com.github.minesweeper.states
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,11 +23,11 @@ object SettingState {
         seed: Int = Random.nextInt(),
         difficulty: Difficulty = Difficulty.Manual
     ) {
-        this.difficulty = difficulty
-        this.xLength = x
-        this.yLength = y
-        this.numOfMines = numOfMines
-        this.seed = seed
+        SettingState.difficulty = difficulty
+        xLength = x
+        yLength = y
+        SettingState.numOfMines = numOfMines
+        SettingState.seed = seed
     }
 }
 
