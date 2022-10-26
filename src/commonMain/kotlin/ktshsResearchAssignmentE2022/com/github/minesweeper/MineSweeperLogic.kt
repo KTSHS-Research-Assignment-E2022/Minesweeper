@@ -32,7 +32,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun openTileWithAround(x: Int, y: Int) {
-        if (gameStatus == GameStatus.BeforeClick) firstTimeOpen(x, y)
+        if (gameStatus == GameStatus.BeforeAction || gameStatus == GameStatus.BeforeClick) firstTimeOpen(x, y)
         if (board[x][y].isFlagged) return
         openTile(x, y)
         if (board[x][y] is NormalSquareState && (board[x][y] as NormalSquareState).numOfAroundMines == 0) {
@@ -55,6 +55,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     private fun firstTimeOpen(clickedX: Int, clickedY: Int) {
+        firstTimeAction()
         gameStatus = GameStatus.Started
         // 地雷の座標を決定
         val rnd = Random(seed)
