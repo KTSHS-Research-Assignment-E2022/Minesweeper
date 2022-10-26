@@ -41,6 +41,13 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
             }
         }
 
+        board.forEachIndexed { x, yList ->
+            yList.forEachIndexed { y, iSquareState ->
+                if (iSquareState is NormalSquareState)
+                    iSquareState.numOfAroundMines = calcNumOfAroundMine(board, x, y)
+            }
+        }
+
         coordinatesOfPlane.removeAll(coordinatesOfMines)
         coordinatesWithoutMines = coordinatesOfPlane
     }
@@ -93,4 +100,18 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
             }
         }
     }
+}
+
+private fun calcNumOfAroundMine(board: List<List<ISquareState>>, x: Int, y: Int): Int {
+    var num = 0
+    for (cx in x - 1..x + 1) {
+        if (0 <= cx && cx < board.size) {
+            for (cy in y - 1..y + 1) {
+                if (0 <= cy && cy < board[cx].size && board[cx][cy] is MineSquareState) {
+                    num++
+                }
+            }
+        }
+    }
+    return num
 }

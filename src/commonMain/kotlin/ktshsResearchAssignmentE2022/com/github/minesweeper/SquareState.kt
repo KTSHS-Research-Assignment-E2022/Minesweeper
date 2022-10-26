@@ -14,7 +14,7 @@ interface ISquareState {
 data class NormalSquareState(
     override val x: Int,
     override val y: Int,
-    val numOfAroundMines: Int
+    var numOfAroundMines: Int
 ) : ISquareState {
     override var isOpened by mutableStateOf(false)
     override var isFlagged by mutableStateOf(false)
