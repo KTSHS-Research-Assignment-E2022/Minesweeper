@@ -12,15 +12,15 @@ fun MineSweeper() {
     MinesweeperLayout {
         for (x in 0 until MineSweeperState.logic.xLength) {
             for (y in 0 until MineSweeperState.logic.yLength) {
-                Tile(MineSweeperState.logic, x, y)
+                Square(MineSweeperState.logic, x, y)
             }
         }
     }
 }
 
 @Composable
-private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
-    val tileState = logic.board[x][y]
+private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
+    val squareState = logic.board[x][y]
     Div({
         classes(MinesweeperStyleSheet.tileStyle)
         style {
@@ -36,11 +36,9 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
 
             backgroundColor(
                 when {
-                    tileState.isOpened -> {
-                        if (tileState.isMine)
-                            Color.crimson
-                        else
-                            when (tileState.numOfAroundMines) {
+                    squareState.isOpened -> {
+                        if (squareState is NormalSquareState) {
+                            when (squareState.numOfAroundMines) {
                                 // 色は安全→危険で　青→黄→赤
                                 0 -> Color.whitesmoke
                                 1 -> Color.cornflowerblue
@@ -48,9 +46,12 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
                                 3 -> Color.lightcoral
                                 else -> Color.mediumorchid
                             }
+                        } else {
+                            Color.crimson
+                        }
                     }
 
-                    tileState.isFlagged -> Color.mediumseagreen
+                    squareState.isFlagged -> Color.mediumseagreen
                     else -> Color.white
                 }
             )
@@ -58,13 +59,13 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
             val commonFontSize = if (logic.xLength > 5) 3.vmin else 4.vmin
             fontSize(
-                if (tileState.isOpened && tileState.isMine)
+                if (squareState.isOpened && squareState is MineSquareState)
                     mineFontSize
                 else
                     commonFontSize
             )
 
-            if (!tileState.isOpened && !tileState.isFlagged) {
+            if (!squareState.isOpened && !squareState.isFlagged) {
                 border {
                     style = LineStyle.Solid
                     this.width = if (logic.xLength < 13) 3.px else 2.px
@@ -75,7 +76,7 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
 
         onContextMenu {
             //右クリ時の挙動
-            if (!tileState.isOpened) {
+            if (!squareState.isOpened) {
                 logic.toggleTileFlag(x, y)
             }
             // 右クリメニューをキャンセル
@@ -86,9 +87,16 @@ private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
         }
     }) {
         Text(
-            if (tileState.isOpened && tileState.numOfAroundMines != 0) {
-                if (tileState.isMine) "💣" else tileState.numOfAroundMines.toString()
-            } else if (tileState.isFlagged) {
+            if (squareState.isOpened) {
+                if (squareState is NormalSquareState) {
+                    if (squareState.numOfAroundMines == 0)
+                        ""
+                    else
+                        squareState.numOfAroundMines.toString()
+                } else {
+                    "💣"
+                }
+            } else if (squareState.isFlagged) {
                 "🚩"
             } else {
                 ""
