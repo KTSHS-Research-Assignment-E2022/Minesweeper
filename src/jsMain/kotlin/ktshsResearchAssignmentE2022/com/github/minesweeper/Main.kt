@@ -23,7 +23,7 @@ fun main() {
             it
         }
 
-        if (MineSweeperState.logic.gameState == GameState.GameOver || MineSweeperState.logic.gameState == GameState.GameClear)
+        if (MineSweeperState.logic.gameStatus == GameStatus.GameOver || MineSweeperState.logic.gameStatus == GameStatus.GameClear)
             Result()
 
         if (AppState.isHelpOpen)

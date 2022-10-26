@@ -3,13 +3,16 @@ package ktshsResearchAssignmentE2022.com.github.minesweeper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.ISquareState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSquareState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.NormalSquareState
 import kotlin.js.Date
 import kotlin.random.Random
 
 class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
     // y軸方向に各マスの情報を格納している
     val board: List<List<ISquareState>>
-    var gameState by mutableStateOf(GameState.BeforeStarts)
+    var gameStatus by mutableStateOf(GameStatus.BeforeStarts)
         private set
     private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
     private val coordinatesWithoutMines: Set<Pair<Int, Int>>
@@ -53,7 +56,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun openTileWithAround(x: Int, y: Int) {
-        if (gameState == GameState.BeforeStarts) firstTimeAction()
+        if (gameStatus == GameStatus.BeforeStarts) firstTimeAction()
         if (board[x][y].isFlagged) return
         openTile(x, y)
         if (board[x][y] is NormalSquareState && (board[x][y] as NormalSquareState).numOfAroundMines == 0) {
@@ -62,7 +65,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun toggleTileFlag(x: Int, y: Int) {
-        if (gameState == GameState.BeforeStarts) firstTimeAction()
+        if (gameStatus == GameStatus.BeforeStarts) firstTimeAction()
         board[x][y].isFlagged = !board[x][y].isFlagged
     }
 
@@ -71,7 +74,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     private fun firstTimeAction() {
-        gameState = GameState.Started
+        gameStatus = GameStatus.Started
         startTime = Date.now()
     }
 
@@ -80,9 +83,9 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
         board[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
         if (coordinatesOfOpened == coordinatesWithoutMines) {
-            gameState = GameState.GameClear
+            gameStatus = GameStatus.GameClear
         } else if (board[x][y] is MineSquareState && !isDevMode) {
-            gameState = GameState.GameOver
+            gameStatus = GameStatus.GameOver
         }
     }
 

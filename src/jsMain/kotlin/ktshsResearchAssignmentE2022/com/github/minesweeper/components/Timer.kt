@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.browser.window
-import ktshsResearchAssignmentE2022.com.github.minesweeper.GameState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.GameStatus
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperState
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
@@ -35,6 +35,6 @@ fun Timer() {
             }
         }
     }) {
-        Text(if (MineSweeperState.logic.gameState == GameState.Started) "$time 秒" else "")
+        Text(if (MineSweeperState.logic.gameStatus == GameStatus.Started) "$time 秒" else "")
     }
 }
