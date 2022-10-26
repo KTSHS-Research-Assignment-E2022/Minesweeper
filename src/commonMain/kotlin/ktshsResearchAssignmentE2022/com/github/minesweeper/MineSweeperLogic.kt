@@ -63,7 +63,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
             connectedList.add(TileState(true))
         }
 
-        while (connectedList.size <= xLength * yLength) {
+        for (i in connectedList.size..xLength * yLength) {
             connectedList.add(TileState(false))
         }
 
