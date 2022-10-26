@@ -20,7 +20,7 @@ fun MineSweeper() {
 
 @Composable
 private fun Tile(logic: MineSweeperLogic, x: Int, y: Int) {
-    val tileState = logic.map[x][y]
+    val tileState = logic.board[x][y]
     Div({
         classes(MinesweeperStyleSheet.tileStyle)
         style {

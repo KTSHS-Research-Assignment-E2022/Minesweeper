@@ -15,7 +15,7 @@ class MineSweeperLogicTest {
                 val logic = MineSweeperLogic(i, i, n, Random.nextInt())
                 for (x in 0 until i) {
                     for (y in 0 until i) {
-                        if (logic.map[x][y].isMine) count++
+                        if (logic.board[x][y].isMine) count++
                     }
                 }
                 println("length: $i, mine:$n")

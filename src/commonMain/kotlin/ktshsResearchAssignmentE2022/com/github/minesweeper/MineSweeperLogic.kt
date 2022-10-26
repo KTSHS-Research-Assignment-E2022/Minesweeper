@@ -45,14 +45,13 @@ private fun List<List<TileState>>.incAround(x: Int, y: Int) {
 
 class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, val seed: Int) {
     // y軸方向に各マスの情報を格納している
-    val map: List<List<TileState>>
+    val board: List<List<TileState>>
+    var gameState by mutableStateOf(GameState.BeforeStarts)
+        private set
     private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
     private val coordinatesWithoutMines: Set<Pair<Int, Int>>
-    var isGameOver by mutableStateOf(false)
-    var isGameClear by mutableStateOf(false)
+
     var isDevMode by mutableStateOf(false)
-    var isStarted by mutableStateOf(false)
-        private set
     private var startTime = 0.0
 
     init {
@@ -70,14 +69,14 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
         connectedList.shuffle(Random(seed))
 
-        map = connectedList.windowed(yLength, yLength)
+        board = connectedList.windowed(yLength, yLength)
 
         for (x in 0 until xLength) {
             for (y in 0 until yLength) {
                 coordinatesOfPlane.add(Pair(x, y))
-                if (map[x][y].isMine) {
+                if (board[x][y].isMine) {
                     coordinatesOfMines.add(Pair(x, y))
-                    map.incAround(x, y)
+                    board.incAround(x, y)
                 }
             }
         }
@@ -86,17 +85,17 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     fun openTileWithAround(x: Int, y: Int) {
-        if (!isStarted) firstTimeAction()
-        if (map[x][y].isFlagged) return
+        if (gameState == GameState.BeforeStarts) firstTimeAction()
+        if (board[x][y].isFlagged) return
         openTile(x, y)
-        if (map[x][y].numOfAroundMines == 0) {
-            map.openAround(x, y)
+        if (board[x][y].numOfAroundMines == 0) {
+            board.openAround(x, y)
         }
     }
 
     fun toggleTileFlag(x: Int, y: Int) {
-        if (!isStarted) firstTimeAction()
-        map[x][y].isFlagged = !map[x][y].isFlagged
+        if (gameState == GameState.BeforeStarts) firstTimeAction()
+        board[x][y].isFlagged = !board[x][y].isFlagged
     }
 
     fun getElapsedSeconds(): Double {
@@ -104,18 +103,18 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     }
 
     private fun firstTimeAction() {
-        isStarted = true
+        gameState = GameState.Started
         startTime = Date.now()
     }
 
     private fun openTile(x: Int, y: Int) {
-        if (map[x][y].isFlagged) toggleTileFlag(x, y)
-        map[x][y].isOpened = true
+        if (board[x][y].isFlagged) toggleTileFlag(x, y)
+        board[x][y].isOpened = true
         coordinatesOfOpened.add(Pair(x, y))
-        isGameClear = coordinatesOfOpened == coordinatesWithoutMines
-        isGameOver = map[x][y].isMine && !isDevMode
-        if (isGameClear || isGameOver) {
-            isStarted = false
+        if (coordinatesOfOpened == coordinatesWithoutMines) {
+            gameState = GameState.GameClear
+        } else if (board[x][y].isMine && !isDevMode) {
+            gameState = GameState.GameOver
         }
     }
 

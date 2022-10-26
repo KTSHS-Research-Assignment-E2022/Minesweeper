@@ -19,12 +19,14 @@ fun Result() {
         Div({
             classes(BlackOutOverlayStyleSheet.ResultStyle)
         }) {
-            if (MineSweeperState.logic.isGameOver)
-                ResultTitle("Game Over")
-            else if (MineSweeperState.logic.isGameClear) {
-                ResultTitle("🎉Game Clear🎉")
-                ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
-            } else ResultTitle("Error: Is it dev mode?")
+            when (MineSweeperState.logic.gameState) {
+                GameState.GameOver -> ResultTitle("Game Over")
+                GameState.GameClear -> {
+                    ResultTitle("🎉Game Clear🎉")
+                    ResultTime("Clear Time: ${MineSweeperState.logic.getElapsedSeconds()}秒")
+                }
+                else -> ResultTitle("Error: Are you developer?")
+            }
 
             OnHoverGrowingButton("新しい盤面でプレイする") {
                 SettingState.seed = Random.nextInt()
