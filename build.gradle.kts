@@ -48,5 +48,6 @@ tasks.register("copyToDocs") {
 }
 
 tasks.wrapper {
-    distributionUrl = "https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
+    val gradleVersion = "7.5.1"
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
