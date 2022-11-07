@@ -1,9 +1,9 @@
 plugins {
     kotlin("multiplatform") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-beta01"
+    id("org.jetbrains.compose") version "1.2.0"
 }
 
-version = "2.1.1"
+version = "2.1.2"
 
 repositories {
     mavenCentral()
@@ -48,5 +48,6 @@ tasks.register("copyToDocs") {
 }
 
 tasks.wrapper {
-    distributionUrl = "https://services.gradle.org/distributions/gradle-7.4.2-all.zip"
+    val gradleVersion = "7.5.1"
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
