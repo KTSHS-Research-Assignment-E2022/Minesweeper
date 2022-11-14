@@ -35,6 +35,7 @@ object SidebarStyleSheet : StyleSheet() {
         width(10.vw)
         height(100.vh)
         borderRadius(0.1.px, 20.px, 20.px, 0.1.px)
+        fontSize(0.8.em)
         property("box-shadow", "5px 0px 24px -2px #848484") // 影
         property("pointer-events", "auto")
         property("user-select", "none")
