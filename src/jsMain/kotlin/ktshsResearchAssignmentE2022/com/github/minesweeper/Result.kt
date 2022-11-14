@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGrowingButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.SettingState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.BlackOutOverlayStyleSheet
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.textAlign
@@ -29,12 +30,12 @@ fun Result() {
                 else -> ResultTitle("Error: Are you developer?")
             }
 
-            OnHoverGrowingButton("新しい盤面でプレイする") {
+            OnHoverGrowingButton("新しい盤面でプレイする", width = if (WindowState.isPhone) 80.percent else 70.percent) {
                 SettingState.seed = Random.nextInt()
                 MineSweeperViewState.regenerate()
             }
 
-            OnHoverGrowingButton("もう一度この盤面をプレイする") {
+            OnHoverGrowingButton("もう一度この盤面をプレイする", width = if (WindowState.isPhone) 80.percent else 70.percent) {
                 MineSweeperViewState.regenerate()
             }
         }
