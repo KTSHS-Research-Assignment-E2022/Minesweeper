@@ -19,9 +19,10 @@ fun main() {
 
         window.onresize = {
             WindowState.width = window.outerWidth
-            WindowState.isPhone = WindowState.width < 850
             it
         }
+
+        WindowState.isPhone = window.outerWidth < 850
 
         if (MineSweeperViewState.logic.gameStatus == GameStatus.GameOver || MineSweeperViewState.logic.gameStatus == GameStatus.GameClear)
             Result()
