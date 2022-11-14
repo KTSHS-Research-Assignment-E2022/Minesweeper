@@ -5,8 +5,7 @@ import ktshsResearchAssignmentE2022.com.github.minesweeper.components.OnHoverGro
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
-import org.jetbrains.compose.web.css.percent
-import org.jetbrains.compose.web.css.textAlign
+import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
@@ -48,6 +47,7 @@ fun PhoneSidebar() {
             H1({
                 style {
                     textAlign("center")
+                    fontSize(4.8.vw)
                 }
             }) {
                 Text(if (!MineSweeperViewState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode")
@@ -64,7 +64,20 @@ fun PhoneSidebar() {
                     MineSweeperViewState.logic.isDevMode = !MineSweeperViewState.logic.isDevMode
                 }
             }) {
-                H3 { Text("Made by 神奈川工業高校電気科") }
+                P({
+                    style {
+                        width(100.percent)
+                    }
+                }) {
+                    Text("Made by")
+                }
+                P({
+                    style {
+                        width(100.percent)
+                    }
+                }) {
+                    Text("神奈川工業高校電気科")
+                }
             }
         }
     }

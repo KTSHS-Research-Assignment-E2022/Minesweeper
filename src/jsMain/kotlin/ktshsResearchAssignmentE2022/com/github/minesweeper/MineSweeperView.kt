@@ -8,6 +8,7 @@ import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.Minesweep
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
+import kotlin.math.sqrt
 
 @Composable
 fun MineSweeper() {
@@ -24,6 +25,7 @@ fun MineSweeper() {
 private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
     val squareState = logic.board[x][y]
     Div({
+        id("tile-$x-$y")
         classes(MinesweeperStyleSheet.tileStyle)
         style {
             // 合計の width = 100/(x軸方向の長さ + マージン)
@@ -59,7 +61,7 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             )
 
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
-            val commonFontSize = if (logic.xLength > 5) 3.vmin else 4.vmin
+            val commonFontSize = (sqrt(20.0 - logic.xLength) + 2.2).vmin
             fontSize(
                 if (squareState.isOpened && squareState is MineSquareState)
                     mineFontSize
@@ -70,7 +72,7 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             if (!squareState.isOpened && !squareState.isFlagged) {
                 border {
                     style = LineStyle.Solid
-                    this.width = if (logic.xLength < 13) 3.px else 2.px
+                    this.width = 90.vmin / logic.xLength / 30
                     color = rgb(180 - x * y * 5, 205 - x * y, 250 - x * y)
                 }
             }
