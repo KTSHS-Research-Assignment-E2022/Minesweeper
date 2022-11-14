@@ -8,6 +8,7 @@ import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.Minesweep
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Text
+import kotlin.math.sqrt
 
 @Composable
 fun MineSweeper() {
@@ -60,7 +61,7 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             )
 
             val mineFontSize = if (logic.xLength < 14) 5.vmin else 3.vmin
-            val commonFontSize = if (logic.xLength > 5) 3.vmin else 4.vmin
+            val commonFontSize = (sqrt(20.0 - logic.xLength) + 2.2).vmin
             fontSize(
                 if (squareState.isOpened && squareState is MineSquareState)
                     mineFontSize
