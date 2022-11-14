@@ -24,6 +24,7 @@ fun MineSweeper() {
 private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
     val squareState = logic.board[x][y]
     Div({
+        id("tile-$x-$y")
         classes(MinesweeperStyleSheet.tileStyle)
         style {
             // 合計の width = 100/(x軸方向の長さ + マージン)
@@ -70,7 +71,7 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             if (!squareState.isOpened && !squareState.isFlagged) {
                 border {
                     style = LineStyle.Solid
-                    this.width = if (logic.xLength < 13) 3.px else 2.px
+                    this.width = 90.vmin / logic.xLength / 30
                     color = rgb(180 - x * y * 5, 205 - x * y, 250 - x * y)
                 }
             }
