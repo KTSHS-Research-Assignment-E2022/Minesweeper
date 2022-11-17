@@ -17,8 +17,12 @@ fun main() {
         Style(SidebarStyleSheet)
         Style(PhoneSidebarStyleSheet)
 
+        WindowState.width = window.outerWidth
+        WindowState.isPhone = window.outerWidth < 850
+
         window.onresize = {
             WindowState.width = window.outerWidth
+            WindowState.isPhone = window.outerWidth < 850
             it
         }
 
