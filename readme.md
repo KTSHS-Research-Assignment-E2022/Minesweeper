@@ -14,11 +14,18 @@ https://ktshs-research-assignment-e2022.github.io/Minesweeper/
 - スマホ
     - マスを開く: タップ
     - 旗を立てる: 長押し(iPhoneはできません)
+    
+## 作ってみての感想も書きました
+
+https://github.com/KTSHS-Research-Assignment-E2022/Impression-of-making-Minesweeper
 
 ## 使用しているフレームワーク
 
 - Jetpack Compose for Web
 
-## 主に使用している言語
+## 使用している言語
 
 - Kotlin
+- HTML
+- CSS
+- JavaScript
