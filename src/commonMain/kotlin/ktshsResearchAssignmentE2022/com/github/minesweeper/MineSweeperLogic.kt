@@ -19,6 +19,7 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     private val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
     private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
     private var coordinatesWithoutMines = mutableSetOf<Pair<Int, Int>>()
+    private var numOfFlags by mutableStateOf(0)
 
     var isDevMode by mutableStateOf(false)
     private var startTime = 0.0
@@ -42,7 +43,15 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
 
     fun toggleTileFlag(x: Int, y: Int) {
         if (gameStatus == GameStatus.BeforeAction) firstTimeAction()
-        board[x][y].isFlagged = !board[x][y].isFlagged
+        if (!board[x][y].isFlagged) {
+            if (numOfFlags < numOfMines) {
+                board[x][y].isFlagged = true
+                numOfFlags++
+            }
+        } else {
+            board[x][y].isFlagged = false
+            numOfFlags--
+        }
     }
 
     fun getElapsedSeconds(): Double {
