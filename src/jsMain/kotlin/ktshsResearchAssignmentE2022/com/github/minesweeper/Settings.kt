@@ -9,6 +9,7 @@ import ktshsResearchAssignmentE2022.com.github.minesweeper.components.Timer
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.Difficulty
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.SettingState
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.WindowState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.styleSheets.SidebarStyleSheet
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.max
@@ -73,7 +74,7 @@ private fun SimpleSettings() {
         }
     }) {
         H2 {
-            Text("経過時間")
+            Text(if (WindowState.isPhone) "経過時間" else "経過時間 / 残りの地雷")
         }
 
         Timer()

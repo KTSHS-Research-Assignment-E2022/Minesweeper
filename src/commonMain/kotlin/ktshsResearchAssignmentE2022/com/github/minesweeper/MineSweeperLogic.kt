@@ -16,10 +16,12 @@ class MineSweeperLogic(val xLength: Int, val yLength: Int, val numOfMines: Int, 
     var gameStatus by mutableStateOf(GameStatus.BeforeAction)
         private set
 
+    var numOfFlags by mutableStateOf(0)
+        private set
+
     private val coordinatesOfMines = mutableSetOf<Pair<Int, Int>>()
     private val coordinatesOfOpened = mutableSetOf<Pair<Int, Int>>()
     private var coordinatesWithoutMines = mutableSetOf<Pair<Int, Int>>()
-    private var numOfFlags by mutableStateOf(0)
 
     var isDevMode by mutableStateOf(false)
     private var startTime = 0.0
