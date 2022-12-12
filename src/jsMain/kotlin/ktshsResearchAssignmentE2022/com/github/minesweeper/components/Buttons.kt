@@ -67,20 +67,26 @@ fun OnHoverGrowingButton(
 
 @Composable
 fun SettingMenuButton(onClick: () -> Unit) {
+    CircleButton(string = "⚙", onClick = onClick)
+}
+
+@Composable
+fun CircleButton(string: String = "", isGrowing: Boolean = false, onClick: () -> Unit) {
     Button({
         style {
-            height(8.vmin)
-            width(8.vmin)
+            height(10.vmin)
+            width(10.vmin)
             borderRadius(5.vmin)
             backgroundColor(Color.white)
             marginTop(2.vmin)
             marginLeft(2.vmin)
             property("pointer-events", "auto")
+            if (isGrowing) backgroundColor(Color.lightskyblue)
         }
         onClick {
             onClick()
         }
     }) {
-        H2 { Text("⚙") }
+        H2 { Text(string) }
     }
 }

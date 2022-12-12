@@ -56,7 +56,7 @@ fun PhoneSidebar() {
             Settings()
 
             OnHoverGrowingButton("閉じる", height = 10.percent, width = 90.percent) {
-                AppState.isOpen = false
+                AppState.isSidebarOpen = false
             }
 
             Button({
