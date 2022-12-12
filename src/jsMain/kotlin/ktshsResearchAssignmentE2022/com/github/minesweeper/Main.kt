@@ -1,6 +1,7 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import kotlinx.browser.window
+import ktshsResearchAssignmentE2022.com.github.minesweeper.components.CircleButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.components.SettingMenuButton
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
@@ -36,11 +37,14 @@ fun main() {
 
         if (WindowState.isPhone)
             PhoneMenuButtonLayout {
-                if (AppState.isOpen) {
+                if (AppState.isSidebarOpen) {
                     PhoneSidebar()
                 } else {
                     SettingMenuButton {
-                        AppState.isOpen = true
+                        AppState.isSidebarOpen = true
+                    }
+                    CircleButton("🚩", AppState.isFlagMode) {
+                        AppState.isFlagMode = !AppState.isFlagMode
                     }
                 }
             }

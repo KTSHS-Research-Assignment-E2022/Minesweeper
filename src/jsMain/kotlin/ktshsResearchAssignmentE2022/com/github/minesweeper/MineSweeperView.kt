@@ -1,6 +1,7 @@
 package ktshsResearchAssignmentE2022.com.github.minesweeper
 
 import androidx.compose.runtime.Composable
+import ktshsResearchAssignmentE2022.com.github.minesweeper.states.AppState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSquareState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.MineSweeperViewState
 import ktshsResearchAssignmentE2022.com.github.minesweeper.states.NormalSquareState
@@ -87,7 +88,10 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             it.nativeEvent.preventDefault()
         }
         onClick {
-            logic.openTileWithAround(x, y)
+            if (AppState.isFlagMode)
+                logic.toggleTileFlag(x, y)
+            else
+                logic.openTileWithAround(x, y)
         }
     }) {
         Text(
