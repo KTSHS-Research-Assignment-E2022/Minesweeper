@@ -13,7 +13,7 @@ https://ktshs-research-assignment-e2022.github.io/Minesweeper/
 
 - スマホ
     - マスを開く: タップ
-    - 旗を立てる: 長押し(iPhoneはできません)
+    - 旗を立てる: 🚩ボタンで旗立てモードと切り替え
     
 ## 作ってみての感想も書きました
 
