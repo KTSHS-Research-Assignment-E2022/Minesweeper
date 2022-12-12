@@ -5,6 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 object AppState {
-    var isOpen by mutableStateOf(false)
+    var isSidebarOpen by mutableStateOf(false)
     var isHelpOpen by mutableStateOf(false)
 }

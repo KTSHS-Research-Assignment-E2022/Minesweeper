@@ -36,11 +36,11 @@ fun main() {
 
         if (WindowState.isPhone)
             PhoneMenuButtonLayout {
-                if (AppState.isOpen) {
+                if (AppState.isSidebarOpen) {
                     PhoneSidebar()
                 } else {
                     SettingMenuButton {
-                        AppState.isOpen = true
+                        AppState.isSidebarOpen = true
                     }
                 }
             }
