@@ -1,6 +1,6 @@
 # マインスイーパー
 
-![innocentくん](./docs/icons/192x192.png)
+![innocentくん](src/jsMain/resources/icons/192x192.png)
 
 (むじつくん)
 
