@@ -1,6 +1,8 @@
 # マインスイーパー
 
-![innocentくん](./docs/icons/icon-480.webp)
+![innocentくん](./docs/icons/192x192.png)
+
+(むじつくん)
 
 ## プレイはこちらから
 
