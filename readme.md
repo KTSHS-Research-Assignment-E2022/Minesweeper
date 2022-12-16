@@ -1,5 +1,7 @@
 # マインスイーパー
 
+![innocentくん](./docs/icons/icon-480.webp)
+
 ## プレイはこちらから
 
 https://ktshs-research-assignment-e2022.github.io/Minesweeper/
@@ -29,3 +31,7 @@ https://github.com/KTSHS-Research-Assignment-E2022/Impression-of-making-Mineswee
 - HTML
 - CSS
 - JavaScript
+
+## Special thanks
+
+デザイン科 A.Kくん (アイコン書いてくれた)
