@@ -8,6 +8,11 @@ const urlsToCache = [
     './ress.min.css',
     './fonts/M_PLUS_2/MPLUS2-VariableFont_wght.ttf',
     './fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf',
+    './icons/icon-32.png',
+    './icons/icon-64.png',
+    './icons/icon-128.png',
+    './icons/icon-256.png',
+    './icons/icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
