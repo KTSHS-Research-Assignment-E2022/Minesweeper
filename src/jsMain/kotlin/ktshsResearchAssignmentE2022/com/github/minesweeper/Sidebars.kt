@@ -18,7 +18,7 @@ fun PCSidebar() {
         }) {
             H1 { Text(if (!MineSweeperViewState.logic.isDevMode) "まいんすいーぱー" else "Dev Mode") }
             Settings()
-            OnHoverGrowingButton("遊び方", height = 10.percent, width = 90.percent) {
+            OnHoverGrowingButton("遊び方", 10.percent, 90.percent, true) {
                 AppState.isHelpOpen = true
             }
             Button({
@@ -55,7 +55,7 @@ fun PhoneSidebar() {
 
             Settings()
 
-            OnHoverGrowingButton("閉じる", height = 10.percent, width = 90.percent) {
+            OnHoverGrowingButton("閉じる", 10.percent, 90.percent, true) {
                 AppState.isSidebarOpen = false
             }
 

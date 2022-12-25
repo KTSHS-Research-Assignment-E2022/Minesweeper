@@ -83,17 +83,17 @@ private fun SimpleSettings() {
             Text("むずかしさ")
         }
 
-        GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy) {
+        GrowingButton("かんたん", SettingState.difficulty == Difficulty.Easy, playSound = true) {
             SettingState.setWithDifficulty(Difficulty.Easy)
             MineSweeperViewState.regenerate()
         }
 
-        GrowingButton("ふつう", SettingState.difficulty == Difficulty.Normal) {
+        GrowingButton("ふつう", SettingState.difficulty == Difficulty.Normal, playSound = true) {
             SettingState.setWithDifficulty(Difficulty.Normal)
             MineSweeperViewState.regenerate()
         }
 
-        GrowingButton("むずかしい", SettingState.difficulty == Difficulty.Hard) {
+        GrowingButton("むずかしい", SettingState.difficulty == Difficulty.Hard, playSound = true) {
             SettingState.setWithDifficulty(Difficulty.Hard)
             MineSweeperViewState.regenerate()
         }
@@ -102,7 +102,7 @@ private fun SimpleSettings() {
 
 @Composable
 private fun AdvancedSettings() {
-    val notIsDiff = !(SettingState.yLength == MineSweeperViewState.logic.yLength &&
+    val diff = !(SettingState.yLength == MineSweeperViewState.logic.yLength &&
             SettingState.xLength == MineSweeperViewState.logic.xLength &&
             SettingState.numOfMines == MineSweeperViewState.logic.numOfMines &&
             SettingState.seed == MineSweeperViewState.logic.seed)
@@ -120,11 +120,13 @@ private fun AdvancedSettings() {
         H2 {
             Text("詳細設定")
         }
-        GrowingButton("再生成する", notIsDiff) {
-            if (notIsDiff) MineSweeperViewState.regenerate()
+        GrowingButton("再生成する", diff, playSound = diff) {
+            if (diff) {
+                MineSweeperViewState.regenerate()
+            }
         }
-        GrowingButton("現在の設定にもどす", notIsDiff, 10.percent) {
-            if (notIsDiff) {
+        GrowingButton("現在の設定にもどす", diff, 10.percent) {
+            if (diff) {
                 SettingState.setAll(
                     MineSweeperViewState.logic.yLength,
                     MineSweeperViewState.logic.xLength,
@@ -239,6 +241,7 @@ private fun AdvancedSettings() {
                     }
                     onClick {
                         SettingState.seed = Random.nextInt()
+                        org.w3c.dom.Audio("./sounds/click.mp3").play()
                     }
                 }) {
                     Text("ランダム")
