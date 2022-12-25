@@ -22,8 +22,12 @@ fun Result() {
             classes(BlackOutOverlayStyleSheet.ResultStyle)
         }) {
             when (MineSweeperViewState.logic.gameStatus) {
-                GameStatus.GameOver -> ResultTitle("Game Over")
+                GameStatus.GameOver -> {
+                    org.w3c.dom.Audio("./sounds/gameover.mp3").play()
+                    ResultTitle("Game Over")
+                }
                 GameStatus.GameClear -> {
+                    org.w3c.dom.Audio("./sounds/clear.mp3").play()
                     ResultTitle("🎉Game Clear🎉")
                     ResultTime("Clear Time: ${MineSweeperViewState.logic.getElapsedSeconds()}秒")
                 }
