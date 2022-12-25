@@ -22,7 +22,7 @@ fun Help() {
             P { Text("2. 数字マスと接する8マスにはその数字個の地雷があります") }
             P { Text("3. 地雷だと思った場所には右クリックで旗を立てましょう") }
             P { Text("4. 地雷以外のマスをすべて開いたらクリアです！") }
-            OnHoverGrowingButton("閉じる", height = 15.percent) {
+            OnHoverGrowingButton("閉じる", height = 15.percent, playSound = true) {
                 AppState.isHelpOpen = false
             }
         }

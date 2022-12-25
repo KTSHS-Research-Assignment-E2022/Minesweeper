@@ -24,9 +24,11 @@ fun Result() {
             when (MineSweeperViewState.logic.gameStatus) {
                 GameStatus.GameOver -> ResultTitle("Game Over")
                 GameStatus.GameClear -> {
+                    org.w3c.dom.Audio("./sounds/clear.mp3").play()
                     ResultTitle("🎉Game Clear🎉")
                     ResultTime("Clear Time: ${MineSweeperViewState.logic.getElapsedSeconds()}秒")
                 }
+
                 else -> ResultTitle("Error: Are you developer?")
             }
 

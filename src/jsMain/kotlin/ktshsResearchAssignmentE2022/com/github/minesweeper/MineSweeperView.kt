@@ -83,6 +83,7 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             //右クリ時の挙動
             if (!squareState.isOpened) {
                 logic.toggleTileFlag(x, y)
+                org.w3c.dom.Audio("./sounds/flag.mp3").play()
             }
             // 右クリメニューをキャンセル
             it.nativeEvent.preventDefault()
@@ -92,6 +93,12 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
                 logic.toggleTileFlag(x, y)
             else
                 logic.openTileWithAround(x, y)
+
+            if (squareState is MineSquareState) {
+                org.w3c.dom.Audio("./sounds/gameover.mp3").play()
+            } else {
+                org.w3c.dom.Audio("./sounds/flag.mp3").play()
+            }
         }
     }) {
         Text(
