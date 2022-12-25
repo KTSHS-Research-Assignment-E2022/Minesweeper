@@ -94,7 +94,11 @@ private fun Square(logic: MineSweeperLogic, x: Int, y: Int) {
             else
                 logic.openTileWithAround(x, y)
 
-            org.w3c.dom.Audio("./sounds/flag.mp3").play()
+            if (squareState is MineSquareState) {
+                org.w3c.dom.Audio("./sounds/gameover.mp3").play()
+            } else {
+                org.w3c.dom.Audio("./sounds/flag.mp3").play()
+            }
         }
     }) {
         Text(
