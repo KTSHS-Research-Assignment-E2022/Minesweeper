@@ -10,7 +10,13 @@ import org.jetbrains.compose.web.dom.H2
 import org.jetbrains.compose.web.dom.Text
 
 @Composable
-fun GrowingButton(string: String, isGrowing: Boolean, height: CSSNumeric = 20.percent, playSound: Boolean = false, onClick: () -> Unit) {
+fun GrowingButton(
+    string: String,
+    isGrowing: Boolean,
+    height: CSSNumeric = 20.percent,
+    playSound: Boolean = false,
+    onClick: () -> Unit
+) {
     Button({
         style {
             height(height)
@@ -24,7 +30,7 @@ fun GrowingButton(string: String, isGrowing: Boolean, height: CSSNumeric = 20.pe
         }
         onClick {
             onClick()
-            if(playSound) org.w3c.dom.Audio("./sounds/click.mp3").play()
+            if (playSound) org.w3c.dom.Audio("./sounds/click.mp3").play()
         }
     }) {
         Text(string)
@@ -60,7 +66,7 @@ fun OnHoverGrowingButton(
             bgColor = defaultColor
         }
         onClick {
-            if(playSound) org.w3c.dom.Audio("./sounds/click.mp3").play()
+            if (playSound) org.w3c.dom.Audio("./sounds/click.mp3").play()
             onClick()
         }
     }) {

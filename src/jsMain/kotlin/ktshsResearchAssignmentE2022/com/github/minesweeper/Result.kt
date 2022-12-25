@@ -28,6 +28,7 @@ fun Result() {
                     ResultTitle("🎉Game Clear🎉")
                     ResultTime("Clear Time: ${MineSweeperViewState.logic.getElapsedSeconds()}秒")
                 }
+
                 else -> ResultTitle("Error: Are you developer?")
             }
 
