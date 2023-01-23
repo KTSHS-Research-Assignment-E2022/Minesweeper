@@ -34,6 +34,12 @@ https://github.com/KTSHS-Research-Assignment-E2022/Impression-of-making-Mineswee
 - CSS
 - JavaScript
 
+## 使用してるフォント
+
+- M PLUS 2 Variable Font
+- M PLUS Rounded 1c
+OFLライセンスの元で使用しています
+
 ## Special thanks
 
 デザイン科 A.Kくん (アイコン書いてくれた)
